@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Project - starfox</title>
+
+	<meta charset="UTF-8">
+  	<meta name="author" content="Michal Pruszkowski">
+  	<meta name="description" content="">
+ 	<meta name="keywords" content="">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<style>
+	body{
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+
+	canvas{
+        border: 5px solid red;
+		z-index: 10;
+    }
+
+	#ui_topLeft{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 12vw;
+		background-color: lightslategray;
+		z-index: 20;
+	}
+
+	#ui_topRight{
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 6vw;
+		background-color: lightslategray;
+		z-index: 20;
+	}
+
+	#ui_bottomLeft{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 16vw;
+		background-color: darkgrey;
+		z-index: 20;
+	}
+
+	#dialogue_box{
+		position: fixed;
+		top: 0;
+		left: 36vw; /*half of game screen width - half of box width => 50vw - 28vw / 2*/
+		width: 28vw;
+		background-color: darkslateblue;
+		color: orange;
+		z-index: 30;
+	}
+
+	#objective_box{
+		position: fixed;
+		top: 50vh;
+		left: 0;
+		width: 4vw;
+		background-color: darkslateblue;
+		color: orange;
+		z-index: 30;
+	}
+
+	#menu_box{
+		position: fixed;
+		top: 24vh;
+		left: 34vw;
+		width: 32vw;
+		height: 38vh;
+		background-color: lightsteelblue;
+		z-index: 30;
+
+		visibility: hidden;
+	}
+
+	#fps_box{
+		position: fixed;
+		bottom: 1vw;
+		right: 1vw;
+		z-index: 20;
+	}
+	
+</style>
+
+</head>
+
+<body>
+
+<main>	
+	<canvas id="gameScreen"></canvas>
+
+	<div id="ui_topLeft">
+		<p>Score 1</p>
+		<p>Score 2</p>
+		<button>Menu</button>
+	</div>
+	
+	<div id="ui_topRight">
+		<p>Level</p>
+		<button>Music on/off</button>
+		<button>Game Pause</button>
+	</div>
+
+	<div id="ui_bottomLeft">
+		<p>HP</p>
+		<p>Energy</p>
+		<p>Special Ammo</p>
+	</div>
+
+	<div id="dialogue_box"> 
+		<img src="" alt="Dialogue image">
+		<p>Dialogue Text</p>
+	</div>
+
+	<div id="objective_box">
+		<p>Objective 1</p>
+		<br>
+		<p>Objective 2</p>
+		<br>
+		<p>Objective 3</p>
+	</div>
+
+	<div id="fps_box">
+		<p>FPS: <b id="fps_counter"></b></p>
+	</div>
+
+	<div id="menu_box">
+		<p>Resume</p>
+		<p>Restart</p>
+		<p>Options</p>
+		<p>Return To Hangar</p>
+		<p>Quit</p>
+	</div>
+</main>
+
+
+
+</div>
+</body>
+
+<script type="module" src="renderer.js"></script>
+</html>
