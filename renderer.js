@@ -42,6 +42,7 @@ canvas.height = window.innerHeight - 10;
 const GAME_WIDTH = canvas.width;
 const GAME_HEIGHT = canvas.height;
 
+//scale is needed to make objects responsive
 let scale = (GAME_WIDTH / 1920) + Number.EPSILON;
 const GAME_SCALE = Math.round(scale * 100) / 100;
 
@@ -61,6 +62,7 @@ let lt = 0;
 		lt = ts;
 		
 		let fps = (1 / dt) * 1000;
+		
 		document.getElementById("fps_counter").innerHTML = fps.toFixed(2); //framerate control
 
 		//debug - low fps log//

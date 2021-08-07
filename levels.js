@@ -1,7 +1,108 @@
 function level1(core, Enemy1){
 
 	let tile = Math.round(core.GAME_WIDTH / 21);
-	
+
+
+if(core.ct == 100){
+
+	const wave4 = [
+		[0, 1000, 2000, 3600, 4600, 5600,],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+	]
+
+
+		for (let i = 1; i < wave4.length; i++) {
+			let row = wave4[i];
+		
+			for (let j = 0; j < row.length; j++) {
+				if(row[j] === 1){
+					let position = {
+						x: tile * j,
+						y: -tile * i,
+					};
+		
+					core.hostileObjects.push(new Enemy1(core, position));
+					
+				}	
+			}
+		}
+	} else {
+		return;
+	}
+
+/*
+objects types (backgroud image, background objects, neutral objects, hostile objects)
+level settings (duration, timings)
+.
+.
+.
+
+
+load object (pre render)...
+
+function() => run background image and background objects
+if game timer == something{
+	switch:
+		time 1
+		add map of objects:
+
+			neutral:
+				[0,1,0]
+				[1,0,1]
+				[0,1,0]
+
+				for (column){
+					for(row)
+				}
+
+			hostile:
+				[0,2,0]
+				[3,0,3]
+				[0,2,0]
+
+		to main objects arrays
+
+
+
+		time 2
+
+
+
+		time 3
+
+
+		etc.
+
+
+}
+
+
+
+
+[cutscene]
+
+[wave]
+[wave]
+[wave]
+[inner peace]
+[wave]
+[inner peace]
+[cutscene]
+[boss]
+
+
+
+
+*/
+
+
+
+/*
 	const wave1 = [
 		[0, 1000],
 		[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
@@ -188,6 +289,9 @@ function level1(core, Enemy1){
 			}
 		}
 		}, 32000);
+
+
+*/
 }
 	
 export {level1};

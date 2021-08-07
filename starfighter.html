@@ -81,10 +81,18 @@
 
 	#fps_box{
 		position: fixed;
+		bottom: 3vw;
+		right: 1vw;
+		z-index: 20;
+	}
+
+	#clock_box{
+		position: fixed;
 		bottom: 1vw;
 		right: 1vw;
 		z-index: 20;
 	}
+	
 	
 </style>
 
@@ -128,6 +136,10 @@
 
 	<div id="fps_box">
 		<p>FPS: <b id="fps_counter"></b></p>
+	</div>
+
+	<div id="clock_box">
+		<p>Game clock: <b id="clock_counter"></b></p>
 	</div>
 
 	<div id="menu_box">

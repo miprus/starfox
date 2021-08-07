@@ -13,26 +13,35 @@ class Enemy1{
 		this.height = 64 * core.GAME_SCALE;
 
 		this.speed = {
-			x: 4 * core.GAME_SCALE,
-			y: 2 * core.GAME_SCALE,		
+			x: 10 * core.GAME_SCALE,
+			y: 10 * core.GAME_SCALE,		
 		}
 
 		this.position = position;
+		/*
+		this.position = {
+			x: 
+			y:
+		}
+		
+		*/
 
 		this.dead = false;
+
+		this.col = '#0ff';
 	}
 
 	draw(ctx){
-		ctx.fillStyle = '#0ff'
+		ctx.fillStyle = this.col;
 		ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
 	}
 
 	update(){
-		if(this.position.y != this.GAME_HEIGHT - this.height){
-			this.position.y += this.speed.y;
-		} else {
+		if(this.position.y > this.core.GAME_HEIGHT){
 			this.dead = true;
-		}
+		} else {
+			this.position.y += this.speed.y;
+		}	
 /*
 		if(this.position.y < 50){
 			this.position.y += this.speed.y;
@@ -44,7 +53,7 @@ class Enemy1{
 			}
 		}
 */
-
+/*
 		if(this.ec >= this.core.enemyWeapon.fireRate && this.core.enemyWeapon.fire){
 			let enemyShot =  new EnemyWeapon(this.core);
 			enemyShot.position.x = this.position.x + this.width / 2 - 5;
@@ -56,7 +65,7 @@ class Enemy1{
 		}else{
 			this.ec++;
 		}
-		
+		*/
 	}
 }
 

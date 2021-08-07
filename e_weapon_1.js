@@ -36,6 +36,8 @@ class EnemyWeapon{
 		} else {
 			this.position.y += this.speed.y;
 		}	
+
+		
 	}
 }
 

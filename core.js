@@ -25,6 +25,8 @@ class Core{
 
 		this.img = himg;
 		this.img2 = himg2;
+
+		this.ct = 0;
 	}
 
 
@@ -53,13 +55,18 @@ class Core{
 		this.hostileObjects = [];
 
 		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
-		level1(this, Enemy1);	
+		//level1(this, Enemy1);	
 
 		new Controls(this.hero, this.heroWeapon, this);
 	}
 
 	update(){
 		if(this.GAME_STATE === GAME_STATE.PAUSE) return;
+
+
+		this.ct += 1;
+		document.getElementById("clock_counter").innerHTML = this.ct; //game clock control
+		
 
 		if(this.heroWeapon.fire === true && this.fc >= this.heroWeapon.fireRate){
 			let shot = new HeroWeapon(this);
@@ -70,8 +77,10 @@ class Core{
 			this.fc++;
 		}
 
+		level1(this, Enemy1);	
 		//console.log(this.friendlyObjects);
-		//console.log(this.hostileObjects);
+		console.log(this.hostileObjects);
+		
 
 
 		[...this.friendlyObjects, ...this.hostileObjects].forEach(object => object.update());
