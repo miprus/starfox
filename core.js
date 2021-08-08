@@ -4,7 +4,7 @@ import {HeroWeapon} from './h_weapon_1.js';
 import {Enemy1} from './enemy_1.js';
 import {collisionDetector} from './collisionDetector.js';
 import {EnemyWeapon} from './e_weapon_1.js';
-import {level1} from './levels.js';
+import {levelLoader, levelEventHandler} from './levels.js';
 
 const GAME_STATE = {
 	PAUSE: 0,
@@ -26,7 +26,8 @@ class Core{
 		this.img = himg;
 		this.img2 = himg2;
 
-		this.ct = 0;
+		this.gameClockRaw = 0;
+		this.gameClock = 0;
 	}
 
 
@@ -53,9 +54,10 @@ class Core{
 
 		this.friendlyObjects = [this.hero];
 		this.hostileObjects = [];
+		this.inactiveObjects = [];
 
 		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
-		//level1(this, Enemy1);	
+		levelLoader(this, Enemy1);	
 
 		new Controls(this.hero, this.heroWeapon, this);
 	}
@@ -64,9 +66,10 @@ class Core{
 		if(this.GAME_STATE === GAME_STATE.PAUSE) return;
 
 
-		this.ct += 1;
-		document.getElementById("clock_counter").innerHTML = this.ct; //game clock control
-		
+		this.gameClockRaw += 1;
+		this.gameClock = Math.round(this.gameClockRaw/60)
+		document.getElementById("clock_counter").innerHTML = this.gameClock; //game clock control (divided by 60 to convert timer to seconds so each showed interation takes 1 real second)
+		console.log()
 
 		if(this.heroWeapon.fire === true && this.fc >= this.heroWeapon.fireRate){
 			let shot = new HeroWeapon(this);
@@ -77,9 +80,11 @@ class Core{
 			this.fc++;
 		}
 
-		level1(this, Enemy1);	
+		//level1(this, Enemy1);	
 		//console.log(this.friendlyObjects);
-		console.log(this.hostileObjects);
+		//console.log(this.hostileObjects);
+
+		levelEventHandler(this);
 		
 
 

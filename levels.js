@@ -1,41 +1,59 @@
-function level1(core, Enemy1){
-
+function levelLoader(core, Enemy1) {
+		
 	let tile = Math.round(core.GAME_WIDTH / 21);
 
+		const wave4 = [
+			[0, 1000, 2000, 3600, 4600, 5600,],
+			[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+			[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+			[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+			[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+			[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+			[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+		]
 
-if(core.ct == 100){
-
-	const wave4 = [
-		[0, 1000, 2000, 3600, 4600, 5600,],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
-	]
-
-
-		for (let i = 1; i < wave4.length; i++) {
-			let row = wave4[i];
-		
-			for (let j = 0; j < row.length; j++) {
-				if(row[j] === 1){
-					let position = {
-						x: tile * j,
-						y: -tile * i,
-					};
-		
-					core.hostileObjects.push(new Enemy1(core, position));
-					
-				}	
-			}
-		}
-	} else {
-		return;
+				for (let i = 1; i < wave4.length; i++) {
+					let row = wave4[i];
+				
+					for (let j = 0; j < row.length; j++) {
+						if(row[j] === 1){
+							let position = {
+								x: tile * j,
+								y: -tile * i,
+							};
+				
+							core.inactiveObjects.push(new Enemy1(core, position));
+							//core.inactiveNeutralObjects
+							//core.inactiveBackgroundObjects
+							//core.inactiveHostileObjects
+							//core.inactiveFriendlyObjects
+							//separate background, neutral and hostile objects' for loops from eachother
+						}	
+					}
+				}
 	}
 
+	function levelEventHandler(core) {
+
+		switch (core.gameClockRaw) {
+			case 120:
+				core.hostileObjects.push(...core.inactiveObjects);
+
+				break;
+
+			case 40:
+				//hmm
+				break;
+		
+			default:
+				break;
+		}
+		
+	}
 /*
+function level1(core, Enemy1){
+
+
 objects types (backgroud image, background objects, neutral objects, hostile objects)
 level settings (duration, timings)
 .
@@ -291,7 +309,7 @@ if game timer == something{
 		}, 32000);
 
 
-*/
+
 }
-	
-export {level1};
+*/
+export {levelLoader, levelEventHandler};
