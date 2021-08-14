@@ -24,9 +24,9 @@ class Core{
 		this.GAME_SCALE = GAME_SCALE;
 		this.GAME_STATE = GAME_STATE.RUN;
 
-		this.img = imgArray[0];
-		this.img2 = imgArray[1];
-		this.bimg = imgArray[2];
+		this.img = imgArray[0].img;
+		this.img2 = imgArray[1].img;
+		this.bimg = imgArray[2].img;
 
 		this.gameClockRaw = 0;
 		this.gameClock = 0;

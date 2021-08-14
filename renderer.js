@@ -1,40 +1,38 @@
 import {Core} from './core.js';
+import {preRenderList} from "./preRenderer.js";
+//import {  } from "./assets_list.json";
 
-function preRender(imgSrc, imgWidth, imgHeight){
-	let imgR = document.createElement("canvas");
-	let ctxR = imgR.getContext("2d");
-
-	let img = new Image();
-	img.src = imgSrc;
-
-	imgR.width = imgWidth;
-	imgR.height = imgHeight;
-	ctxR.save();
-
-	img.onload = function(){
-		ctxR.drawImage(img, 0, 0, imgWidth, imgHeight);
-		ctxR.beginPath();
-		ctxR.lineWidth = "2";
-		ctxR.strokeStyle = "blue";
-		ctxR.rect(0, 0, imgWidth, imgHeight);
-		ctxR.stroke();
-	}
-
-	ctxR.restore();
-
-	return imgR;
-}
-
+let jsonData = `{
+    "gameObjects" : [
+        {
+            "id" : "1",
+            "type" : "weapon",
+            "name" : "himg",
+            "src" : "assets/explosion.png",
+            "width" : "4096",
+            "height" : "4096"  
+        },
+        {      
+            "id" : "2",
+            "type" : "hero",
+            "name" : "himg2",
+            "src" : "assets/fighter1.svg",
+            "width" : "64",
+            "height" : "64"  
+        },
+        {
+            "id" : "3",
+            "type" : "bck_object",
+            "name" : "bimg",
+            "src" : "assets/sprite_test.png",
+            "width" : "80",
+            "height" : "16"    
+        }
+    ]
+}`;
 
 let canvas = document.getElementById('gameScreen');
 let ctx = canvas.getContext('2d');
-
-/////////preload assets///////
-//let himg = new Image();
-//himg.src = 'assets/explosion.png';
-
-let himg2 = new Image();
-himg2.src = 'assets/fighter1.svg';
 
 canvas.width = window.innerWidth - 10;
 canvas.height = window.innerHeight - 10;
@@ -46,15 +44,13 @@ const GAME_HEIGHT = canvas.height;
 let scale = (GAME_WIDTH / 1920) + Number.EPSILON;
 const GAME_SCALE = Math.round(scale * 100) / 100;
 
-//add another function or object to level file and import just this part, eg.: level options.
-// those options will be used by pre-renderer to pre render images and stuff
-let himgsrc = 'assets/explosion.png';
-let himg = preRender(himgsrc, 4096, 4096);
+//load game assets
+let assets_list = JSON.parse(jsonData);
+let imgArray = preRenderList(assets_list);
 
-let bimgsrc = 'assets/sprite_test.png';
-let bimg = preRender(bimgsrc, 80, 16);
-
-let imgArray = [himg, himg2, bimg];
+//debug//
+console.log(imgArray);
+//////////////////////
 
 let core = new Core(GAME_WIDTH, GAME_HEIGHT, GAME_SCALE, imgArray);
 core.start();
@@ -80,6 +76,7 @@ let lt = 0;
 
 		core.update();
 		core.draw(ctx);
+		
 		requestAnimationFrame(renderer);
 	}
 

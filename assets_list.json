@@ -1,0 +1,34 @@
+{
+    "gameObjects" : [
+        {
+            "himg" : {
+                "id" : "1",
+                "type" : "weapon",
+                "name" : "himg",
+                "src" : "assets/explosion.png",
+                "width" : "4096",
+                "height" : "4096"
+            }
+        },
+        {
+            "himg2" : {
+                "id" : "2",
+                "type" : "hero",
+                "name" : "himg2",
+                "src" : "assets/fighter1.svg",
+                "width" : "64",
+                "height" : "64"
+            }
+        },
+        {
+            "bimg" : {
+                "id" : "3",
+                "type" : "bck_object",
+                "name" : "bimg",
+                "src" : "assets/sprite_test.png",
+                "width" : "80",
+                "height" : "16"
+            }
+        }
+    ]
+}

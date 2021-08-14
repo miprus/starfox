@@ -44,6 +44,7 @@ class Hero{
 
 	draw(ctx){
 		ctx.drawImage(this.img, this.position.x, this.position.y, this.width, this.height);
+		
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = "blue";
@@ -61,6 +62,7 @@ class Hero{
 		ctx.strokeStyle = "blue";
 		ctx.rect(this.position.x + this.width, this.position.y + this.height/2, this.width/2, this.height/2);
 		ctx.stroke();
+		
 	}
 
 

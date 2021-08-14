@@ -6,7 +6,7 @@ function levelLoader(core) {
 	//////////////////options section//////////////
 	let tile = Math.round(core.GAME_WIDTH / 21);
 	let hmmm = true;
-
+//list of assets used for the level?
 
 	/////////////inactiveObjects array is ONLY for TESTING purposes//////////
 
