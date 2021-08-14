@@ -1,15 +1,24 @@
-function levelLoader(core, Enemy1) {
-		
+import {Neutral_Object_1} from './neutral_object_1.js';
+import {Enemy1} from './enemy_1.js';
+
+function levelLoader(core) {
+	
+	//////////////////options section//////////////
 	let tile = Math.round(core.GAME_WIDTH / 21);
+	let hmmm = true;
+
+
+	/////////////inactiveObjects array is ONLY for TESTING purposes//////////
+
 
 		const wave4 = [
-			[0, 1000, 2000, 3600, 4600, 5600,],
-			[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-			[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-			[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-			[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-			[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-			[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+			[],
+			[0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
+			[0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
+			[0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 		]
 
 				for (let i = 1; i < wave4.length; i++) {
@@ -31,13 +40,68 @@ function levelLoader(core, Enemy1) {
 						}	
 					}
 				}
+
+
+
+
+	const bckObj = [
+		[],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
+	]
+
+			for (let i = 1; i < bckObj.length; i++) {
+				let row = bckObj[i];
+			
+				for (let j = 0; j < row.length; j++) {
+					if(row[j] === 1){
+						let position = {
+							x: tile * j,
+							y: -tile * i,
+						};
+			
+						core.inactiveBackgroundObjects.push(new Neutral_Object_1(core, position));
+
+						//separate background, neutral and hostile objects' for loops from eachother
+					}	
+				}
+			}
+
+/*
+	switch (background) {
+		case value:
+			
+			break;
+	
+		default:
+			break;
 	}
+*/
+
+}
+
+	
 
 	function levelEventHandler(core) {
 
 		switch (core.gameClockRaw) {
 			case 120:
 				core.hostileObjects.push(...core.inactiveObjects);
+				core.backgroundObjects.push(...core.inactiveBackgroundObjects);
+				console.log(core.inactiveBackgroundObjects);
 
 				break;
 

@@ -51,7 +51,12 @@ const GAME_SCALE = Math.round(scale * 100) / 100;
 let himgsrc = 'assets/explosion.png';
 let himg = preRender(himgsrc, 4096, 4096);
 
-let core = new Core(GAME_WIDTH, GAME_HEIGHT, GAME_SCALE, himg, himg2);
+let bimgsrc = 'assets/sprite_test.png';
+let bimg = preRender(bimgsrc, 80, 16);
+
+let imgArray = [himg, himg2, bimg];
+
+let core = new Core(GAME_WIDTH, GAME_HEIGHT, GAME_SCALE, imgArray);
 core.start();
 
 let lt = 0;
