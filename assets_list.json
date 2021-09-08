@@ -1,34 +1,40 @@
 {
     "gameObjects" : [
         {
-            "himg" : {
-                "id" : "1",
-                "type" : "weapon",
-                "name" : "himg",
-                "src" : "assets/explosion.png",
-                "width" : "4096",
-                "height" : "4096"
-            }
+            "id" : "1",
+            "type" : "weapon",
+            "name" : "h_weapopn_1.js",
+            "n" : "meh",
+            "src" : "assets/explosion.png",
+            "width" : "4096",
+            "height" : "4096"  
+        },
+        {      
+            "id" : "2",
+            "type" : "hero",
+            "name" : "hero.js",
+            "n" : "Hero",
+            "src" : "assets/fighter1.svg",
+            "width" : "64",
+            "height" : "64"  
         },
         {
-            "himg2" : {
-                "id" : "2",
-                "type" : "hero",
-                "name" : "himg2",
-                "src" : "assets/fighter1.svg",
-                "width" : "64",
-                "height" : "64"
-            }
+            "id" : "3",
+            "type" : "neutral",
+            "name" : "neutral_object_1.js",
+            "n" : "Neutral_Object_1",
+            "src" : "assets/sprite_test.png",
+            "width" : "80",
+            "height" : "16"    
         },
         {
-            "bimg" : {
-                "id" : "3",
-                "type" : "bck_object",
-                "name" : "bimg",
-                "src" : "assets/sprite_test.png",
-                "width" : "80",
-                "height" : "16"
-            }
+            "id" : "4",
+            "type" : "enemy",
+            "name" : "enemy_1.js",
+            "n" : "Enemy1",
+            "src" : "assets/xwing.png",
+            "width" : "300",
+            "height" : "300"    
         }
     ]
 }

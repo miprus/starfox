@@ -5,6 +5,7 @@ class Enemy1{
 		this.GAME_WIDTH = core.GAME_WIDTH;
 		this.GAME_HEIGHT = core.GAME_HEIGHT;
 		this.GAME_SCALE = core.GAME_SCALE;
+		this.img = core.img3;
 
 		this.core = core;
 		this.ec = core.enemyWeapon.fireRate;
@@ -17,23 +18,22 @@ class Enemy1{
 			y: 10 * core.GAME_SCALE,		
 		}
 
-		this.position = position;
-		/*
 		this.position = {
-			x: 
-			y:
+			x: position.x,
+			y: position.y,
 		}
-		
-		*/
 
 		this.dead = false;
-
-		this.col = '#0ff';
 	}
 
 	draw(ctx){
-		ctx.fillStyle = this.col;
-		ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+		ctx.drawImage(this.img, this.position.x, this.position.y, this.width, this.height);
+
+		ctx.beginPath();
+		ctx.lineWidth = "2";
+		ctx.strokeStyle = "green";
+		ctx.rect(this.position.x, this.position.y, this.width, this.height);
+		ctx.stroke();
 	}
 
 	update(){
