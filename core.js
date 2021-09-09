@@ -29,6 +29,7 @@ class Core{
 
 		this.gameClockRaw = 0;
 		this.gameClock = 0;
+		//this.eventC = 0;
 
 		this.level = 'level_1';
 	}
@@ -47,26 +48,9 @@ class Core{
 		}
 	}
 
-	start(){
-
-		//load game assets
-
-/*
-	let xmlhttp = new XMLHttpRequest();
-	
-	xmlhttp.onreadystatechange = function() {
-	  if (this.readyState == 4 && this.status == 200) {
-		//get json file from the url passed to xmlhttp.open() function below
-		var myArr = JSON.parse(this.responseText);
-		this.imgArray = preRenderList(myArr);
+	async start(){
+		this.globalModifires = [];
 		
-	  }
-	};
-
-	xmlhttp.open("GET", './assets_list.JSON' , true);
-	xmlhttp.send();
-*/
-
 		this.imgArray = preRenderList(assets_list);
 		this.img = this.imgArray[0].img;
 		this.img2 = this.imgArray[1].img;
@@ -108,8 +92,8 @@ class Core{
 		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
 
 
-		levelLoader(this);	
-		//levelLoader seems to work only after 3 cycle of core.update(). It may be the source of future buggs
+		await levelLoader(this);	
+		//levelLoader seems to work only after 3 cycle of core.update(). It may be the source of future buggs. UPDATE: making core.start() async function seems to fix timing bug since it is possible now to force some functions to await for promises
 		
 
 

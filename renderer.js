@@ -14,7 +14,7 @@ let scale = (GAME_WIDTH / 1920) + Number.EPSILON;
 const GAME_SCALE = Math.round(scale * 100) / 100;
 
 let core = new Core(GAME_WIDTH, GAME_HEIGHT, GAME_SCALE);
-core.start();
+await core.start();
 
 let lt = 0;
 

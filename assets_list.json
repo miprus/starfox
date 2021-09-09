@@ -1,37 +1,33 @@
 {
     "gameObjects" : [
         {
-            "id" : "1",
-            "type" : "weapon",
-            "name" : "h_weapopn_1.js",
-            "n" : "meh",
+            "type" : "friendly",
+            "file_name" : "h_weapopn_1.js",
+            "name" : "meh",
             "src" : "assets/explosion.png",
             "width" : "4096",
             "height" : "4096"  
         },
         {      
-            "id" : "2",
-            "type" : "hero",
-            "name" : "hero.js",
-            "n" : "Hero",
+            "type" : "friendly",
+            "file_name" : "hero.js",
+            "name" : "Hero",
             "src" : "assets/fighter1.svg",
             "width" : "64",
             "height" : "64"  
         },
         {
-            "id" : "3",
             "type" : "neutral",
-            "name" : "neutral_object_1.js",
-            "n" : "Neutral_Object_1",
+            "file_name" : "neutral_object_1.js",
+            "name" : "Neutral_Object_1",
             "src" : "assets/sprite_test.png",
             "width" : "80",
             "height" : "16"    
         },
         {
-            "id" : "4",
-            "type" : "enemy",
-            "name" : "enemy_1.js",
-            "n" : "Enemy1",
+            "type" : "hostile",
+            "file_name" : "enemy_1.js",
+            "name" : "Enemy1",
             "src" : "assets/xwing.png",
             "width" : "300",
             "height" : "300"    

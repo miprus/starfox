@@ -10,13 +10,13 @@ class Level{
 
         this.levelObjects = [
             {
-                name: 'enemy_1.js', 
-                n: "Enemy1",
+                file_name: 'enemy_1.js', 
+                name: "Enemy1",
                 setID: 1,
             },
             {
-                name: 'neutral_object_1.js', 
-                n: "Neutral_Object_1",
+                file_name: 'neutral_object_1.js', 
+                name: "Neutral_Object_1",
                 setID: 3,
             },
         ],
@@ -55,11 +55,11 @@ class Level{
         };
 
         //stages of level
-        this.stages = [
+        this.levelWaves = [
             {
                 timing: 120,
                 //hostile
-                hostileWave: {
+                hostileGroup: {
                     set: [
                         [0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
                         [0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
@@ -71,7 +71,7 @@ class Level{
                 },
                 
                 //neutral
-                neutralWave: {
+                neutralGroup: {
                     set: [
                         [0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0],
                         [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],

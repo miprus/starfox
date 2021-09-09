@@ -1,218 +1,218 @@
-import {Neutral_Object_1} from './neutral_object_1.js';
-import {Enemy1} from './enemy_1.js';
-////////////////////////////////////////////////
-
 import assets_list from "./assets_list.json" assert { type: "json" };
-import {preRenderList} from "./preRenderer.js";
+//import {preRenderList} from "./preRenderer.js";
 
+async function moduleLoader(levelFilePath, globalModifires){
+	var levelPack = await import(levelFilePath);
 
-async function moduleLoader(levelPath, globalModifires){
-
-	var levelPathModule = await import(levelPath);
-
-	const LEVEL_SETTINGS = new levelPathModule.LevelSettings(globalModifires);
-	const LEVEL = new levelPathModule.Level;
-
-
-
-
+	const LEVEL_SETTINGS = new levelPack.LevelSettings(globalModifires);
+	const LEVEL = new levelPack.Level;
 
 	return [LEVEL_SETTINGS, LEVEL];
 }
 
-
 async function levelLoader(core){
-		//////////////////options section//////////////
-		let tile = Math.round(core.GAME_WIDTH / 21);
-		let hmmm = true;
-		//list of assets used for the level?
-	
-		///////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////
-	
-	
-		//let globalModifires = core.globalModifires;
-		
-	let globalModifires = null;
-	let levelPath = './levels/' + core.level + '.js';
+	var tile = Math.round(core.GAME_WIDTH / 21);
+	var levelFilePath = './levels/' + core.level + '.js';
+	var globalModifires = core.globalModifires;
 
+	const [LEVEL_SETTINGS, LEVEL] = await moduleLoader(levelFilePath, globalModifires);
+	const LOADED_WAVES = [];
 
-	const [LEVEL_SETTINGS, LEVEL] = await moduleLoader(levelPath, globalModifires);
+	const PRELOADED_OBJECTS = {
+		objectGroup: [],
+		friendly: [],
+		hostile: [],
+		neutral: [],
+		background: []
+	}
 
-	//console.log(LEVEL);
-	//console.log(LEVEL_SETTINGS);
-
-
-
-	let classArrayf = [];
-	let classArrayh = [];
-	let classArrayn = [];
-	let classArrayb = [];
-
-	let objectSprites = [];
 
 	LEVEL.levelObjects.forEach(element => {
 		let objectElement = assets_list.gameObjects.find(({name}) => name === element.name);
 
-		objectSprites.push(objectElement);
+		PRELOADED_OBJECTS.objectGroup.push(objectElement);
 	});
 	
 
-	//forOf supports await import(), but forEach() - no... Omoshiroi
-	for (const element of objectSprites) {
-		let osrc = element.name;
-		let oname = element.n;
+	for (const object of PRELOADED_OBJECTS.objectGroup) {
+		let object_src = './' + object.file_name;
+		let objectName = object.name;
 		
-		let module = await import('./' + osrc);
+		let objectClass = await import(object_src);
 
-			switch (element.type){
-				case "hero":
-					classArrayf.push(module[oname]);
+			switch (object.type){
+				case "friendly":
+					PRELOADED_OBJECTS.friendly.push(objectClass[objectName]);
 					break;
 	
-				case "enemy":
-					classArrayh.push(module[oname]);
+				case "hostile":
+					PRELOADED_OBJECTS.hostile.push(objectClass[objectName]);
 					break;
 	
 				case "neutral":
-					classArrayn.push(module[oname]);
+					PRELOADED_OBJECTS.neutral.push(objectClass[objectName]);
 					break;
 	
-				case "bck_object":
-					classArrayb.push(module[oname]);
+				case "background":
+					PRELOADED_OBJECTS.background.push(objectClass[objectName]);
 					break;
 			}
 	}
 
-		//console.log(classArrayn);
-		//console.log(classArrayh);
 
+	LEVEL.levelWaves.forEach(wave => {
+		var newWave = {
+			timing: wave.timing,
+			hostileGroup: [],
+			neutralGroup: [],
+		} 
 
+		//hostile objects
+		for(let i = 0; i < wave.hostileGroup.set.length; i++){
+			let row = wave.hostileGroup.set[i];
 
-		const LOADED_STAGES = [
-			//{
-			//	hostileStage: [],
-			//	neutralStage: [],
-			//} 
-		];
+			for (let j = 0; j < row.length; j++) {
+				let position = {
+					x: tile * j,
+					y: -tile * i,
+				};
 
-		LEVEL.stages.forEach(levelStage => {
-			var newStage = {
-				hostileStage: [],
-				neutralStage: [],
-			} 
-
-
-			//hostile objects
-			for (let i = 0; i < levelStage.hostileWave.set.length; i++) {
-				let row = levelStage.hostileWave.set[i];
-
-				for (let j = 0; j < row.length; j++) {
-
-					let position = {
-						x: tile * j,
-						y: -tile * i,
-					};
-
-					
-					LEVEL.levelObjects.forEach(lvlObj => {
-						if(lvlObj.setID == row[j]) {
-
-							classArrayh.forEach(element => {
-								if(element.name == lvlObj.n){
-									
-									//console.log('yay');
-									newStage.hostileStage.push(new element(core, position))
-									
-								} else {
-	
-									//console.log('nah');
-								}
-
-
-							});
-		
-						}
-					});
-				}
-			
+				LEVEL.levelObjects.forEach(object => {
+					if(object.setID == row[j]){
+						PRELOADED_OBJECTS.hostile.forEach(element => {
+							if(element.name == object.name){		
+								newWave.hostileGroup.push(new element(core, position))	
+							}
+						});
+					}
+				});
 			}
+		}
 
-			//neutral objects
-			for (let i = 0; i < levelStage.neutralWave.set.length; i++) {
-				let row = levelStage.neutralWave.set[i];
+		//neutral objects
+		for (let i = 0; i < wave.neutralGroup.set.length; i++) {
+			let row = wave.neutralGroup.set[i];
 
+			for (let j = 0; j < row.length; j++) {
 
-				for (let j = 0; j < row.length; j++) {
+				let position = {
+					x: tile * j,
+					y: -tile * i,
+				};
 
-					let position = {
-						x: tile * j,
-						y: -tile * i,
-					};
-
-
-					LEVEL.levelObjects.forEach(lvlObj => {
-						
-						if(lvlObj.setID == row[j]) {
-							
-							classArrayn.forEach(element => {
-								if(element.name == lvlObj.n){
-									console.log('3');
-									//console.log('yay');
-									newStage.neutralStage.push(new element(core, position))
-									
-								} else {
-									console.log('66');
-									//console.log('nah');
-								}
-
-
-							});
-		
-						}
-					});
-				}
-			
+				LEVEL.levelObjects.forEach(object => {
+					if(object.setID == row[j]) {
+						PRELOADED_OBJECTS.neutral.forEach(element => {
+							if(element.name == object.name){
+								newWave.neutralGroup.push(new element(core, position))	
+							}
+						});
+					}
+				});
 			}
+		}
 
-			
-			LOADED_STAGES.push(newStage);
-			
+			LOADED_WAVES.push(newWave);
 		});
 
-		console.log("loader:");
-		console.log(LOADED_STAGES);
-		core.inactiveObjects1 = LOADED_STAGES;
+		core.inactiveObjects1 = LOADED_WAVES;
+	}
 
+function levelEventHandler(core){
+	if(core.gameClockRaw == core.inactiveObjects1[0].timing){
+		core.hostileObjects.push(...core.inactiveObjects1[0].hostileGroup);
+		core.backgroundObjects.push(...core.inactiveObjects1[0].neutralGroup);
 
-
+		let loadedElement = core.inactiveObjects1.shift();
+		core.inactiveObjects1.push(loadedElement);
+	}
+	
 
 
 /*
-arrays process:
+	switch (core.gameClockRaw) {
+		case 120:
+			//core.hostileObjects.push(...core.inactiveObjects);
+			//core.backgroundObjects.push(...core.inactiveBackgroundObjects);
+			core.hostileObjects.push(...core.inactiveObjects1[0].hostileStage);
+			core.backgroundObjects.push(...core.inactiveObjects1[0].neutralStage);
 
-		LEVEL object + assets_list
-					||
-					\/
-			   objectSprites
-					||
-					\/
-		 classArrayh + classArrayn
-					||
-					\/
-				   stage
-					||
-					\/
-				arrayStage
+			console.log(core.inactiveObjects1[0].hostileStage);
+			console.log(core.inactiveObjects1[0].neutralStage);
+			//console.log(core.inactiveBackgroundObjects);
+		break;
+	}*/
+}
+	
+export {levelLoader, levelEventHandler};
+/*
+	4 object types:
+		friendly
+		hostile
+		neutral
+		background
+
+	level folder: 
+			level settings - js or json file
+				speed of background objects
+				music and sounds to be loaded
+				sprites to be loaded
+				objects types to be loaded
+				timings of events and stages or waves
+				fail conditions (e.g. for escort missions)
+				win conditions (e.g. after reaching certain point or killing boss)
+
+				
+				campaign modifires
+			level stages/events - js file
+				arrays for stages [0,1,0,0,0,1,0]
+				events
+
+
+
+//for other file/s
+master settings for player
+master modifires of player's starship
+
+json save file hyhy
+
+
+/////////////////////////////////////////////////////////////////////////////////
+level folder 					levelbuilder						assets_list
+(instructions)    ====>>>>		(processing)		<<<<======= 	(database)
+
+									||
+									||
+									||
+									\/
+									\/
+									\/
+							level ready to play
+							(core/renderer)
+/////////////////////////////////////////////////////////////////////////////////
+
+get settings
+
+get object classes
+prerender sprites for each obtained object class
+
+create new objects and push them into inactive arrays
+let event handler take care of timing
+
+
+[cutscene]
+
+[wave]
+[wave]
+[wave]
+[inner peace]
+[wave]
+[inner peace]
+[cutscene]
+[boss]
 */
 
-	//});//end
-
-
-/////////////inactiveObjects array is ONLY for TESTING purposes//////////
-
-
+/*
 		const wave4 = [
 			[],
 			[0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
@@ -282,166 +282,4 @@ arrays process:
 				}
 			}
 			
-
-}
-
-
-//console.log(LOADED_STAGES);
-
-
-
-	function levelEventHandler(core) {
-		switch (core.gameClockRaw) {
-			case 120:
-				//core.hostileObjects.push(...core.inactiveObjects);
-				//core.backgroundObjects.push(...core.inactiveBackgroundObjects);
-
-
-				
-				core.hostileObjects.push(...core.inactiveObjects1[0].hostileStage);
-				core.backgroundObjects.push(...core.inactiveObjects1[0].neutralStage);
-
-
-				console.log(core.inactiveObjects1[0].hostileStage);
-				console.log(core.inactiveObjects1[0].neutralStage);
-
-				//console.log(core.inactiveBackgroundObjects);
-
-				break;
-
-			case 40:
-				//hmm
-				break;
-		
-			default:
-				break;
-		}
-		
-	}
-	
-/*
-	4 object types:
-		friendly
-		hostile
-		neutral
-		background
-
-	level folder: 
-			level settings - js or json file
-				speed of background objects
-				music and sounds to be loaded
-				sprites to be loaded
-				objects types to be loaded
-				timings of events and stages or waves
-				fail conditions (e.g. for escort missions)
-				win conditions (e.g. after reaching certain point or killing boss)
-
-				
-				campaign modifires
-			level stages/events - js file
-				arrays for stages [0,1,0,0,0,1,0]
-				events
-
-
-
-//for other file/s
-master settings for player
-master modifires of player's starship
-
-json save file hyhy
-
-
-
-/////////////////////////////////////////////////////////////////////////////////
-level folder 					levelbuilder						assets_list
-(instructions)    ====>>>>		(processing)		<<<<======= 	(database)
-
-									||
-									||
-									||
-									\/
-									\/
-									\/
-							level ready to play
-							(core/renderer)
-/////////////////////////////////////////////////////////////////////////////////
-
-get settings
-
-get object classes
-prerender sprites for each obtained object class
-
-create new objects and push them into inactive arrays
-let event handler take care of timing
-
-
 */
-/*
-function level1(core, Enemy1){
-
-
-objects types (backgroud image, background objects, neutral objects, hostile objects)
-level settings (duration, timings)
-.
-.
-.
-
-
-load object (pre render)...
-
-function() => run background image and background objects
-if game timer == something{
-	switch:
-		time 1
-		add map of objects:
-
-			neutral:
-				[0,1,0]
-				[1,0,1]
-				[0,1,0]
-
-				for (column){
-					for(row)
-				}
-
-			hostile:
-				[0,2,0]
-				[3,0,3]
-				[0,2,0]
-
-		to main objects arrays
-
-
-
-		time 2
-
-
-
-		time 3
-
-
-		etc.
-
-
-}
-
-
-
-
-[cutscene]
-
-[wave]
-[wave]
-[wave]
-[inner peace]
-[wave]
-[inner peace]
-[cutscene]
-[boss]
-
-
-
-
-*/
-
-export {levelLoader, levelEventHandler};
