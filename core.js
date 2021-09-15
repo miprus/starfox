@@ -29,7 +29,6 @@ class Core{
 
 		this.gameClockRaw = 0;
 		this.gameClock = 0;
-		//this.eventC = 0;
 
 		this.level = 'level_1';
 	}
@@ -51,11 +50,9 @@ class Core{
 	async start(){
 		this.globalModifires = [];
 		
-		this.imgArray = preRenderList(assets_list);
+		this.imgArray = preRenderList(assets_list.gameObjects);
 		this.img = this.imgArray[0].img;
 		this.img2 = this.imgArray[1].img;
-		this.bimg = this.imgArray[2].img;
-		this.img3 = this.imgArray[3].img;
 
 		//debug//
 		//console.log(this.imgArray);
@@ -71,24 +68,18 @@ class Core{
 
 		this.fc = this.heroWeapon.fireRate;
 
-
 		//objects arrays
 		//active (those that will be drawn on the screen)
-		this.friendlyObjects = [this.hero];
-		this.hostileObjects = [];
-		this.neutralObjects = [];
-		this.backgroundObjects = [];
+		this.activeObjects = {
+			friendlyObjects: [this.hero],
+			hostileObjects: [],
+			neutralObjects: [],
+			backgroundObjects: [],
+		}
 
 		//inactive (those that are loaded but not yet displayed)
-		this.inactiveFriendlyObjects = []
-		this.inactiveHostileObjects = [];
-		this.inactiveNeutralObjects = [];
-		
-		this.inactiveBackgroundObjects = [];
+		this.inactiveObjects = [];
 
-		this.inactiveObjects = []; //testing
-
-		this.inactiveObjects1 = []; //testing
 		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
 
 
@@ -114,7 +105,7 @@ class Core{
 		
 		if(this.heroWeapon.fire === true && this.fc >= this.heroWeapon.fireRate){
 			let shot = new HeroWeapon(this);
-			this.friendlyObjects.push(shot);
+			this.activeObjects.friendlyObjects.push(shot);
 
 			this.fc = 0;
 		}else{
@@ -122,36 +113,31 @@ class Core{
 		}
 
 
-
-		//console.log(this.friendlyObjects);
-		//console.log(this.backgroundObjects);
-		//console.log(this.gameClockRaw);
-
 		levelEventHandler(this);
 		
 
+		[...this.activeObjects.friendlyObjects, ...this.activeObjects.hostileObjects, ...this.activeObjects.backgroundObjects, ...this.activeObjects.neutralObjects].forEach(object => object.update());
 
-		[...this.friendlyObjects, ...this.hostileObjects, ...this.backgroundObjects].forEach(object => object.update());
+	for(let i = 0; i < this.activeObjects.friendlyObjects.length; i++){
+		for (let j = 0; j < this.activeObjects.hostileObjects.length; j++){
 
-	for(let i = 0; i < this.friendlyObjects.length; i++){
-		for (let j = 0; j < this.hostileObjects.length; j++){
-
-			if(collisionDetector(this.friendlyObjects[i], this.hostileObjects[j])){
-					this.friendlyObjects[i].dead = true;
-					this.hostileObjects[j].dead = true;
+			if(collisionDetector(this.activeObjects.friendlyObjects[i], this.activeObjects.hostileObjects[j])){
+					this.activeObjects.friendlyObjects[i].dead = true;
+					this.activeObjects.hostileObjects[j].dead = true;
 			}
 		}
 	}
 
-			this.friendlyObjects = this.friendlyObjects.filter(object => !object.dead);
-			this.hostileObjects = this.hostileObjects.filter(object => !object.dead);
+			this.activeObjects.friendlyObjects = this.activeObjects.friendlyObjects.filter(object => !object.dead);
+			this.activeObjects.hostileObjects = this.activeObjects.hostileObjects.filter(object => !object.dead);
 
-			this.backgroundObjects = this.backgroundObjects.filter(object => !object.dead);
+			this.activeObjects.neutralObjects = this.activeObjects.neutralObjects.filter(object => !object.dead);
+			this.activeObjects.backgroundObjects = this.activeObjects.backgroundObjects.filter(object => !object.dead);
 
 	}
 
 	draw(ctx){
-		[...this.friendlyObjects, ...this.hostileObjects, ...this.backgroundObjects].forEach(object => object.draw(ctx));
+		[...this.activeObjects.friendlyObjects, ...this.activeObjects.hostileObjects, ...this.activeObjects.backgroundObjects, ...this.activeObjects.neutralObjects].forEach(object => object.draw(ctx));
 	}
 
 }

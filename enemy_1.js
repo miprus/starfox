@@ -1,11 +1,11 @@
 import {EnemyWeapon} from './e_weapon_1.js';
 
 class Enemy1{
-	constructor(core, position){
+	constructor(core, position, sprite){
 		this.GAME_WIDTH = core.GAME_WIDTH;
 		this.GAME_HEIGHT = core.GAME_HEIGHT;
 		this.GAME_SCALE = core.GAME_SCALE;
-		this.img = core.img3;
+		this.img = sprite;
 
 		this.core = core;
 		this.ec = core.enemyWeapon.fireRate;

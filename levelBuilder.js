@@ -1,5 +1,5 @@
 import assets_list from "./assets_list.json" assert { type: "json" };
-//import {preRenderList} from "./preRenderer.js";
+import {preRenderList} from "./preRenderer.js";
 
 async function moduleLoader(levelFilePath, globalModifires){
 	var levelPack = await import(levelFilePath);
@@ -19,7 +19,8 @@ async function levelLoader(core){
 	const LOADED_WAVES = [];
 
 	const PRELOADED_OBJECTS = {
-		objectGroup: [],
+		gameObjects: [],
+		objectSprites: [],
 		friendly: [],
 		hostile: [],
 		neutral: [],
@@ -30,11 +31,11 @@ async function levelLoader(core){
 	LEVEL.levelObjects.forEach(element => {
 		let objectElement = assets_list.gameObjects.find(({name}) => name === element.name);
 
-		PRELOADED_OBJECTS.objectGroup.push(objectElement);
+		PRELOADED_OBJECTS.gameObjects.push(objectElement);
 	});
-	
 
-	for (const object of PRELOADED_OBJECTS.objectGroup) {
+
+	for (const object of PRELOADED_OBJECTS.gameObjects) {
 		let object_src = './' + object.file_name;
 		let objectName = object.name;
 		
@@ -59,12 +60,15 @@ async function levelLoader(core){
 			}
 	}
 
+	PRELOADED_OBJECTS.objectSprites = preRenderList(PRELOADED_OBJECTS.gameObjects);
 
 	LEVEL.levelWaves.forEach(wave => {
 		var newWave = {
 			timing: wave.timing,
-			hostileGroup: [],
-			neutralGroup: [],
+			//friendlyObjects: [],
+			hostileObjects: [],
+			neutralObjects: [],
+			backgroundObjects: [],
 		} 
 
 		//hostile objects
@@ -74,14 +78,16 @@ async function levelLoader(core){
 			for (let j = 0; j < row.length; j++) {
 				let position = {
 					x: tile * j,
-					y: -tile * i,
+					y: -tile - tile * i,
 				};
 
 				LEVEL.levelObjects.forEach(object => {
 					if(object.setID == row[j]){
 						PRELOADED_OBJECTS.hostile.forEach(element => {
 							if(element.name == object.name){		
-								newWave.hostileGroup.push(new element(core, position))	
+								let sprite = PRELOADED_OBJECTS.objectSprites.find(({name}) => name === element.name);
+
+								newWave.hostileObjects.push(new element(core, position, sprite.img))	
 							}
 						});
 					}
@@ -97,14 +103,16 @@ async function levelLoader(core){
 
 				let position = {
 					x: tile * j,
-					y: -tile * i,
+					y: -tile - tile * i,
 				};
 
 				LEVEL.levelObjects.forEach(object => {
 					if(object.setID == row[j]) {
 						PRELOADED_OBJECTS.neutral.forEach(element => {
 							if(element.name == object.name){
-								newWave.neutralGroup.push(new element(core, position))	
+								let sprite = PRELOADED_OBJECTS.objectSprites.find(({name}) => name === element.name);
+
+								newWave.neutralObjects.push(new element(core, position, sprite.img))	
 							}
 						});
 					}
@@ -112,36 +120,50 @@ async function levelLoader(core){
 			}
 		}
 
+		
+		//background objects
+		for(let i = 0; i < wave.backgroundGroup.set.length; i++){
+			let row = wave.backgroundGroup.set[i];
+
+			for (let j = 0; j < row.length; j++) {
+				let position = {
+					x: tile * j,
+					y: -tile - tile * i,
+				};
+
+				LEVEL.levelObjects.forEach(object => {
+					if(object.setID == row[j]){
+						PRELOADED_OBJECTS.background.forEach(element => {
+							if(element.name == object.name){		
+								let sprite = PRELOADED_OBJECTS.objectSprites.find(({name}) => name === element.name);
+								
+								newWave.backgroundObjects.push(new element(core, position, sprite.img))	
+							}
+						});
+					}
+				});
+			}
+		}
+			
 			LOADED_WAVES.push(newWave);
 		});
 
-		core.inactiveObjects1 = LOADED_WAVES;
+		core.inactiveObjects = LOADED_WAVES;
 	}
 
 function levelEventHandler(core){
-	if(core.gameClockRaw == core.inactiveObjects1[0].timing){
-		core.hostileObjects.push(...core.inactiveObjects1[0].hostileGroup);
-		core.backgroundObjects.push(...core.inactiveObjects1[0].neutralGroup);
+	if(core.gameClockRaw == core.inactiveObjects[0].timing){
+		core.activeObjects.hostileObjects.push(...core.inactiveObjects[0].hostileObjects);
+		//core.activeObjects.friendlyObjects.push(...core.inactiveObjects[0].friendlyObjects);
+		core.activeObjects.neutralObjects.push(...core.inactiveObjects[0].neutralObjects);
+		core.activeObjects.backgroundObjects.push(...core.inactiveObjects[0].backgroundObjects);
 
-		let loadedElement = core.inactiveObjects1.shift();
-		core.inactiveObjects1.push(loadedElement);
+
+
+		///think of this shift and push thingy if multiply background waves wont work 
+		let loadedElement = core.inactiveObjects.shift();
+		core.inactiveObjects.push(loadedElement);
 	}
-	
-
-
-/*
-	switch (core.gameClockRaw) {
-		case 120:
-			//core.hostileObjects.push(...core.inactiveObjects);
-			//core.backgroundObjects.push(...core.inactiveBackgroundObjects);
-			core.hostileObjects.push(...core.inactiveObjects1[0].hostileStage);
-			core.backgroundObjects.push(...core.inactiveObjects1[0].neutralStage);
-
-			console.log(core.inactiveObjects1[0].hostileStage);
-			console.log(core.inactiveObjects1[0].neutralStage);
-			//console.log(core.inactiveBackgroundObjects);
-		break;
-	}*/
 }
 	
 export {levelLoader, levelEventHandler};

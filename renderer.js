@@ -18,8 +18,20 @@ await core.start();
 
 let lt = 0;
 
-	function renderer(ts){
 
+////////////////
+/*
+var img = new Image();
+img.src = "./assets/bck_test.png";
+img.height = GAME_HEIGHT + 10;
+img.width = GAME_WIDTH + 10;
+var imgHeight = 0;
+var scrollSpeed = 1.8;
+*/
+
+//////////////////////
+
+	function renderer(ts){
 		let dt = ts - lt;
 		lt = ts;
 		
@@ -34,6 +46,20 @@ let lt = 0;
 		///////////////////////
 
 		ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+/////////////////////
+/*
+        ctx.drawImage(img, 0, imgHeight, GAME_WIDTH, GAME_HEIGHT * 2);
+        ctx.drawImage(img, 0, imgHeight - GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT*2);
+        imgHeight += scrollSpeed;
+
+  
+       if (imgHeight >= GAME_HEIGHT){
+            imgHeight = 0;
+		}
+		*/
+//////////////////////////////
+
 
 		core.update();
 		core.draw(ctx);

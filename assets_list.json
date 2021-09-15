@@ -31,6 +31,14 @@
             "src" : "assets/xwing.png",
             "width" : "300",
             "height" : "300"    
+        },
+        {
+            "type" : "background",
+            "file_name" : "bck_obj1.js",
+            "name" : "Rock1",
+            "src" : "assets/bck_rock.png",
+            "width" : "200",
+            "height" : "200"    
         }
     ]
 }

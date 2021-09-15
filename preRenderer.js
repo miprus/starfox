@@ -29,7 +29,7 @@ function preRenderList(objectData){
     let objectList = [];
 
     //loop through each provided object and extract necessary properties for pre-rendering operation. Then push each object into created earlier array.
-	objectData.gameObjects.forEach(object => {
+	objectData.forEach(object => {
 		let newObjectImg = preRenderObject(object.src, object.width, object.height);
 		objectList.push({name : object.name, img : newObjectImg});
 	});

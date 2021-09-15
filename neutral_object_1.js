@@ -1,10 +1,10 @@
 class Neutral_Object_1{
-	constructor(core, position){
+	constructor(core, position, sprite){
 		this.GAME_WIDTH = core.GAME_WIDTH;
 		this.GAME_HEIGHT = core.GAME_HEIGHT;
 		this.GAME_SCALE = core.GAME_SCALE;
         //this.spriteSheet = false;
-        this.img = core.bimg;
+        this.img = sprite;
 
 		this.core = core;
 
@@ -12,8 +12,8 @@ class Neutral_Object_1{
 		this.height = 64 * core.GAME_SCALE;
 
 		this.speed = {
-			x: 10 * core.GAME_SCALE,
-			y: 10 * core.GAME_SCALE,		
+			x: 6 * core.GAME_SCALE,
+			y: 6 * core.GAME_SCALE,		
 		}
 
 		this.position = position;
