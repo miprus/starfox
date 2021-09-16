@@ -40,5 +40,16 @@
             "width" : "200",
             "height" : "200"    
         }
+    ],
+
+    "gameBackgrounds" : [
+        {
+            "type" : "background_theme",
+            "file_name" : "bck1.js",
+            "name" : "Bck1",
+            "src" : "assets/bck_test.png",
+            "width" : "1920",
+            "height" : "1080" 
+        }
     ]
 }

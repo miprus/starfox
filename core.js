@@ -1,7 +1,7 @@
 import {Hero} from './hero.js';
 import {Controls} from './controls.js';
 import {HeroWeapon} from './h_weapon_1.js';
-import {Enemy1} from './enemy_1.js';
+//import {Enemy1} from './enemy_1.js';
 import {collisionDetector} from './collisionDetector.js';
 import {EnemyWeapon} from './e_weapon_1.js';
 //import {Neutral_Object_1} from './neutral_object_1.js';
@@ -77,8 +77,14 @@ class Core{
 			backgroundObjects: [],
 		}
 
+		this.activeThemes = {
+			backgroundThemes: [],
+		}
+
+
 		//inactive (those that are loaded but not yet displayed)
 		this.inactiveObjects = [];
+		this.inactiveThemes = [];
 
 		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
 
@@ -115,8 +121,13 @@ class Core{
 
 		levelEventHandler(this);
 		
+		[...this.activeThemes.backgroundThemes].forEach(bckTheme => bckTheme.update());
 
 		[...this.activeObjects.friendlyObjects, ...this.activeObjects.hostileObjects, ...this.activeObjects.backgroundObjects, ...this.activeObjects.neutralObjects].forEach(object => object.update());
+
+
+
+
 
 	for(let i = 0; i < this.activeObjects.friendlyObjects.length; i++){
 		for (let j = 0; j < this.activeObjects.hostileObjects.length; j++){
@@ -137,6 +148,8 @@ class Core{
 	}
 
 	draw(ctx){
+		[...this.activeThemes.backgroundThemes].forEach(bckTheme => bckTheme.draw(ctx));
+
 		[...this.activeObjects.friendlyObjects, ...this.activeObjects.hostileObjects, ...this.activeObjects.backgroundObjects, ...this.activeObjects.neutralObjects].forEach(object => object.draw(ctx));
 	}
 

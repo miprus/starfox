@@ -15,12 +15,13 @@ class Level{
         ]
 
         this.levelBackgrouds = [
-            {name: "bck_test",            timing: 1},
-            {name: "hmmm",                timing: 2000},
+            {name: "Bck1",              timing: 1},
+           // {name: "hmmm",              timing: 2000},
         ]
 
         //background objects
-        this.backgroundObjects = [
+        /*
+        this.backgroundTheme = [
             {
                 timing: 120,
                 miscGroup: {
@@ -40,7 +41,7 @@ class Level{
                  }
             }
         ]
-
+        */
 
         //stages of level
         this.levelWaves = [

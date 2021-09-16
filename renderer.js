@@ -17,57 +17,41 @@ let core = new Core(GAME_WIDTH, GAME_HEIGHT, GAME_SCALE);
 await core.start();
 
 let lt = 0;
+//fps//
+let fpsLog = [];
 
-
-////////////////
-/*
-var img = new Image();
-img.src = "./assets/bck_test.png";
-img.height = GAME_HEIGHT + 10;
-img.width = GAME_WIDTH + 10;
-var imgHeight = 0;
-var scrollSpeed = 1.8;
-*/
-
-//////////////////////
-
-	function renderer(ts){
-		let dt = ts - lt;
-		lt = ts;
+function renderer(ts){
+	let dt = ts - lt;
+	lt = ts;
+	
+	//fps/////////////////////////////////////////////
+	let fps = (1 / dt) * 1000;
+	fpsLog.push(fps);
 		
-		let fps = (1 / dt) * 1000;
-		
-		document.getElementById("fps_counter").innerHTML = fps.toFixed(2); //framerate control
-
-		//debug - low fps log//
-		if(fps < 59){
-			console.log(fps);
-		}
-		///////////////////////
-
-		ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-
-/////////////////////
-/*
-        ctx.drawImage(img, 0, imgHeight, GAME_WIDTH, GAME_HEIGHT * 2);
-        ctx.drawImage(img, 0, imgHeight - GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT*2);
-        imgHeight += scrollSpeed;
-
-  
-       if (imgHeight >= GAME_HEIGHT){
-            imgHeight = 0;
-		}
-		*/
-//////////////////////////////
-
-
-		core.update();
-		core.draw(ctx);
-		
-		requestAnimationFrame(renderer);
+	//debug - low fps log//
+	if(fps < 59){
+		console.log(fps);
+		//try to calculate average of fps to actualy see any difference on the screen
 	}
 
+	if(fpsLog.length >= 17){ //17 cuz of 16.66ms (update rate)
+		let fpsTotal = fpsLog.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+
+		let fpsAverage = Math.round(fpsTotal/fpsLog.length);
+		document.getElementById("fps_counter").innerHTML = fpsAverage; //framerate control
+		fpsLog = [];
+	}
+	////////////////////////////////////////////////
+
+	ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+	core.update();
+	core.draw(ctx);
+		
 	requestAnimationFrame(renderer);
+}
+
+requestAnimationFrame(renderer);
 
 
 

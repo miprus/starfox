@@ -25,17 +25,37 @@ async function levelLoader(core){
 		hostile: [],
 		neutral: [],
 		background: []
+	};
+
+	const PRELOADED_THEMES = {
+		themeGroup: [],
+		backgroundThemes: [],
+		backgroundImages: [],
 	}
 
 
+	//////////////////////////
+	//for objects
 	LEVEL.levelObjects.forEach(element => {
 		let objectElement = assets_list.gameObjects.find(({name}) => name === element.name);
 
 		PRELOADED_OBJECTS.gameObjects.push(objectElement);
 	});
 
+	//for background themes
+	LEVEL.levelBackgrouds.forEach(element => {
+		let backgroundElement = assets_list.gameBackgrounds.find(({name}) => name === element.name);
 
-	for (const object of PRELOADED_OBJECTS.gameObjects) {
+		//if statement prevents from pushing undefined variables into an array which would then produce errors
+		if(backgroundElement){
+			PRELOADED_THEMES.themeGroup.push(backgroundElement);
+		}
+	});
+	///////////////////////////////
+
+	//////////////////////////////
+	/////////////////////////////
+	for(const object of PRELOADED_OBJECTS.gameObjects){
 		let object_src = './' + object.file_name;
 		let objectName = object.name;
 		
@@ -61,6 +81,26 @@ async function levelLoader(core){
 	}
 
 	PRELOADED_OBJECTS.objectSprites = preRenderList(PRELOADED_OBJECTS.gameObjects);
+
+
+
+	for(const theme of PRELOADED_THEMES.themeGroup){
+		let theme_src = './' + theme.file_name;
+		let themeName = theme.name;
+		
+		let themeClass = await import(theme_src);
+		
+			switch (theme.type){
+				case "background_theme":
+					PRELOADED_THEMES.backgroundThemes.push(themeClass[themeName]);
+					break;
+			}
+	}
+
+	PRELOADED_THEMES.backgroundImages = preRenderList(PRELOADED_THEMES.themeGroup);
+	//////////////////////////////
+	/////////////////////////////
+	
 
 	LEVEL.levelWaves.forEach(wave => {
 		var newWave = {
@@ -146,12 +186,31 @@ async function levelLoader(core){
 		}
 			
 			LOADED_WAVES.push(newWave);
-		});
+	});
 
 		core.inactiveObjects = LOADED_WAVES;
+
+
+		LEVEL.levelBackgrouds.forEach(background => {
+			PRELOADED_THEMES.backgroundThemes.forEach(element => {
+				if(element.name == background.name){		
+					let bckImg = PRELOADED_THEMES.backgroundImages.find(({name}) => name === element.name);
+
+					var newBackground = {
+						timing: background.timing,
+						backgroundThemes: [],
+					}
+
+					newBackground.backgroundThemes.push(new element(core, bckImg.img));
+					core.inactiveThemes.push(newBackground);
+
+				}
+			});
+		});
 	}
 
 function levelEventHandler(core){
+
 	if(core.gameClockRaw == core.inactiveObjects[0].timing){
 		core.activeObjects.hostileObjects.push(...core.inactiveObjects[0].hostileObjects);
 		//core.activeObjects.friendlyObjects.push(...core.inactiveObjects[0].friendlyObjects);
@@ -159,10 +218,13 @@ function levelEventHandler(core){
 		core.activeObjects.backgroundObjects.push(...core.inactiveObjects[0].backgroundObjects);
 
 
-
 		///think of this shift and push thingy if multiply background waves wont work 
 		let loadedElement = core.inactiveObjects.shift();
 		core.inactiveObjects.push(loadedElement);
+	}
+
+	if(core.gameClockRaw == core.inactiveThemes[0].timing){
+		core.activeThemes.backgroundThemes.push(...core.inactiveThemes[0].backgroundThemes);
 	}
 }
 	
@@ -305,3 +367,10 @@ let event handler take care of timing
 			}
 			
 */
+
+
+
+
+
+
+
