@@ -1,25 +1,49 @@
 {
-    "userData" : [
-        {
-            "name" : "Prus",
-            "starfighter" : "White Archangel",
-            "tutorial" : 0
-        },
+    "userDetails" : {
+        "name" : "Prus",
+        "tutorial" : 0
+    },
 
+    "starfighterDetails" : {
+        "components" : [
+            {
+                "type" :  "hull",
+                "name" : "Hull1",
+                "level" : 1
+            },
+            {
+                "type" :  "cockpit",
+                "name" : "Cockpit1",
+                "level" : 1
+            },
+            {
+                "type" :  "engine",
+                "name" : "Engine1",
+                "level" : 1
+            },
+            {
+                "type" :  "wing_left",
+                "name" : "WingL1",
+                "level" : 1
+            },
+            {
+                "type" :  "wing_right",
+                "name" : "WingR1",
+                "level" : 1
+            }
+        ]
+    },
+        
+    
+    
+    
+    
+        
+            
+        
+    
+    
+    
 
-
-
-
-
-
-
-
-
-
-
-
-        {
-            "comments" : "global modifires? and player's spaceship settings and configurations"
-        }
-    ]
+    "comments" : "global modifires? and player's spaceship settings and configurations"
 }

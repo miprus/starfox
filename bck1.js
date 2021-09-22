@@ -8,11 +8,11 @@ class Bck1{
 		this.core = core;
 
 		this.width = this.GAME_WIDTH;
-		this.height = this.GAME_HEIGHT * 8;
+		this.height = this.GAME_HEIGHT;
 
 		this.speed = {
 			x: 0 * core.GAME_SCALE,
-			y: 500 * core.GAME_SCALE,		
+			y: 1 * core.GAME_SCALE,		
 		}
 
 		this.position = {

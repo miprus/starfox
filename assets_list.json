@@ -51,5 +51,43 @@
             "width" : "1920",
             "height" : "1080" 
         }
+    ],
+
+    "starfighterObjects" : [
+        {
+            "type" : "hull",
+            "name" : "Hull1",
+            "src" : "assets/components/hull1.png",
+            "width" : "173",
+            "height" : "167" 
+        },
+        {
+            "type" : "cockpit",
+            "name" : "Cockpit1",
+            "src" : "assets/components/cockpit1.png",
+            "width" : "50",
+            "height" : "98" 
+        },
+        {
+            "type" : "engine",
+            "name" : "Engine1",
+            "src" : "assets/components/engine1.png",
+            "width" : "59",
+            "height" : "231" 
+        },
+        {
+            "type" : "wing_left",
+            "name" : "WingL1",
+            "src" : "assets/components/wingL1.png",
+            "width" : "59",
+            "height" : "231" 
+        },
+        {
+            "type" : "wing_right",
+            "name" : "WingR1",
+            "src" : "assets/components/wingR1.png",
+            "width" : "59",
+            "height" : "231" 
+        }
     ]
 }

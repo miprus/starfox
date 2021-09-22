@@ -11,17 +11,13 @@ class HeroWeapon{
 
 		this.speed = {
 			x: 0,
-			y: -8 * core.GAME_SCALE,
+			y: -11 * core.GAME_SCALE,
 		}
 
 		this.position = {
-			x: core.hero.position.x + core.hero.width / 2 - this.width / 2,
-			y: core.hero.position.y,
+			x: 0,
+			y: 0,
 		}
-
-		this.fireRate = 10;
-		this.fire = false;
-
 
 		this.dead = false;
 		this.numCol = 8;

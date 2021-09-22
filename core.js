@@ -61,17 +61,17 @@ class Core{
 
 
 		
-		this.hero = new Hero(this);
+		//this.hero = new Hero(this);
 		
-		this.heroWeapon = new HeroWeapon(this);
-		this.enemyWeapon = new EnemyWeapon(this);
+		//this.heroWeapon = new HeroWeapon(this);
+		//this.enemyWeapon = new EnemyWeapon(this);
 
-		this.fc = this.heroWeapon.fireRate;
+		//this.fc = this.heroWeapon.fireRate;
 
 		//objects arrays
 		//active (those that will be drawn on the screen)
 		this.activeObjects = {
-			friendlyObjects: [this.hero],
+			friendlyObjects: [],
 			hostileObjects: [],
 			neutralObjects: [],
 			backgroundObjects: [],
@@ -95,7 +95,7 @@ class Core{
 
 
 
-		new Controls(this.hero, this.heroWeapon, this);
+		this.controls = new Controls(this);
 	}
 
 	update(){
@@ -108,17 +108,6 @@ class Core{
 
 
 
-		
-		if(this.heroWeapon.fire === true && this.fc >= this.heroWeapon.fireRate){
-			let shot = new HeroWeapon(this);
-			this.activeObjects.friendlyObjects.push(shot);
-
-			this.fc = 0;
-		}else{
-			this.fc++;
-		}
-
-
 		levelEventHandler(this);
 		
 		[...this.activeThemes.backgroundThemes].forEach(bckTheme => bckTheme.update());
@@ -129,15 +118,15 @@ class Core{
 
 
 
-	for(let i = 0; i < this.activeObjects.friendlyObjects.length; i++){
-		for (let j = 0; j < this.activeObjects.hostileObjects.length; j++){
+		for(let i = 0; i < this.activeObjects.friendlyObjects.length; i++){
+			for (let j = 0; j < this.activeObjects.hostileObjects.length; j++){
 
-			if(collisionDetector(this.activeObjects.friendlyObjects[i], this.activeObjects.hostileObjects[j])){
+				if(collisionDetector(this.activeObjects.friendlyObjects[i], this.activeObjects.hostileObjects[j])){
 					this.activeObjects.friendlyObjects[i].dead = true;
 					this.activeObjects.hostileObjects[j].dead = true;
+				}
 			}
 		}
-	}
 
 			this.activeObjects.friendlyObjects = this.activeObjects.friendlyObjects.filter(object => !object.dead);
 			this.activeObjects.hostileObjects = this.activeObjects.hostileObjects.filter(object => !object.dead);

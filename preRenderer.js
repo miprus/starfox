@@ -31,7 +31,7 @@ function preRenderList(objectData){
     //loop through each provided object and extract necessary properties for pre-rendering operation. Then push each object into created earlier array.
 	objectData.forEach(object => {
 		let newObjectImg = preRenderObject(object.src, object.width, object.height);
-		objectList.push({name : object.name, img : newObjectImg});
+		objectList.push({type : object.type, name : object.name, img : newObjectImg});
 	});
 
     return objectList;

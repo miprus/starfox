@@ -1,5 +1,8 @@
 import assets_list from "./assets_list.json" assert { type: "json" };
+import user_data from "./user/user_data.json" assert { type: "json" };
+
 import {preRenderList} from "./preRenderer.js";
+import {Hero} from './hero.js';
 
 async function moduleLoader(levelFilePath, globalModifires){
 	var levelPack = await import(levelFilePath);
@@ -16,7 +19,6 @@ async function levelLoader(core){
 	var globalModifires = core.globalModifires;
 
 	const [LEVEL_SETTINGS, LEVEL] = await moduleLoader(levelFilePath, globalModifires);
-	const LOADED_WAVES = [];
 
 	const PRELOADED_OBJECTS = {
 		gameObjects: [],
@@ -34,6 +36,41 @@ async function levelLoader(core){
 	}
 
 
+/////////////////hero object///////////////
+
+let starfighterDetails = user_data.starfighterDetails;
+
+let componentsData = [];
+
+
+starfighterDetails.components.forEach(element => {
+	let heroComponent = assets_list.starfighterObjects.find(({name}) => name === element.name);
+	componentsData.push(heroComponent);
+
+});
+
+
+let componentSprite = preRenderList(componentsData);
+console.log(componentSprite);
+
+var newWave = {
+	timing: 1, 
+	friendlyObjects: [],
+	hostileObjects: [],
+	neutralObjects: [],
+	backgroundObjects: [],
+}
+
+let newHero = new Hero(core, componentSprite);
+
+newWave.friendlyObjects.push(newHero);
+
+core.inactiveObjects.push(newWave);
+console.log(core.inactiveObjects);
+
+core.hero = newHero;
+
+/////////////////
 	//////////////////////////
 	//for objects
 	LEVEL.levelObjects.forEach(element => {
@@ -105,7 +142,7 @@ async function levelLoader(core){
 	LEVEL.levelWaves.forEach(wave => {
 		var newWave = {
 			timing: wave.timing,
-			//friendlyObjects: [],
+			friendlyObjects: [],
 			hostileObjects: [],
 			neutralObjects: [],
 			backgroundObjects: [],
@@ -184,41 +221,71 @@ async function levelLoader(core){
 				});
 			}
 		}
-			
-			LOADED_WAVES.push(newWave);
+		console.log(newWave);
+
+		core.inactiveObjects.push(newWave);
+
+		console.log(core.inactiveObjects);
 	});
 
-		core.inactiveObjects = LOADED_WAVES;
 
+	LEVEL.levelBackgrouds.forEach(background => {
+		PRELOADED_THEMES.backgroundThemes.forEach(element => {
+			if(element.name == background.name){		
+				let bckImg = PRELOADED_THEMES.backgroundImages.find(({name}) => name === element.name);
 
-		LEVEL.levelBackgrouds.forEach(background => {
-			PRELOADED_THEMES.backgroundThemes.forEach(element => {
-				if(element.name == background.name){		
-					let bckImg = PRELOADED_THEMES.backgroundImages.find(({name}) => name === element.name);
-
-					var newBackground = {
-						timing: background.timing,
-						backgroundThemes: [],
-					}
-
-					newBackground.backgroundThemes.push(new element(core, bckImg.img));
-					core.inactiveThemes.push(newBackground);
-
+				var newBackground = {
+					timing: background.timing,
+					backgroundThemes: [],
 				}
-			});
+
+				newBackground.backgroundThemes.push(new element(core, bckImg.img));
+				core.inactiveThemes.push(newBackground);
+			}
 		});
-	}
+	});
+
+
+
+
+
+
+
+//console.log(componentsSprites);
+
+
+	//////loading player//////
+
+	/*
+	+import hero object
+	+import player config (type of starfighter, weaponns, skills, etc);
+	+import assets list
+
+	+match starfighter data from player config with data from assets list (just like with other objects you did earlier)
+
+	+/-get hero's hull, wings, engine, weapons (classes)
+	+prerender their sprites
+	+/-create hero object
+
+
+	+push into core.inactive frieendlies
+	then
+	invoke (push into core.active) in event handler
+
+	(this way the cutscenes or other interruptors should be easier to made... I hope)
+	*/
+
+}
 
 function levelEventHandler(core){
-
+	//console.log(core.inactiveObjects);
+	//console.log(core.activeObjects);
 	if(core.gameClockRaw == core.inactiveObjects[0].timing){
 		core.activeObjects.hostileObjects.push(...core.inactiveObjects[0].hostileObjects);
-		//core.activeObjects.friendlyObjects.push(...core.inactiveObjects[0].friendlyObjects);
+		core.activeObjects.friendlyObjects.push(...core.inactiveObjects[0].friendlyObjects);
 		core.activeObjects.neutralObjects.push(...core.inactiveObjects[0].neutralObjects);
 		core.activeObjects.backgroundObjects.push(...core.inactiveObjects[0].backgroundObjects);
 
-
-		///think of this shift and push thingy if multiply background waves wont work 
 		let loadedElement = core.inactiveObjects.shift();
 		core.inactiveObjects.push(loadedElement);
 	}
@@ -294,78 +361,6 @@ let event handler take care of timing
 [inner peace]
 [cutscene]
 [boss]
-*/
-
-/*
-		const wave4 = [
-			[],
-			[0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
-			[0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
-			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0],
-			[0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
-			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-		]
-
-				for (let i = 1; i < wave4.length; i++) {
-					let row = wave4[i];
-				
-					for (let j = 0; j < row.length; j++) {
-						if(row[j] === 1){
-							let position = {
-								x: tile * j,
-								y: -tile * i,
-							};
-				
-							core.inactiveObjects.push(new Enemy1(core, position));
-							//core.inactiveNeutralObjects
-							//core.inactiveBackgroundObjects
-							//core.inactiveHostileObjects
-							//core.inactiveFriendlyObjects
-							//separate background, neutral and hostile objects' for loops from eachother
-						}	
-					}
-				}
-
-
-
-
-	const bckObj = [
-		[],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
-	]
-
-			for (let i = 1; i < bckObj.length; i++) {
-				let row = bckObj[i];
-			
-				for (let j = 0; j < row.length; j++) {
-					if(row[j] === 1){
-						let position = {
-							x: tile * j,
-							y: -tile * i,
-						};
-			
-						core.inactiveBackgroundObjects.push(new Neutral_Object_1(core, position));
-
-						//separate background, neutral and hostile objects' for loops from eachother
-					}	
-				}
-			}
-			
 */
 
 

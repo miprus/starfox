@@ -8,7 +8,12 @@ class Enemy1{
 		this.img = sprite;
 
 		this.core = core;
-		this.ec = core.enemyWeapon.fireRate;
+
+		this.fireRate = 50;
+		this.ec = this.fireRate;
+		this.fire = true;
+
+
 
 		this.width = 64 * core.GAME_SCALE;
 		this.height = 64 * core.GAME_SCALE;
@@ -53,19 +58,19 @@ class Enemy1{
 			}
 		}
 */
-/*
-		if(this.ec >= this.core.enemyWeapon.fireRate && this.core.enemyWeapon.fire){
+
+		if(this.ec >= this.fireRate && this.fire){
 			let enemyShot =  new EnemyWeapon(this.core);
 			enemyShot.position.x = this.position.x + this.width / 2 - 5;
 			enemyShot.position.y = this.position.y + this.height;
-			enemyShot.speed.y = 4 * this.GAME_SCALE;
-			this.core.hostileObjects.push(enemyShot);
+			//enemyShot.speed.y = 11 * this.GAME_SCALE;
+			this.core.activeObjects.hostileObjects.push(enemyShot);
 
 			this.ec = 0;
 		}else{
 			this.ec++;
 		}
-		*/
+		
 	}
 }
 

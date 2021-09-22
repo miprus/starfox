@@ -1,17 +1,35 @@
-class Hero{
-	
-	constructor(core){
+import {HeroWeapon} from './h_weapon_1.js';
+
+class Hero{	
+	constructor(core, sprites){
 		this.GAME_WIDTH = core.GAME_WIDTH;
 		this.GAME_HEIGHT = core.GAME_HEIGHT;
 		this.GAME_SCALE = core.GAME_SCALE;
-		this.img = core.img2;
+
+		this.sprite = {
+			hull: sprites[0].img,
+			cockpit: sprites[1].img,
+			engine: sprites[2].img,
+			wingLeft: sprites[3].img,
+			wingRight: sprites[4].img,
+			
+			//weapon: sprites[0].img,
+		}
+
+		//expand sprites{} by adding starfighter component's width and height
+
 
 		this.core = core;
 
-		this.width = 64 * core.GAME_SCALE;
-		this.height = 64 * core.GAME_SCALE;
+		this.fireRate = 10;
+		this.fc = this.fireRate;
+		this.fire = false;
 
-		this.maxSpeed = 10 * core.GAME_SCALE;
+
+		this.width = 64 * this.GAME_SCALE;
+		this.height = 64 * this.GAME_SCALE;
+
+		this.maxSpeed = 10 * this.GAME_SCALE;
 
 		this.speed = {
 			x: 0,
@@ -19,8 +37,8 @@ class Hero{
 		}
 
 		this.position = {
-			x: core.GAME_WIDTH / 2 - this.width / 2,
-			y: core.GAME_HEIGHT - this.height * 2,
+			x: this.GAME_WIDTH / 2 - this.width / 2,
+			y: this.GAME_HEIGHT - this.height * 2,
 		}
 
 		this.dead = false;
@@ -43,7 +61,7 @@ class Hero{
 	}
 
 	draw(ctx){
-		ctx.drawImage(this.img, this.position.x, this.position.y, this.width, this.height);
+		ctx.drawImage(this.sprite.hull, this.position.x, this.position.y, this.width, this.height);
 		
 		ctx.beginPath();
 		ctx.lineWidth = "2";
@@ -51,11 +69,15 @@ class Hero{
 		ctx.rect(this.position.x, this.position.y, this.width, this.height);
 		ctx.stroke();
 
+		//ctx.drawImage(this.sprite.wingLeft, this.position.x, this.position.y, this.width, this.height);
+
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = "blue";
 		ctx.rect(this.position.x - this.width/2, this.position.y + this.height/2, this.width/2, this.height/2);
 		ctx.stroke();
+
+		//ctx.drawImage(this.sprite.wingRight, this.position.x, this.position.y, this.width, this.height);
 
 		ctx.beginPath();
 		ctx.lineWidth = "2";
@@ -88,6 +110,19 @@ class Hero{
 			if(this.position.y + this.height > this.GAME_HEIGHT){
 				this.position.y = this.GAME_HEIGHT - this.height;
 			} 
+
+
+			if(this.fire === true && this.fc >= this.fireRate){
+				let shot = new HeroWeapon(this.core);
+				shot.position.x = this.position.x + this.width / 2 - shot.width / 2,
+				shot.position.y = this.position.y,
+
+				this.core.activeObjects.friendlyObjects.push(shot);
+	
+				this.fc = 0;
+			}else{
+				this.fc++;
+			}
 	}
 }
 

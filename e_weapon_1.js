@@ -10,17 +10,13 @@ class EnemyWeapon{
 
 		this.speed = {
 			x: 0,
-			y: 1.6 * core.GAME_SCALE,
+			y: 11 * core.GAME_SCALE,
 		}
 
 		this.position = {
 			x: 0,
 			y: 0,
 		}
-
-		this.fireRate = 50;
-		this.fire = true;
-
 
 		this.dead = false;
 	}
@@ -36,8 +32,6 @@ class EnemyWeapon{
 		} else {
 			this.position.y += this.speed.y;
 		}	
-
-		
 	}
 }
 

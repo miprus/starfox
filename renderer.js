@@ -34,7 +34,7 @@ function renderer(ts){
 		//try to calculate average of fps to actualy see any difference on the screen
 	}
 
-	if(fpsLog.length >= 17){ //17 cuz of 16.66ms (update rate)
+	if(fpsLog.length >= 8){ //8 cuz of 16.66ms/2 (update rate)
 		let fpsTotal = fpsLog.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
 
 		let fpsAverage = Math.round(fpsTotal/fpsLog.length);
