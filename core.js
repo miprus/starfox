@@ -52,7 +52,6 @@ class Core{
 		
 		this.imgArray = preRenderList(assets_list.gameObjects);
 		this.img = this.imgArray[0].img;
-		this.img2 = this.imgArray[1].img;
 
 		//debug//
 		//console.log(this.imgArray);
@@ -75,6 +74,10 @@ class Core{
 			hostileObjects: [],
 			neutralObjects: [],
 			backgroundObjects: [],
+		}
+
+		this.heroObjects = {
+			hero: null,
 		}
 
 		this.activeThemes = {
@@ -136,10 +139,12 @@ class Core{
 
 	}
 
+	//order of drawing objects is importatnt as it determines the "z-index" of those objects 
+
 	draw(ctx){
 		[...this.activeThemes.backgroundThemes].forEach(bckTheme => bckTheme.draw(ctx));
 
-		[...this.activeObjects.friendlyObjects, ...this.activeObjects.hostileObjects, ...this.activeObjects.backgroundObjects, ...this.activeObjects.neutralObjects].forEach(object => object.draw(ctx));
+		[...this.activeObjects.backgroundObjects, ...this.activeObjects.neutralObjects, ...this.activeObjects.friendlyObjects, ...this.activeObjects.hostileObjects,].forEach(object => object.draw(ctx));
 	}
 
 }

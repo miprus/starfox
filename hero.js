@@ -16,6 +16,7 @@ class Hero{
 			//weapon: sprites[0].img,
 		}
 
+
 		//expand sprites{} by adding starfighter component's width and height
 
 
@@ -26,8 +27,10 @@ class Hero{
 		this.fire = false;
 
 
-		this.width = 64 * this.GAME_SCALE;
-		this.height = 64 * this.GAME_SCALE;
+		this.width = this.sprite.hull.width / 2 * this.GAME_SCALE;
+		//64 * this.GAME_SCALE;
+		this.height = this.sprite.hull.height / 2 * this.GAME_SCALE;
+		//64 * this.GAME_SCALE;
 
 		this.maxSpeed = 10 * this.GAME_SCALE;
 
@@ -69,27 +72,24 @@ class Hero{
 		ctx.rect(this.position.x, this.position.y, this.width, this.height);
 		ctx.stroke();
 
-		//ctx.drawImage(this.sprite.wingLeft, this.position.x, this.position.y, this.width, this.height);
+		ctx.drawImage(this.sprite.wingLeft, this.position.x - this.width, this.position.y, this.width, this.sprite.wingLeft.height / 2);
 
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = "blue";
-		ctx.rect(this.position.x - this.width/2, this.position.y + this.height/2, this.width/2, this.height/2);
+		ctx.rect(this.position.x - this.width, this.position.y, this.width, this.sprite.wingLeft.height / 2);
 		ctx.stroke();
 
-		//ctx.drawImage(this.sprite.wingRight, this.position.x, this.position.y, this.width, this.height);
+		ctx.drawImage(this.sprite.wingRight, this.position.x + this.width, this.position.y, this.width, this.sprite.wingRight.height / 2);
 
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = "blue";
-		ctx.rect(this.position.x + this.width, this.position.y + this.height/2, this.width/2, this.height/2);
+		ctx.rect(this.position.x + this.width, this.position.y, this.width, this.sprite.wingRight.height / 2);
 		ctx.stroke();
-		
 	}
 
-
 	update(){
-
 		this.position.x += this.speed.x;
 		this.position.y += this.speed.y;
 

@@ -4,23 +4,23 @@ class Controls {
 		document.addEventListener('keydown', event => {
 			switch(event.keyCode){
 				case 37: //left
-					core.hero.moveLeft();
+					core.heroObjects.hero.moveLeft();
 					break;
 
 				case 39: //right
-					core.hero.moveRight();
+					core.heroObjects.hero.moveRight();
 					break;
 
 				case 38: //up
-					core.hero.moveUp();
+					core.heroObjects.hero.moveUp();
 					break;
 
 				case 40: //down
-					core.hero.moveDown();
+					core.heroObjects.hero.moveDown();
 					break;
 
 				case 32: //backspace
-					core.hero.fire = true;
+					core.heroObjects.hero.fire = true;
 
 					break;
 
@@ -37,31 +37,31 @@ class Controls {
 		document.addEventListener('keyup', event => {
 			switch(event.keyCode){
 				case 37: //left
-					if(core.hero.speed.x < 0){
-						core.hero.speed.x = 0;
+					if(core.heroObjects.hero.speed.x < 0){
+						core.heroObjects.hero.speed.x = 0;
 					}
 					break;
 
 				case 39: //right
-					if(core.hero.speed.x > 0){
-						core.hero.speed.x = 0;
+					if(core.heroObjects.hero.speed.x > 0){
+						core.heroObjects.hero.speed.x = 0;
 					}
 					break;
 
 				case 38: //up
-					if(core.hero.speed.y < 0){
-						core.hero.speed.y = 0;
+					if(core.heroObjects.hero.speed.y < 0){
+						core.heroObjects.hero.speed.y = 0;
 					}
 					break;
 
 				case 40: //down
-					if(core.hero.speed.y > 0){
-						core.hero.speed.y = 0;
+					if(core.heroObjects.hero.speed.y > 0){
+						core.heroObjects.hero.speed.y = 0;
 					}
 					break;
 
 				case 32: //backspace
-					core.hero.fire = false;
+					core.heroObjects.hero.fire = false;
 					break;
 
 				case 18: //alt

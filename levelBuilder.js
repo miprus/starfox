@@ -13,6 +13,72 @@ async function moduleLoader(levelFilePath, globalModifires){
 	return [LEVEL_SETTINGS, LEVEL];
 }
 
+function preLoadData(dataSet, assets, objetctSet) {
+	dataSet.forEach(element => {
+	let objectElement = assets.find(({name}) => name === element.name);
+
+	objetctSet.push(objectElement);
+	});
+}
+
+async function importObjects(preLoadedSet, preLoadedSetType){
+	for(const element of preLoadedSetType){
+		let element_src = './' + element.file_name;
+		let elementName = element.name;
+		
+		let elementClass = await import(element_src);
+
+		switch (element.type){
+			case "friendly":
+				preLoadedSet.friendly.push(elementClass[elementName]);
+				break;
+
+			case "hostile":
+				preLoadedSet.hostile.push(elementClass[elementName]);
+				break;
+
+			case "neutral":
+				preLoadedSet.neutral.push(elementClass[elementName]);
+				break;
+
+			case "background":
+				preLoadedSet.background.push(elementClass[elementName]);
+				break;
+
+			case "background_theme":
+				preLoadedSet.backgroundThemes.push(elementClass[elementName]);
+				break;
+		}
+
+	}
+}
+
+function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupType, tile, core){
+	for(let i = 0; i < waveTypeSet.set.length; i++){
+		let row = waveTypeSet.set[i];
+
+		for (let j = 0; j < row.length; j++) {
+			let position = {
+				x: tile * j,
+				y: -tile - tile * i,
+			};
+
+			dataSet.forEach(object => {
+				if(object.setID == row[j]){
+					objectTypeSet.forEach(element => {
+						if(element.name == object.name){		
+							let sprite = imgSet.find(({name}) => name === element.name);
+
+							newWaveGroupType.push(new element(core, position, sprite.img))	
+						}
+					});
+				}
+			});
+		}
+
+	}
+}
+
 async function levelLoader(core){
 	var tile = Math.round(core.GAME_WIDTH / 21);
 	var levelFilePath = './levels/' + core.level + '.js';
@@ -36,108 +102,38 @@ async function levelLoader(core){
 	}
 
 
-/////////////////hero object///////////////
+	/////////////////hero object///////////////
 
-let starfighterDetails = user_data.starfighterDetails;
-
-let componentsData = [];
-
-
-starfighterDetails.components.forEach(element => {
-	let heroComponent = assets_list.starfighterObjects.find(({name}) => name === element.name);
-	componentsData.push(heroComponent);
-
-});
+	let starfighterDetails = user_data.starfighterDetails;
+	let componentsData = [];
 
 
-let componentSprite = preRenderList(componentsData);
-console.log(componentSprite);
-
-var newWave = {
-	timing: 1, 
-	friendlyObjects: [],
-	hostileObjects: [],
-	neutralObjects: [],
-	backgroundObjects: [],
-}
-
-let newHero = new Hero(core, componentSprite);
-
-newWave.friendlyObjects.push(newHero);
-
-core.inactiveObjects.push(newWave);
-console.log(core.inactiveObjects);
-
-core.hero = newHero;
-
-/////////////////
-	//////////////////////////
-	//for objects
-	LEVEL.levelObjects.forEach(element => {
-		let objectElement = assets_list.gameObjects.find(({name}) => name === element.name);
-
-		PRELOADED_OBJECTS.gameObjects.push(objectElement);
+	starfighterDetails.components.forEach(element => {
+		let heroComponent = assets_list.starfighterObjects.find(({name}) => name === element.name);
+		componentsData.push(heroComponent);
 	});
 
-	//for background themes
-	LEVEL.levelBackgrouds.forEach(element => {
-		let backgroundElement = assets_list.gameBackgrounds.find(({name}) => name === element.name);
 
-		//if statement prevents from pushing undefined variables into an array which would then produce errors
-		if(backgroundElement){
-			PRELOADED_THEMES.themeGroup.push(backgroundElement);
-		}
-	});
-	///////////////////////////////
+	let componentSprite = preRenderList(componentsData);
+	let newHero = new Hero(core, componentSprite);
 
-	//////////////////////////////
-	/////////////////////////////
-	for(const object of PRELOADED_OBJECTS.gameObjects){
-		let object_src = './' + object.file_name;
-		let objectName = object.name;
-		
-		let objectClass = await import(object_src);
+	core.activeObjects.friendlyObjects.push(newHero);
+	//console.log(core.inactiveObjects);
 
-			switch (object.type){
-				case "friendly":
-					PRELOADED_OBJECTS.friendly.push(objectClass[objectName]);
-					break;
-	
-				case "hostile":
-					PRELOADED_OBJECTS.hostile.push(objectClass[objectName]);
-					break;
-	
-				case "neutral":
-					PRELOADED_OBJECTS.neutral.push(objectClass[objectName]);
-					break;
-	
-				case "background":
-					PRELOADED_OBJECTS.background.push(objectClass[objectName]);
-					break;
-			}
-	}
+	core.heroObjects.hero = newHero;
+
+	//////////////////////////////////////////////
+
+
+	preLoadData(LEVEL.levelObjects, assets_list.gameObjects, PRELOADED_OBJECTS.gameObjects);
+	preLoadData(LEVEL.levelBackgrouds, assets_list.gameBackgrounds, PRELOADED_THEMES.themeGroup);
+
+	await importObjects(PRELOADED_OBJECTS, PRELOADED_OBJECTS.gameObjects);
+	await importObjects(PRELOADED_THEMES, PRELOADED_THEMES.themeGroup);
 
 	PRELOADED_OBJECTS.objectSprites = preRenderList(PRELOADED_OBJECTS.gameObjects);
-
-
-
-	for(const theme of PRELOADED_THEMES.themeGroup){
-		let theme_src = './' + theme.file_name;
-		let themeName = theme.name;
-		
-		let themeClass = await import(theme_src);
-		
-			switch (theme.type){
-				case "background_theme":
-					PRELOADED_THEMES.backgroundThemes.push(themeClass[themeName]);
-					break;
-			}
-	}
-
 	PRELOADED_THEMES.backgroundImages = preRenderList(PRELOADED_THEMES.themeGroup);
-	//////////////////////////////
-	/////////////////////////////
-	
+
 
 	LEVEL.levelWaves.forEach(wave => {
 		var newWave = {
@@ -148,84 +144,12 @@ core.hero = newHero;
 			backgroundObjects: [],
 		} 
 
-		//hostile objects
-		for(let i = 0; i < wave.hostileGroup.set.length; i++){
-			let row = wave.hostileGroup.set[i];
-
-			for (let j = 0; j < row.length; j++) {
-				let position = {
-					x: tile * j,
-					y: -tile - tile * i,
-				};
-
-				LEVEL.levelObjects.forEach(object => {
-					if(object.setID == row[j]){
-						PRELOADED_OBJECTS.hostile.forEach(element => {
-							if(element.name == object.name){		
-								let sprite = PRELOADED_OBJECTS.objectSprites.find(({name}) => name === element.name);
-
-								newWave.hostileObjects.push(new element(core, position, sprite.img))	
-							}
-						});
-					}
-				});
-			}
-		}
-
-		//neutral objects
-		for (let i = 0; i < wave.neutralGroup.set.length; i++) {
-			let row = wave.neutralGroup.set[i];
-
-			for (let j = 0; j < row.length; j++) {
-
-				let position = {
-					x: tile * j,
-					y: -tile - tile * i,
-				};
-
-				LEVEL.levelObjects.forEach(object => {
-					if(object.setID == row[j]) {
-						PRELOADED_OBJECTS.neutral.forEach(element => {
-							if(element.name == object.name){
-								let sprite = PRELOADED_OBJECTS.objectSprites.find(({name}) => name === element.name);
-
-								newWave.neutralObjects.push(new element(core, position, sprite.img))	
-							}
-						});
-					}
-				});
-			}
-		}
-
-		
-		//background objects
-		for(let i = 0; i < wave.backgroundGroup.set.length; i++){
-			let row = wave.backgroundGroup.set[i];
-
-			for (let j = 0; j < row.length; j++) {
-				let position = {
-					x: tile * j,
-					y: -tile - tile * i,
-				};
-
-				LEVEL.levelObjects.forEach(object => {
-					if(object.setID == row[j]){
-						PRELOADED_OBJECTS.background.forEach(element => {
-							if(element.name == object.name){		
-								let sprite = PRELOADED_OBJECTS.objectSprites.find(({name}) => name === element.name);
-								
-								newWave.backgroundObjects.push(new element(core, position, sprite.img))	
-							}
-						});
-					}
-				});
-			}
-		}
-		console.log(newWave);
+		preLoadWave(wave.hostileGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.hostile, PRELOADED_OBJECTS.objectSprites, newWave.hostileObjects, tile, core);
+		preLoadWave(wave.neutralGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.neutral, PRELOADED_OBJECTS.objectSprites, newWave.neutralObjects, tile, core);
+		preLoadWave(wave.backgroundGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.background, PRELOADED_OBJECTS.objectSprites, newWave.backgroundObjects, tile, core);
+		//preLoadWave(wave.FriendlyGroup, EVEL.levelObjects, PRELOADED_OBJECTS.friendly, PRELOADED_OBJECTS.objectSprites, newWave.friendlyObjects, tile);
 
 		core.inactiveObjects.push(newWave);
-
-		console.log(core.inactiveObjects);
 	});
 
 
@@ -244,42 +168,9 @@ core.hero = newHero;
 			}
 		});
 	});
-
-
-
-
-
-
-
-//console.log(componentsSprites);
-
-
-	//////loading player//////
-
-	/*
-	+import hero object
-	+import player config (type of starfighter, weaponns, skills, etc);
-	+import assets list
-
-	+match starfighter data from player config with data from assets list (just like with other objects you did earlier)
-
-	+/-get hero's hull, wings, engine, weapons (classes)
-	+prerender their sprites
-	+/-create hero object
-
-
-	+push into core.inactive frieendlies
-	then
-	invoke (push into core.active) in event handler
-
-	(this way the cutscenes or other interruptors should be easier to made... I hope)
-	*/
-
 }
 
 function levelEventHandler(core){
-	//console.log(core.inactiveObjects);
-	//console.log(core.activeObjects);
 	if(core.gameClockRaw == core.inactiveObjects[0].timing){
 		core.activeObjects.hostileObjects.push(...core.inactiveObjects[0].hostileObjects);
 		core.activeObjects.friendlyObjects.push(...core.inactiveObjects[0].friendlyObjects);
@@ -296,76 +187,3 @@ function levelEventHandler(core){
 }
 	
 export {levelLoader, levelEventHandler};
-/*
-	4 object types:
-		friendly
-		hostile
-		neutral
-		background
-
-	level folder: 
-			level settings - js or json file
-				speed of background objects
-				music and sounds to be loaded
-				sprites to be loaded
-				objects types to be loaded
-				timings of events and stages or waves
-				fail conditions (e.g. for escort missions)
-				win conditions (e.g. after reaching certain point or killing boss)
-
-				
-				campaign modifires
-			level stages/events - js file
-				arrays for stages [0,1,0,0,0,1,0]
-				events
-
-
-
-//for other file/s
-master settings for player
-master modifires of player's starship
-
-json save file hyhy
-
-
-/////////////////////////////////////////////////////////////////////////////////
-level folder 					levelbuilder						assets_list
-(instructions)    ====>>>>		(processing)		<<<<======= 	(database)
-
-									||
-									||
-									||
-									\/
-									\/
-									\/
-							level ready to play
-							(core/renderer)
-/////////////////////////////////////////////////////////////////////////////////
-
-get settings
-
-get object classes
-prerender sprites for each obtained object class
-
-create new objects and push them into inactive arrays
-let event handler take care of timing
-
-
-[cutscene]
-
-[wave]
-[wave]
-[wave]
-[inner peace]
-[wave]
-[inner peace]
-[cutscene]
-[boss]
-*/
-
-
-
-
-
-
-
