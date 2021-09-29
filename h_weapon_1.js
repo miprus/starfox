@@ -20,6 +20,7 @@ class HeroWeapon{
 		}
 
 		this.dead = false;
+		
 		this.numCol = 8;
 		this.numRow = 8;
 		this.maxFrame = this.numCol * this.numRow;

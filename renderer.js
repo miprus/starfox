@@ -29,7 +29,7 @@ function renderer(ts){
 	fpsLog.push(fps);
 		
 	//debug - low fps log//
-	if(fps < 59){
+	if(fps < 50){
 		console.log(fps);
 		//try to calculate average of fps to actualy see any difference on the screen
 	}

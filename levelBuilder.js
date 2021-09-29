@@ -13,47 +13,55 @@ async function moduleLoader(levelFilePath, globalModifires){
 	return [LEVEL_SETTINGS, LEVEL];
 }
 
-function preLoadData(dataSet, assets, objetctSet) {
-	dataSet.forEach(element => {
-	let objectElement = assets.find(({name}) => name === element.name);
-
-	objetctSet.push(objectElement);
-	});
-}
-
-async function importObjects(preLoadedSet, preLoadedSetType){
-	for(const element of preLoadedSetType){
-		let element_src = './' + element.file_name;
-		let elementName = element.name;
+async function preLoadData(dataSet, assets, preLoadedSet){
+	for(const element of dataSet){
+		let objectData = assets.find(({name}) => name === element.name);
 		
-		let elementClass = await import(element_src);
+		let objectFilePath = './' + objectData.file_name;
+		let objectName = objectData.name;
+		
+		let objectClass = await import(objectFilePath);
 
-		switch (element.type){
+
+
+		if(objectClass[objectName].bulletType){
+			let bulletData = assets.find(({name}) => name === objectClass[objectName].bulletType);
+
+			let bulletFilePath = './' + bulletData.file_name;
+			let bulletName = bulletData.name;
+
+			let bulletClass = await import(bulletFilePath);
+
+			preLoadedSet.hostile.push(bulletClass[bulletName]);
+			
+		} 
+
+		switch (objectData.type){
 			case "friendly":
-				preLoadedSet.friendly.push(elementClass[elementName]);
+				preLoadedSet.friendly.push(objectClass[objectName]);
 				break;
 
 			case "hostile":
-				preLoadedSet.hostile.push(elementClass[elementName]);
+				preLoadedSet.hostile.push(objectClass[objectName]);
 				break;
 
 			case "neutral":
-				preLoadedSet.neutral.push(elementClass[elementName]);
+				preLoadedSet.neutral.push(objectClass[objectName]);
 				break;
 
 			case "background":
-				preLoadedSet.background.push(elementClass[elementName]);
+				preLoadedSet.background.push(objectClass[objectName]);
 				break;
 
 			case "background_theme":
-				preLoadedSet.backgroundThemes.push(elementClass[elementName]);
+				preLoadedSet.backgroundThemes.push(objectClass[objectName]);
 				break;
 		}
-
-	}
+	};
 }
 
 function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupType, tile, core){
+
 	for(let i = 0; i < waveTypeSet.set.length; i++){
 		let row = waveTypeSet.set[i];
 
@@ -66,10 +74,22 @@ function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupTy
 			dataSet.forEach(object => {
 				if(object.setID == row[j]){
 					objectTypeSet.forEach(element => {
-						if(element.name == object.name){		
+						if(element.name == object.name){	
 							let sprite = imgSet.find(({name}) => name === element.name);
 
-							newWaveGroupType.push(new element(core, position, sprite.img))	
+							if(element.bulletType){
+								let bulletSprite = imgSet.find(({name}) => name === "HeroWeapon");
+								//change "HeroWeapon" for element.bulletType
+
+								let bulletClass = objectTypeSet.find(({name}) => name === element.bulletType);
+
+								let newObject = new element(core, position, sprite.img, bulletClass, bulletSprite.img);
+
+								newWaveGroupType.push(newObject);	
+							} else {
+															
+							newWaveGroupType.push(new element(core, position, sprite.img));	
+							}
 						}
 					});
 				}
@@ -87,8 +107,6 @@ async function levelLoader(core){
 	const [LEVEL_SETTINGS, LEVEL] = await moduleLoader(levelFilePath, globalModifires);
 
 	const PRELOADED_OBJECTS = {
-		gameObjects: [],
-		objectSprites: [],
 		friendly: [],
 		hostile: [],
 		neutral: [],
@@ -125,14 +143,15 @@ async function levelLoader(core){
 	//////////////////////////////////////////////
 
 
-	preLoadData(LEVEL.levelObjects, assets_list.gameObjects, PRELOADED_OBJECTS.gameObjects);
-	preLoadData(LEVEL.levelBackgrouds, assets_list.gameBackgrounds, PRELOADED_THEMES.themeGroup);
+	await preLoadData(LEVEL.levelObjects, assets_list.gameObjects, PRELOADED_OBJECTS);
+	await preLoadData(LEVEL.levelBackgrouds, assets_list.gameBackgrounds, PRELOADED_THEMES);
 
-	await importObjects(PRELOADED_OBJECTS, PRELOADED_OBJECTS.gameObjects);
-	await importObjects(PRELOADED_THEMES, PRELOADED_THEMES.themeGroup);
+	//await importObjects(PRELOADED_OBJECTS, PRELOADED_OBJECTS.gameObjects);
+	//await importObjects(PRELOADED_THEMES, PRELOADED_THEMES.themeGroup);
 
-	PRELOADED_OBJECTS.objectSprites = preRenderList(PRELOADED_OBJECTS.gameObjects);
-	PRELOADED_THEMES.backgroundImages = preRenderList(PRELOADED_THEMES.themeGroup);
+	//PRELOADED_OBJECTS.objectSprites = preRenderList(PRELOADED_OBJECTS.gameObjects);
+	//PRELOADED_THEMES.backgroundImages = preRenderList(PRELOADED_THEMES.themeGroup);
+
 
 
 	LEVEL.levelWaves.forEach(wave => {
@@ -144,10 +163,10 @@ async function levelLoader(core){
 			backgroundObjects: [],
 		} 
 
-		preLoadWave(wave.hostileGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.hostile, PRELOADED_OBJECTS.objectSprites, newWave.hostileObjects, tile, core);
-		preLoadWave(wave.neutralGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.neutral, PRELOADED_OBJECTS.objectSprites, newWave.neutralObjects, tile, core);
-		preLoadWave(wave.backgroundGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.background, PRELOADED_OBJECTS.objectSprites, newWave.backgroundObjects, tile, core);
-		//preLoadWave(wave.FriendlyGroup, EVEL.levelObjects, PRELOADED_OBJECTS.friendly, PRELOADED_OBJECTS.objectSprites, newWave.friendlyObjects, tile);
+		preLoadWave(wave.hostileGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.hostile, core.gameObjectsImgData, newWave.hostileObjects, tile, core);
+		preLoadWave(wave.neutralGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.neutral, core.gameObjectsImgData, newWave.neutralObjects, tile, core);
+		preLoadWave(wave.backgroundGroup, LEVEL.levelObjects, PRELOADED_OBJECTS.background, core.gameObjectsImgData, newWave.backgroundObjects, tile, core);
+		//preLoadWave(wave.FriendlyGroup, EVEL.levelObjects, PRELOADED_OBJECTS.friendly, core.gameObjectsImgData, newWave.friendlyObjects, tile);
 
 		core.inactiveObjects.push(newWave);
 	});
@@ -155,8 +174,8 @@ async function levelLoader(core){
 
 	LEVEL.levelBackgrouds.forEach(background => {
 		PRELOADED_THEMES.backgroundThemes.forEach(element => {
-			if(element.name == background.name){		
-				let bckImg = PRELOADED_THEMES.backgroundImages.find(({name}) => name === element.name);
+			if(element.name == background.name){	
+				let bckImg = core.gameBackgroundsImgData.find(({name}) => name === element.name);
 
 				var newBackground = {
 					timing: background.timing,

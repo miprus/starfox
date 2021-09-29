@@ -1,6 +1,6 @@
 import {HeroWeapon} from './h_weapon_1.js';
 
-class Hero{	
+class Hero{
 	constructor(core, sprites){
 		this.GAME_WIDTH = core.GAME_WIDTH;
 		this.GAME_HEIGHT = core.GAME_HEIGHT;
@@ -22,7 +22,7 @@ class Hero{
 
 		this.core = core;
 
-		this.fireRate = 10;
+		this.fireRate = 12;
 		this.fc = this.fireRate;
 		this.fire = false;
 

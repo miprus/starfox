@@ -1,10 +1,5 @@
-import {Hero} from './hero.js';
 import {Controls} from './controls.js';
-import {HeroWeapon} from './h_weapon_1.js';
-//import {Enemy1} from './enemy_1.js';
 import {collisionDetector} from './collisionDetector.js';
-import {EnemyWeapon} from './e_weapon_1.js';
-//import {Neutral_Object_1} from './neutral_object_1.js';
 import {levelLoader, levelEventHandler} from './levelBuilder.js';
 import {preRenderList} from "./preRenderer.js";
 import assets_list from "./assets_list.json" assert { type: "json" };
@@ -53,19 +48,20 @@ class Core{
 		this.imgArray = preRenderList(assets_list.gameObjects);
 		this.img = this.imgArray[0].img;
 
+		this.gameObjectsImgData = preRenderList(assets_list.gameObjects);
+		this.gameBackgroundsImgData = preRenderList(assets_list.gameBackgrounds);
+
+
+
+
 		//debug//
 		//console.log(this.imgArray);
 		//console.log(assets_list.gameObjects);
+		//console.log(this.gameObjectsImgData);
+		//console.log(this.gameBulletsImgData);
+		//console.log(this.gameBackgroundsImgData);
 		//////////////////////
 
-
-		
-		//this.hero = new Hero(this);
-		
-		//this.heroWeapon = new HeroWeapon(this);
-		//this.enemyWeapon = new EnemyWeapon(this);
-
-		//this.fc = this.heroWeapon.fireRate;
 
 		//objects arrays
 		//active (those that will be drawn on the screen)
@@ -95,9 +91,6 @@ class Core{
 		await levelLoader(this);	
 		//levelLoader seems to work only after 3 cycle of core.update(). It may be the source of future buggs. UPDATE: making core.start() async function seems to fix timing bug since it is possible now to force some functions to await for promises
 		
-
-
-
 		this.controls = new Controls(this);
 	}
 

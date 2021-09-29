@@ -2,8 +2,8 @@
     "gameObjects" : [
         {
             "type" : "friendly",
-            "file_name" : "h_weapopn_1.js",
-            "name" : "meh",
+            "file_name" : "h_weapon_1.js",
+            "name" : "HeroWeapon",
             "src" : "assets/explosion.png",
             "width" : "4096",
             "height" : "4096"  
@@ -39,6 +39,22 @@
             "src" : "assets/bck_rock.png",
             "width" : "200",
             "height" : "200"    
+        },
+        {
+            "type" : "bullet",
+            "file_name" : "e_weapon_1.js",
+            "name" : "EnemyWeapon",
+            "src" : "assets/explosion.png",
+            "width" : "4096",
+            "height" : "4096" 
+        },
+        {
+            "type" : "bullet",
+            "file_name" : "h_weapon.js",
+            "name" : "HeroWeapon",
+            "src" : "assets/explosion.png",
+            "width" : "4096",
+            "height" : "4096" 
         }
     ],
 
