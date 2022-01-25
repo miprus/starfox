@@ -20,6 +20,19 @@ let lt = 0;
 //fps//
 let fpsLog = [];
 
+////////////////////////////////////
+/*
+To be developed
+
+
+*/
+document.getElementById("resume_btn").addEventListener("click", resumeButton);
+
+function resumeButton() {
+	core.togglePause();
+}
+/////////////////////////////////////////
+
 function renderer(ts){
 	let dt = ts - lt;
 	lt = ts;

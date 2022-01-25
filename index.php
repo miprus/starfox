@@ -1,1 +1,1 @@
-<?php include_once("starfighter.html"); ?>
+<?php include_once("index.html"); ?>
