@@ -10,6 +10,25 @@
                 "type" :  "hull",
                 "name" : "Hull1",
                 "level" : 1
+            }
+        ]
+    },
+        
+    
+    
+    
+    
+        
+            
+        
+    
+    
+    "innactive": {
+        "components" : [
+            {
+                "type" :  "hull",
+                "name" : "Hull1",
+                "level" : 1
             },
             {
                 "type" :  "cockpit",
@@ -33,17 +52,6 @@
             }
         ]
     },
-        
-    
-    
-    
-    
-        
-            
-        
-    
-    
-    
 
     "comments" : "global modifires? and player's spaceship settings and configurations"
 }

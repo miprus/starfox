@@ -62,6 +62,7 @@ class Core{
 		//console.log(this.gameBackgroundsImgData);
 		//////////////////////
 
+		this.levelEventTimings = [];
 
 		//objects arrays
 		//active (those that will be drawn on the screen)
@@ -84,6 +85,7 @@ class Core{
 		//inactive (those that are loaded but not yet displayed)
 		this.inactiveObjects = [];
 		this.inactiveThemes = [];
+
 
 		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
 

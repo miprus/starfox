@@ -119,7 +119,6 @@ async function levelLoader(core){
 		backgroundImages: [],
 	}
 
-
 	/////////////////hero object///////////////
 
 	let starfighterDetails = user_data.starfighterDetails;
@@ -131,12 +130,11 @@ async function levelLoader(core){
 		componentsData.push(heroComponent);
 	});
 
-
 	let componentSprite = preRenderList(componentsData);
 	let newHero = new Hero(core, componentSprite);
 
 	core.activeObjects.friendlyObjects.push(newHero);
-	//console.log(core.inactiveObjects);
+	//console.log(core.activeObjects);
 
 	core.heroObjects.hero = newHero;
 
@@ -187,7 +185,11 @@ async function levelLoader(core){
 			}
 		});
 	});
+
+//assign event timing to core for easier access from levelEventHandler function. events such as end of cutscene, start of boss fight or end of level
+	core.levelEventTimings = LEVEL.eventTimings;
 }
+
 
 function levelEventHandler(core){
 	if(core.gameClockRaw == core.inactiveObjects[0].timing){
@@ -202,6 +204,11 @@ function levelEventHandler(core){
 
 	if(core.gameClockRaw == core.inactiveThemes[0].timing){
 		core.activeThemes.backgroundThemes.push(...core.inactiveThemes[0].backgroundThemes);
+	}
+
+	if(core.gameClockRaw == core.levelEventTimings[1]){
+		console.log('end of the level');
+		core.togglePause();
 	}
 }
 	

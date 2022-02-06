@@ -26,18 +26,29 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 12vw;
-		background-color: lightslategray;
+		width: 16vw;
+		height: 14vh;
+		color: orange;
+		background-image: url('assets/ui/ui_top_left.png');
+		background-repeat: no-repeat;
+        background-size: 100% 100%;
 		z-index: 20;
+		padding-left: 20px;
 	}
 
 	#ui_topRight{
 		position: fixed;
 		top: 0;
 		right: 0;
-		width: 6vw;
-		background-color: lightslategray;
+		width: 16vw;
+		height: 14vh;
+		color: orange;
+		background-image: url('assets/ui/ui_top_right.png');
+		background-repeat: no-repeat;
+        background-size: 100% 100%;
 		z-index: 20;
+		padding-right: 20px;
+		text-align: end;
 	}
 
 	#ui_bottomLeft{
@@ -45,8 +56,13 @@
 		bottom: 0;
 		left: 0;
 		width: 16vw;
-		background-color: darkgrey;
+		height: 14vh;
+		color: orange;
+		background-image: url('assets/ui/ui_bottom_left.png');
+		background-repeat: no-repeat;
+        background-size: 100% 100%;
 		z-index: 20;
+		padding-left: 20px;
 	}
 
 	#dialogue_box{
@@ -54,19 +70,26 @@
 		top: 0;
 		left: 36vw; /*half of game screen width - half of box width => 50vw - 28vw / 2*/
 		width: 28vw;
-		background-color: darkslateblue;
+		height: 14vh;
 		color: orange;
+		background-image: url('assets/ui/ui_top.png');
+		background-repeat: no-repeat;
+        background-size: 100% 100%;
 		z-index: 30;
 	}
 
 	#objective_box{
 		position: fixed;
-		top: 50vh;
+		top: 38vh;
 		left: 0;
-		width: 4vw;
-		background-color: darkslateblue;
+		width: 8vw;
+		height: 24vh;
 		color: orange;
+		background-image: url('assets/ui/ui_left.png');
+		background-repeat: no-repeat;
+        background-size: 100% 100%;
 		z-index: 30;
+		padding-left: 20px;
 	}
 
 	#menu_box{
@@ -75,9 +98,8 @@
 		left: 34vw;
 		width: 32vw;
 		height: 38vh;
-		background-color: lightsteelblue;
 		z-index: 30;
-		background-image: url('assets/b1.jpg');
+		background-image: url('assets/ui/ui_window.png');
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: 100% 100%;
@@ -88,7 +110,7 @@
 	#fps_box{
 		position: fixed;
 		bottom: 3vw;
-		right: 1vw;
+		left: 1vw;
 		z-index: 20;
 		color: white;
 	}
@@ -96,7 +118,7 @@
 	#clock_box{
 		position: fixed;
 		bottom: 1vw;
-		right: 1vw;
+		left: 1vw;
 		z-index: 20;
 		color: white;
 	}
@@ -117,6 +139,10 @@
     a:hover{
         color: darkred;
     }
+
+	button:hover{
+		color: darkred;
+	}
 	
 </style>
 
@@ -128,34 +154,44 @@
 	<canvas id="gameScreen"></canvas>
 
 	<div id="ui_topLeft">
+		<!--
 		<p>Score 1</p>
 		<p>Score 2</p>
 		<button>Menu</button>
+		-->
 	</div>
 	
 	<div id="ui_topRight">
+		<!--
 		<p>Level</p>
 		<button>Music on/off</button>
 		<button>Game Pause</button>
+		-->
 	</div>
 
 	<div id="ui_bottomLeft">
+		<!--
 		<p>HP</p>
 		<p>Energy</p>
 		<p>Special Ammo</p>
+		-->
 	</div>
 
-	<div id="dialogue_box"> 
+	<div id="dialogue_box">
+		<!--
 		<img src="" alt="Dialogue image">
 		<p>Dialogue Text</p>
+		--> 
 	</div>
 
 	<div id="objective_box">
+		<!--
 		<p>Objective 1</p>
 		<br>
 		<p>Objective 2</p>
 		<br>
 		<p>Objective 3</p>
+		-->
 	</div>
 
 	<div id="fps_box">

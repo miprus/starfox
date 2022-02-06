@@ -8,10 +8,10 @@ class Hero{
 
 		this.sprite = {
 			hull: sprites[0].img,
-			cockpit: sprites[1].img,
-			engine: sprites[2].img,
-			wingLeft: sprites[3].img,
-			wingRight: sprites[4].img,
+			//cockpit: sprites[1].img,
+			//engine: sprites[2].img,
+			//wingLeft: sprites[3].img,
+			//wingRight: sprites[4].img,
 			
 			//weapon: sprites[0].img,
 		}
@@ -72,6 +72,7 @@ class Hero{
 		ctx.rect(this.position.x, this.position.y, this.width, this.height);
 		ctx.stroke();
 
+		/*
 		ctx.drawImage(this.sprite.wingLeft, this.position.x - this.width, this.position.y, this.width, this.sprite.wingLeft.height / 2);
 
 		ctx.beginPath();
@@ -87,6 +88,7 @@ class Hero{
 		ctx.strokeStyle = "blue";
 		ctx.rect(this.position.x + this.width, this.position.y, this.width, this.sprite.wingRight.height / 2);
 		ctx.stroke();
+		*/
 	}
 
 	update(){

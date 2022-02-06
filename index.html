@@ -66,22 +66,71 @@
         a:hover{
             color: darkred;
         }
+
+        button:hover{
+		    color: darkred;
+	    }
         
         #menu_box{
             position: fixed;
             top: 24vh;
             left: 34vw;
             width: 32vw;
-            height: 38vh;
-            background-color: lightsteelblue;
+            height: 48vh;
             z-index: 30;
-            background-image: url('assets/b1.jpg');
+            background-image: url('assets/ui/ui_window.png');
             background-repeat: no-repeat;
-            background-attachment: fixed;
             background-size: 100% 100%;
 
             /*visibility: hidden;*/
 	    }
+
+        .list-group button{
+            background: none;
+            border: none;
+            background-image: url('assets/ui/button.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            font-size: 1.4em;
+            color: #97F7FF;
+            margin: auto;
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            width: 16vw;
+            height: 4vh;
+
+        }
+
+        .list-group button:hover{
+            background-image: url('assets/ui/button_active.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+
+        .list-group a{
+            background-image: url('assets/ui/button.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            font-size: 1.4em;
+            color: #97F7FF;
+            margin: auto;
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            width: 16vw;
+            height: 4vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .list-group a:hover{
+            background-image: url('assets/ui/button_active.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+
     </style>
 
 </head>
@@ -103,7 +152,7 @@
        
 
         <section id="menu_box">
-            <nav class="list-group text-center">
+            <nav class="list-group text-center mt-5">
                 <!--style="background-image: url('assets/b1.jpg');"-->
 
                 <!--
@@ -120,12 +169,12 @@
                             Log Out
                 -->
 
-                <a href="starfighter.html" class="list-group-item mx-5 mt-3">Play</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">Login</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">Register</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">About</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">Log Out</a>
-                <button type="button" class="list-group-item disabled mx-5 mt-3">Options</button>
+                <a href="starfighter.html">Play</a>
+                <a href="#">Login</a>
+                <a href="#">Register</a>
+                <a href="#">About</a>
+                <a href="#">Log Out</a>
+                <button type="button">Options</button>
               </nav>
         </section>
     </main>
