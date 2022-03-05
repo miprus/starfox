@@ -1,4 +1,4 @@
-function preRenderObject(imgSrc, imgWidth, imgHeight){
+function preRenderObject(imgSrc){
     //...R suffix is used to indicate variable used for pre-rendering operations
     //create offscreen canvas
 	let canvasR = document.createElement("canvas");
@@ -7,20 +7,22 @@ function preRenderObject(imgSrc, imgWidth, imgHeight){
     //load image based on provided source (file path) 
 	let imgR = new Image();
 	imgR.src = imgSrc;
-
-    //set offscreen canvas size to match given image's height and width
-	canvasR.width = imgWidth;
-	canvasR.height = imgHeight;
-
+	
+    
+	
 	//ctxR.save();
 
     //draw given image using provided source (file path) and dimensions. The draw function will only be called after an image is loaded to prevent any errors in case of heavier sprites 
 	imgR.onload = function(){
-		ctxR.drawImage(imgR, 0, 0, imgWidth, imgHeight);
+		//set offscreen canvas size to match given image's height and width
+		canvasR.width = imgR.width;
+		canvasR.height = imgR.height;
+
+		ctxR.drawImage(imgR, 0, 0, imgR.width, imgR.height);
 	}
 
 	//ctxR.restore();
-
+	
 	return canvasR;
 }
 
@@ -30,11 +32,11 @@ function preRenderList(objectData){
 
     //loop through each provided object and extract necessary properties for pre-rendering operation. Then push each object into created earlier array.
 	objectData.forEach(object => {
-		let newObjectImg = preRenderObject(object.src, object.width, object.height);
+		let newObjectImg = preRenderObject(object.src);
 		objectList.push({type : object.type, name : object.name, img : newObjectImg});
 	});
 
     return objectList;
 }
 
-export {preRenderList};
+export {preRenderList, preRenderObject};

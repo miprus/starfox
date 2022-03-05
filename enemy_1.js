@@ -1,5 +1,6 @@
 class Enemy1{
 	static bulletType = "EnemyWeapon";
+//thats the name of a object with type "bullet" from assets_list
 
 	constructor(core, position, sprite, bulletClass, bulletSprite){
 		this.GAME_WIDTH = core.GAME_WIDTH;
@@ -56,7 +57,7 @@ class Enemy1{
 		}	
 
 
-		if(this.fireRateCounter >= this.fireRate && this.fire){
+		if(this.fire && this.fireRateCounter >= this.fireRate){
 			let enemyShot =  new this.bulletClass(this.core, this.bulletSprite);
 			enemyShot.position.x = this.position.x + this.width / 2 - 5;
 			enemyShot.position.y = this.position.y + this.height;

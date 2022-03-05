@@ -1,7 +1,7 @@
 import assets_list from "./assets_list.json" assert { type: "json" };
 import user_data from "./user/user_data.json" assert { type: "json" };
 
-import {preRenderList} from "./preRenderer.js";
+//import {preRenderList} from "./preRenderer.js";
 import {Hero} from './hero.js';
 
 async function moduleLoader(levelFilePath, globalModifires){
@@ -22,11 +22,10 @@ async function preLoadData(dataSet, assets, preLoadedSet){
 		
 		let objectClass = await import(objectFilePath);
 
-
-
+		
 		if(objectClass[objectName].bulletType){
 			let bulletData = assets.find(({name}) => name === objectClass[objectName].bulletType);
-
+			
 			let bulletFilePath = './' + bulletData.file_name;
 			let bulletName = bulletData.name;
 
@@ -35,7 +34,7 @@ async function preLoadData(dataSet, assets, preLoadedSet){
 			preLoadedSet.hostile.push(bulletClass[bulletName]);
 			
 		} 
-
+		
 		switch (objectData.type){
 			case "friendly":
 				preLoadedSet.friendly.push(objectClass[objectName]);
@@ -60,8 +59,14 @@ async function preLoadData(dataSet, assets, preLoadedSet){
 	};
 }
 
-function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupType, tile, core){
 
+
+
+function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupType, tile, core){
+//wavetypeset change to waveMap???
+//dataSet change to waveObjectData/Set???
+
+	
 	for(let i = 0; i < waveTypeSet.set.length; i++){
 		let row = waveTypeSet.set[i];
 
@@ -78,8 +83,9 @@ function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupTy
 							let sprite = imgSet.find(({name}) => name === element.name);
 
 							if(element.bulletType){
-								let bulletSprite = imgSet.find(({name}) => name === "HeroWeapon");
-								//change "HeroWeapon" for element.bulletType
+								let bulletSprite = imgSet.find(({name}) => name === element.bulletType);
+
+								//change "HeroWeapon" for element.bulletType | done :3
 
 								let bulletClass = objectTypeSet.find(({name}) => name === element.bulletType);
 
@@ -119,26 +125,71 @@ async function levelLoader(core){
 		backgroundImages: [],
 	}
 
-
 	/////////////////hero object///////////////
-
-	let starfighterDetails = user_data.starfighterDetails;
+	let local_user_data = JSON.parse(localStorage.getItem('user_data'));
+	let starfighterDetails = local_user_data.starfighterDetails;
 	let componentsData = [];
+	
+	///change components to modules?
+	//array.prototype.forEach() doesen't work with async processes like await import(); that's why "manual" for each loop has to be created 
+	for(let i = 0; i < starfighterDetails.components.length; i++) {
+		const element = starfighterDetails.components[i];
 
+		let heroSprites = core.heroObjectsImgData.find(({name}) => name === element.name);
+		componentsData.push(heroSprites);
 
-	starfighterDetails.components.forEach(element => {
-		let heroComponent = assets_list.starfighterObjects.find(({name}) => name === element.name);
-		componentsData.push(heroComponent);
+		if(element.type == "weapon"){
+			let heroBulletSprite = core.gameObjectsImgData.find(({name}) => name === element.bullet_name);
+			componentsData.push(heroBulletSprite);
+			
+			let heroWeaponBullet = assets_list.gameObjects.find(({name}) => name === element.bullet_name);
+
+			let heroBulletFilePath = './' + heroWeaponBullet.file_name;
+			let objectClass = await import(heroBulletFilePath);
+
+			var bulletClass = objectClass[heroWeaponBullet.name];
+		}
+	}
+
+	let moduleSprites = componentsData;
+
+	//rename it to modulesImages or image set or whatever like this
+	let starfighterModules = {
+		hull: 0,
+		cockpit: 0,
+		engine: 0,
+		engineFlame: 0,
+		wings: 0,
+		weapon: 0,
+		bullet: 0,
+	}
+
+	//console.log(starfighterModules);
+	//2: {type: 'engine', name: 'Engine1', img: canvas}
+	moduleSprites.forEach(element => {
+		let moduleTarget = Object.keys(starfighterModules).find(key => key === element.type);
+		starfighterModules[moduleTarget] = element.img;
+		
 	});
 
+	//console.log(starfighterModules);
 
-	let componentSprite = preRenderList(componentsData);
-	let newHero = new Hero(core, componentSprite);
+
+	let newHero = new Hero(core, starfighterModules, bulletClass);
 
 	core.activeObjects.friendlyObjects.push(newHero);
-	//console.log(core.inactiveObjects);
 
 	core.heroObjects.hero = newHero;
+
+	//debug
+	//let result = moduleSprites.find(({type}) => type === 'hull');
+	//console.log(result);
+
+	
+
+
+
+
 
 	//////////////////////////////////////////////
 
@@ -187,7 +238,11 @@ async function levelLoader(core){
 			}
 		});
 	});
+
+//assign event timing to core for easier access from levelEventHandler function. events such as end of cutscene, start of boss fight or end of level
+	core.levelEventTimings = LEVEL.eventTimings;
 }
+
 
 function levelEventHandler(core){
 	if(core.gameClockRaw == core.inactiveObjects[0].timing){
@@ -202,6 +257,11 @@ function levelEventHandler(core){
 
 	if(core.gameClockRaw == core.inactiveThemes[0].timing){
 		core.activeThemes.backgroundThemes.push(...core.inactiveThemes[0].backgroundThemes);
+	}
+
+	if(core.gameClockRaw == core.levelEventTimings[1]){
+		console.log('end of the level');
+		core.togglePause();
 	}
 }
 	

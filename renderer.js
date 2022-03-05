@@ -20,6 +20,8 @@ let lt = 0;
 //fps//
 let fpsLog = [];
 
+
+console.log(localStorage.getItem('user_data'));
 ////////////////////////////////////
 /*
 To be developed

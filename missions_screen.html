@@ -15,7 +15,7 @@
 		padding: 0;
 		margin: 0;
 		overflow: hidden;
-		background-image: url('assets/b1.jpg');
+		background-image: url('assets/b3.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
 	}
@@ -161,58 +161,44 @@
 		color: #97F7FF;
     }
 
-	#content_container{
-		width: 80vw;
-		height: 50vh;
-	}
+    #mission_tile_1{
+        position: fixed;
+        top: 53vh;
+        left: 20vw;
+    }
 
-	#starfighter_modules{
-		
-	}
+    #mission_tile_2{
+        position: fixed;
+        top: 51vh;
+        left: 34vw;
+    }
 
-	#starfighter_eq{
-		
-	}
+    #mission_tile_3{
+        position: fixed;
+        top: 46vh;
+        left: 46vw;
+    }
 
-	#starfighter{
-		width: 26vw;
-		height: 40vh;
-		margin: 5vh 2vw 5vh 2vw;
-		border: 5px solid red;
-	}
+    #mission_tile_4{
+        position: fixed;
+        top: 41vh;
+        left: 54vw;
+    }
 
-	.eq_tile{
+
+
+
+	.mission_tile{
 		width: 4vw;
 		height: 4vw;
-		margin: 0.3vw;
+		margin: 3vh 0.3vw 0 0.3vw;
 		background-image: url('assets/ui/ui_tile.png');
         background-repeat: no-repeat;
         background-size: 100% 100%;
 	}
 
-	.eq_tile img{
-		width: inherit;
-		height: inherit;
-		padding: 0.5vw;
-	}
-
-	.eq_tile:hover{
+	.mission_tile:hover{
 		background-image: url('assets/ui/ui_tile_active.png');
-	}
-
-	#eq{
-		width: 25vw;
-		height: 40vh;
-		padding: 1.5vw 0.3vw;
-		margin: 5vh 2vw 0 2vw;
-		background-image: url('assets/ui/ui_window.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-		overflow: auto;
-	}
-
-	.module_label{
-		color: orange;
 	}
 
 	#options_window{
@@ -231,6 +217,38 @@
             display: none;
 	    }
 
+    #content_container{
+        position: fixed;
+        top: 10vh;
+        left: 10vw;
+		width: 80vw;
+		height: 80vh;
+    
+        border: 5px solid red;
+	}
+
+    #content_container button {
+        padding: 0;
+        border: none;
+        background: none;
+
+        width: inherit;
+        height: inherit;
+    }
+
+    #content_container button img {
+        width: 3vw;
+		height: 3vw;
+    }
+/*
+    width: 4vw;
+		height: 4vw;
+		margin: 3vh 0.3vw 0 0.3vw;
+		background-image: url('assets/ui/ui_tile.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+
+*/
 
 </style>
 
@@ -238,13 +256,13 @@
 
 <body>
 
-
-	<canvas id="hangarScreen"></canvas>
+<main>	
+	<canvas id="missionsScreen"></canvas>
 
 	
 
 	<div id="ui_top">
-		<button type="button" id="main_button" onclick="redirectToMissionScreen()">Missions</button>
+		<button type="button" id="main_button" onclick="redirectToGameScreen()">Play</button>
 		<!--
 		<p>Score 1</p>
 		<p>Score 2</p>
@@ -269,88 +287,71 @@
 	</div>
 
 
-	<main id="content_container" class="position-absolute top-50 start-50 translate-middle row g-0">
+	<main id="content_container" class="position-absolute top-50 start-50 translate-middle">
+        <div id="mission_tile_1" class="mission_tile">
+            <button type="button" id="mission_btn_1" onclick="missionSelect(this)">
+                <img src="./assets/bck_rock.png" alt="">
+            </button>
+        </div>
+        
+        <div id="mission_tile_2" class="mission_tile">
+            <button type="button" id="mission_btn_2" onclick="missionSelect(this)">
+                <img src="./assets/bck_rock.png" alt="">
+            </button>
+        </div>
 
-		<section id="starfighter_modules" class="col-6 d-flex justify-content-center">
-			
-			<canvas id="starfighter"></canvas>
+        <div id="mission_tile_3" class="mission_tile">
+            <button type="button" id="mission_btn_3" onclick="missionSelect(this)">
+                <img src="./assets/bck_rock.png" alt="">
+            </button>
+        </div>
 
-			<div class="d-flex flex-column">
-				<div id="tile_weapon" class="eq_tile d-inline" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				<h6 class="module_label">Weapon</h6>
-				<div id="tile_cockpit" class="eq_tile ms-4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				<h6 class="module_label ms-4">Cockpit</h6>
-				<div id="tile_hull" class="eq_tile ms-5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				<h6 class="module_label ms-5">Hull</h6>
-				<div id="tile_wings" class="eq_tile ms-4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				<h6 class="module_label ms-4">Wings</h6>
-				<div id="tile_engine" class="eq_tile" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-				<h6 class="module_label">Engine</h6>
-			</div>
+        <div id="mission_tile_4" class="mission_tile">
+            <button type="button" id="mission_btn_4" onclick="missionSelect(this)">
+                <img src="./assets/bck_rock.png" alt="">
+            </button>
+        </div>
+
+        <section class="position-absolute bottom-0 start-50 translate-middle-x">
+            <button type="button" class="d-inline">hmm</button>
+            <button type="button" class="d-inline">yay</button>
+        </section>
+    </main>
+
+<section id="menu_window">
+    <nav class="list-group text-center mt-5">
+		<a href="hangar.html" class="">Return To Hangar</a>
+        <button type="button" onclick="showOptionsMenu()">Options</button>
+        <a href="index.html">Quit</a>
+      </nav>
+</section>
+
+<section id="options_window">
+	<div class="list-group text-center mt-5">
+		<section id="options_section">
 		</section>
-	
-		<div class="col-2"></div>
 
-		<section id="starfighter_eq" class="col-4"> 
-			<!--
-			<div id="filter_tab">
-				<label for="item_filter">Filter by:</label>
-				<select name="item_filter" id="item_filter">
-					<option value="hmm">Hulls</option>
-					<option value="ammm">Engines</option>
-				</select>
-
-				<label for="eq_sort">Sort by:</label>
-				<select name="eq_sort" id="eq_sort">
-					<option value="hmm">Rare</option>
-					<option value="ammm">Common</option>
-				</select>
-			</div>
-			-->
-
-			<div id="eq" class="row row-cols-5 g-0 justify-content-start">
-			</div>
-
-			<button type="button" id="moduleSetSave_btn" class="d-inline">Save Modules</button>
-		</section>
-	</main>
-
-	<section id="menu_window">
-		<nav class="list-group text-center mt-5">
-			<button type="button" onclick="showOptionsMenu()">Options</button>
-			<a href="index.html">Quit</a>
-		</nav>
-	</section>
-
-	<section id="options_window">
-		<div class="list-group text-center mt-5">
-			<section id="options_section">
-			</section>
-
-			<section id="buttons_section">
-				<div class="row">
-					<div class="col">
-						<button type="button">Reset</button>
-					</div>
-					<div class="col">
-						<button type="button" onclick="saveOptions()">Save</button>
-					</div>
+		<section id="buttons_section">
+			<div class="row">
+				<div class="col">
+					<button type="button">Reset</button>
 				</div>
+				<div class="col">
+					<button type="button" onclick="saveOptions()">Save</button>
+				</div>
+			</div>
 
-				<button type="button" onclick="showMainMenu()">Back</button>
-			</section>
-		</div>
-	</section>
-
-
+			<button type="button" onclick="showMainMenu()">Back</button>
+		</section>
+	</div>
+</section>
 
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<script type="module" src="hangarHandler.js"></script>
-
-
+<!--
+<script type="module" src="renderer.js"></script>
+-->
 <script type="module">
 import user_data from "./user/user_data.json" assert { type: "json" }; 
 
@@ -440,6 +441,78 @@ window.showMainMenu = function(){
     document.getElementById("options_window").style.display = "none";
     document.getElementById("menu_window").style.display = "initial";
 }
+
+	document.addEventListener('keydown', event => {
+		switch(event.code){
+			case "Escape": //esc
+			let menuBox = document.getElementById("menu_window");
+
+				if(menuBox.style.visibility == "visible"){
+					menuBox.style.visibility = "hidden";
+				
+				} else {
+					menuBox.style.visibility = "visible";
+
+				}
+
+				break;
+			}
+		});
+
+
+window.missionSelect = function(missionTile){
+    /*
+        <div id="mission_tile_1" class="mission_tile">
+            <button type="button" id="mission_btn_1" onclick="missionSelect(this)">
+                <img src="./assets/bck_rock.png" alt="">
+            </button>
+        </div>
+    */
+   
+    let missionTiles = document.getElementsByClassName("mission_tile");
+    
+    for (let i = 0; i < missionTiles.length; i++) {
+        let element = missionTiles[i];
+        element.style.backgroundImage = "url('assets/ui/ui_tile.png')";
+    }
+
+    missionTile.parentElement.style.backgroundImage = "url('assets/ui/ui_tile_active.png')";
+
+    switch (missionTile.id){
+        case "mission_btn_1":
+            local_user_data.userDetails.level = "level_1";
+            localStorage.setItem('user_data', JSON.stringify(local_user_data));
+
+            //document.getElementById(missionTile.id).style.backgroundImage = "url('assets/ui/ui_tile_active.png')";
+
+            break;
+    
+        case "mission_btn_2":
+            local_user_data.userDetails.level = "level_2";
+            localStorage.setItem('user_data', JSON.stringify(local_user_data));
+
+            break;
+
+        case "mission_btn_3":
+            local_user_data.userDetails.level = "level_3";
+            localStorage.setItem('user_data', JSON.stringify(local_user_data));
+
+            break;
+
+        case "mission_btn_4":
+            local_user_data.userDetails.level = "level_4";
+            localStorage.setItem('user_data', JSON.stringify(local_user_data));
+
+            break;
+    }
+}
+
+window.redirectToGameScreen = function(){
+//if button checked then:
+    window.location.href = "starfighter.html";
+}
+
+
 </script>
 
 </html>

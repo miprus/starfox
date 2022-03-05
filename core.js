@@ -3,8 +3,9 @@ import {collisionDetector} from './collisionDetector.js';
 import {levelLoader, levelEventHandler} from './levelBuilder.js';
 import {preRenderList} from "./preRenderer.js";
 import assets_list from "./assets_list.json" assert { type: "json" };
-//new json module syntax is apperently not supported by visual studio code :(
 
+const user_data = JSON.parse(localStorage.getItem('user_data')); 
+console.log(user_data)
 
 const GAME_STATE = {
 	PAUSE: 0,
@@ -25,7 +26,7 @@ class Core{
 		this.gameClockRaw = 0;
 		this.gameClock = 0;
 
-		this.level = 'level_1';
+		this.level = user_data.userDetails.level;
 	}
 
 
@@ -45,11 +46,14 @@ class Core{
 	async start(){
 		this.globalModifires = [];
 		
+
+		///load assests data
 		this.imgArray = preRenderList(assets_list.gameObjects);
-		this.img = this.imgArray[0].img;
+		//this.img = this.imgArray[0].img;
 
 		this.gameObjectsImgData = preRenderList(assets_list.gameObjects);
 		this.gameBackgroundsImgData = preRenderList(assets_list.gameBackgrounds);
+		this.heroObjectsImgData = preRenderList(assets_list.heroObjects);
 
 
 
@@ -58,10 +62,11 @@ class Core{
 		//console.log(this.imgArray);
 		//console.log(assets_list.gameObjects);
 		//console.log(this.gameObjectsImgData);
-		//console.log(this.gameBulletsImgData);
+		//console.log(this.heroObjectsImgData);
 		//console.log(this.gameBackgroundsImgData);
 		//////////////////////
 
+		this.levelEventTimings = [];
 
 		//objects arrays
 		//active (those that will be drawn on the screen)
@@ -85,13 +90,14 @@ class Core{
 		this.inactiveObjects = [];
 		this.inactiveThemes = [];
 
+
 		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
 
 
 		await levelLoader(this);	
 		//levelLoader seems to work only after 3 cycle of core.update(). It may be the source of future buggs. UPDATE: making core.start() async function seems to fix timing bug since it is possible now to force some functions to await for promises
 		
-		this.controls = new Controls(this);
+		this.controls = new Controls(this, user_data.keyBindings);
 	}
 
 	update(){

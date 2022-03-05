@@ -11,6 +11,7 @@ class EnemyWeapon{
 
 		this.img = sprite;
 
+		//no need for core
 		this.core = core;
 
 		this.speed = {

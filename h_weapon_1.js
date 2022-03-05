@@ -1,8 +1,10 @@
 class HeroWeapon{
 	
-	constructor(core){
+	//add bullet img src or bullet name like this:
+	//static bulletImgSrc = "assets/explosion.png";
+	constructor(core, sprite){
 		this.GAME_SCALE = core.GAME_SCALE;
-		this.img = core.img;
+		this.img = sprite;
 
 		this.width = 40 * core.GAME_SCALE;
 		this.height = 60 * core.GAME_SCALE;

@@ -15,8 +15,6 @@
         body{
             padding: 0;
             margin: 0;
-            font-size: var(--bodyText);
-            background-color: darkgray;
            /* overflow: hidden;*/
             background-image: url('assets/b2.jpg');
             background-repeat: no-repeat;
@@ -52,7 +50,6 @@
 
         a{
             text-decoration: none;
-            color: #000;
         }
 
         a:link{
@@ -60,73 +57,174 @@
         }
         
         a:visited{
-            color: #000;
+            color: #97F7FF;
         }
 
         a:hover{
             color: darkred;
         }
+
+        button:hover{
+		    color: darkred;
+	    }
         
-        #menu_box{
+        #menu_window{
             position: fixed;
             top: 24vh;
             left: 34vw;
             width: 32vw;
-            height: 38vh;
-            background-color: lightsteelblue;
+            height: 48vh;
             z-index: 30;
-            background-image: url('assets/b1.jpg');
+            background-image: url('assets/ui/ui_window.png');
             background-repeat: no-repeat;
-            background-attachment: fixed;
             background-size: 100% 100%;
 
-            /*visibility: hidden;*/
+            display: none;
 	    }
+
+        .list-group button{
+            background: none;
+            border: none;
+            background-image: url('assets/ui/button.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            font-size: 1.4em;
+            color: #97F7FF;
+            margin: auto;
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            width: 16vw;
+            height: 4vh;
+        }
+
+        .list-group button:hover{
+            background-image: url('assets/ui/button_active.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .list-group a{
+            background-image: url('assets/ui/button.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            font-size: 1.4em;
+            color: #97F7FF;
+            margin: auto;
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            width: 16vw;
+            height: 4vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .list-group a:hover{
+            background-image: url('assets/ui/button_active.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        #options_window{
+            position: fixed;
+            top: 24vh;
+            left: 29vw;
+            width: 42vw;
+            height: 54vh;
+            z-index: 30;
+            background-image: url('assets/ui/ui_window.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            display: none;
+	    }
+
+        #loading_screen{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+
+            z-index: 9999;
+        }
+
+        #loader{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1;
+            width: 120px;
+            height: 120px;
+            margin: -76px 0 0 -76px;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
     </style>
 
 </head>
 
 <body>
-    
-        <!--
-            insert either iframe (e.g movie, gif etc) or canvas as a animated background
-        -->
+    <div id="loading_screen">
+        <div id="loader"></div>
+    </div>
+
         
     <header class="text-center">
+        <div class="position-absolute top-0 start-0">
+            <button type="button" onclick="muteBackgroundMusic()">Mute</button>
+        </div>
         <h1 class="text-center">Project Starfox</h1>
         <hr>
         <p class="text-center">Honours Project Web Browser Game </p>
     </header>
 
     <main>	
+        <section id="menu_window">
+            <nav class="list-group text-center mt-5">
+                <a href="starfighter.html">Play</a>
+                <a href="hangar.html">Hnagar</a>
+                <a href="missions_screen.html">Mission</a>
+                <a href="#">About</a>
 
-       
-
-        <section id="menu_box">
-            <nav class="list-group text-center">
-                <!--style="background-image: url('assets/b1.jpg');"-->
-
-                <!--
-                    Menu visible items:
-                        For not logged:
-                            Login
-                            register
-                            About
-
-                        For logged:
-                            Play/Continue
-                            Options
-                            About
-                            Log Out
-                -->
-
-                <a href="starfighter.html" class="list-group-item mx-5 mt-3">Play</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">Login</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">Register</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">About</a>
-                <a href="#" class="list-group-item disabled mx-5 mt-3">Log Out</a>
-                <button type="button" class="list-group-item disabled mx-5 mt-3">Options</button>
+                <button type="button" onclick="showOptionsMenu()">Options</button>
               </nav>
+        </section>
+
+        <section id="options_window">
+            <div class="list-group text-center mt-5">
+                <section id="options_section">
+                </section>
+
+                <section id="buttons_section">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button">Reset</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" onclick="saveOptions()">Save</button>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="showMainMenu()">Back</button>
+                </section>
+            </div>
         </section>
     </main>
 
@@ -136,9 +234,122 @@
     </footer>
 </body>
 
+<audio id="bck_menu_music" src="./audio/swtor_kotfe_theme.mp3" style="display: none;"></audio>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<script type="" src="">
+<script type="module">
+import user_data from "./user/user_data.json" assert { type: "json" }; 
 
+//localStorage.removeItem('user_data');
+
+const local_user_data = localStorage.getItem('user_data') 
+    ? JSON.parse(localStorage.getItem('user_data')) 
+    : (localStorage.setItem('user_data', JSON.stringify(user_data)), JSON.parse(localStorage.getItem('user_data')));
+
+    console.log(local_user_data)
+
+function displayOptions(local_user_data){
+    for(const [actionName, keyCode] of Object.entries(local_user_data.keyBindings)){
+
+        //<label for="opt1">Option 1:</label>
+        // <input type="text" id="opt1" name="opt1">
+
+        let bindingOptLabel = document.createElement('label');
+            bindingOptLabel.setAttribute("for", actionName);
+            bindingOptLabel.innerHTML = actionName;
+
+        let bindingOptInput = document.createElement('input');
+            bindingOptInput.setAttribute("type", "text");
+            bindingOptInput.setAttribute("id", actionName);
+            bindingOptInput.setAttribute("name", keyCode);
+            bindingOptInput.setAttribute("value", keyCode);
+            bindingOptInput.setAttribute("onfocus", "keyBindStart(this)");
+            bindingOptInput.setAttribute("onblur", "keyBindEnd(this)");
+
+            document.getElementById("options_section").appendChild(bindingOptLabel);
+            document.getElementById("options_section").appendChild(bindingOptInput);
+    }
+}
+
+
+
+displayOptions(local_user_data);
+
+
+///////////////key binding option handler//////////////////
+window.keyBindStart = function(keyBindInput){
+    keyBindInput.value = "Press key";
+    //add change style of value text
+
+    keyBindInput.addEventListener('keyup', event => {
+        keyBindInput.value = event.code;
+
+        //let local_user_data = JSON.parse(localStorage.getItem('user_data'));
+        //let local_user_data = localStorage.getItem('user_data');
+        //console.log(local_user_data);
+        //console.log(keyBindInput.name);
+        local_user_data.keyBindings[keyBindInput.id] = event.code;
+    });
+}
+
+
+window.keyBindEnd = function(keyBindInput){
+    //let local_user_data = JSON.parse(localStorage.getItem('user_data'));
+   //let local_user_data = localStorage.getItem('user_data');
+    if(keyBindInput.value == ""){
+        keyBindInput.value =  local_user_data.keyBindings[keyBindInput.id];
+    }
+ 
+    //document.removeEventListener('keyup', event);
+}
+
+
+window.saveOptions = function(){
+    //let local_user_data = JSON.parse(localStorage.getItem('user_data'));
+
+    local_user_data.keyBindings.move_up = document.getElementById("move_up").value;
+    local_user_data.keyBindings.move_down = document.getElementById("move_down").value;
+    local_user_data.keyBindings.move_left = document.getElementById("move_left").value;
+    local_user_data.keyBindings.move_right = document.getElementById("move_right").value;
+    local_user_data.keyBindings.shoot = document.getElementById("shoot").value;
+    local_user_data.keyBindings.pause = document.getElementById("pause").value;
+
+    //update local storage
+    localStorage.setItem('user_data', JSON.stringify(local_user_data));
+}
+/////////////////////////////////////////////////////
+
+///////////////music handler script///////////////////
+var bckMenuMusic =  document.getElementById("bck_menu_music");
+
+window.onload = function(){
+    document.getElementById("loading_screen").style.display = "none";
+    document.getElementById("menu_window").style.display = "initial";
+        
+    bckMenuMusic.addEventListener("canplaythrough", event => {
+        //bckMenuMusic.play();
+    });
+}
+
+window.muteBackgroundMusic = function(){
+    if(bckMenuMusic && bckMenuMusic.muted != true){
+        bckMenuMusic.muted = true;
+
+    } else if(bckMenuMusic && bckMenuMusic.muted == true){
+        bckMenuMusic.muted = false;
+    }
+}
+
+window.showOptionsMenu = function(){
+    document.getElementById("menu_window").style.display = "none";
+    document.getElementById("options_window").style.display = "initial";
+}
+
+window.showMainMenu = function(){
+    document.getElementById("options_window").style.display = "none";
+    document.getElementById("menu_window").style.display = "initial";
+}
+///////////////////////////////////////////////////////////
 </script>
 </html>

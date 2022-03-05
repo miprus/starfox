@@ -1,74 +1,74 @@
 class Controls {
 
-	constructor(core){
+	constructor(core, keyBindingsData){
 		document.addEventListener('keydown', event => {
-			switch(event.keyCode){
-				case 37: //left
+			switch(event.code){
+				case keyBindingsData.move_left : //left
 					core.heroObjects.hero.moveLeft();
 					break;
 
-				case 39: //right
+				case keyBindingsData.move_right: //right
 					core.heroObjects.hero.moveRight();
 					break;
 
-				case 38: //up
+				case keyBindingsData.move_up: //up
 					core.heroObjects.hero.moveUp();
 					break;
 
-				case 40: //down
+				case keyBindingsData.move_down: //down
 					core.heroObjects.hero.moveDown();
 					break;
 
-				case 32: //backspace
+				case keyBindingsData.shoot: //Space
 					core.heroObjects.hero.fire = true;
 
 					break;
 
-				case 18: //alt
+				case "Alt": //alt
 
 					break;
 
-				case 27: //esc
+				case keyBindingsData.pause: //esc
 					core.togglePause();
 					break;
 			}
 		});
 
 		document.addEventListener('keyup', event => {
-			switch(event.keyCode){
-				case 37: //left
+			switch(event.code){
+				case keyBindingsData.move_left: //left
 					if(core.heroObjects.hero.speed.x < 0){
 						core.heroObjects.hero.speed.x = 0;
 					}
 					break;
 
-				case 39: //right
+				case keyBindingsData.move_right: //right
 					if(core.heroObjects.hero.speed.x > 0){
 						core.heroObjects.hero.speed.x = 0;
 					}
 					break;
 
-				case 38: //up
+				case keyBindingsData.move_up: //up
 					if(core.heroObjects.hero.speed.y < 0){
 						core.heroObjects.hero.speed.y = 0;
 					}
 					break;
 
-				case 40: //down
+				case keyBindingsData.move_down: //down
 					if(core.heroObjects.hero.speed.y > 0){
 						core.heroObjects.hero.speed.y = 0;
 					}
 					break;
 
-				case 32: //backspace
+				case keyBindingsData.shoot: //space
 					core.heroObjects.hero.fire = false;
 					break;
 
-				case 18: //alt
+				case "Alt": //alt
 
 					break;
 
-				case 27: //esc
+				case keyBindingsData.pause: //esc
 
 					break;
 			}

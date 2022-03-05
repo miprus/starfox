@@ -1,11 +1,37 @@
 {
     "userDetails" : {
-        "name" : "Prus",
-        "tutorial" : 0
+        "name" : "None",
+        "tutorial" : 0,
+        "level" : "level_1"
+    },
+
+    "keyBindings" : {
+        "move_up" : "ArrowUp",
+        "move_down" : "ArrowDown",
+        "move_left" : "ArrowLeft",
+        "move_right" : "ArrowRight",
+        "shoot" : "Space",
+        "pause" : "Escape"
     },
 
     "starfighterDetails" : {
         "components" : [
+            {
+                "type" :  "weapon",
+                "name" : "Weapon_1",
+                "bullet_name" : "HeroWeapon",
+                "level" : 1
+            },
+            {
+                "type" :  "wings",
+                "name" : "Wings_1",
+                "level" : 1
+            },
+            {
+                "type" :  "engine",
+                "name" : "Engine_1",
+                "level" : 1
+            },
             {
                 "type" :  "hull",
                 "name" : "Hull1",
@@ -13,22 +39,35 @@
             },
             {
                 "type" :  "cockpit",
-                "name" : "Cockpit1",
+                "name" : "Cockpit_2",
+                "level" : 1
+            }
+        ],
+        "componentsTest" : [
+            {
+                "type" :  "weapon",
+                "name" : "Weapon_1",
+                "bullet_name" : "HeroWeapon",
+                "level" : 1
+            },
+            {
+                "type" :  "wings",
+                "name" : "Wings_1",
                 "level" : 1
             },
             {
                 "type" :  "engine",
-                "name" : "Engine1",
+                "name" : "Engine_1",
                 "level" : 1
             },
             {
-                "type" :  "wing_left",
-                "name" : "WingL1",
+                "type" :  "hull",
+                "name" : "Hull1",
                 "level" : 1
             },
             {
-                "type" :  "wing_right",
-                "name" : "WingR1",
+                "type" :  "cockpit",
+                "name" : "Cockpit_2",
                 "level" : 1
             }
         ]
@@ -43,7 +82,17 @@
         
     
     
-    
+    "innactive": {
+        "components" : [
+
+
+            {
+                "type" :  "wings",
+                "name" : "Wings_1",
+                "level" : 1
+            }
+        ]
+    },
 
     "comments" : "global modifires? and player's spaceship settings and configurations"
 }
