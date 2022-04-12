@@ -1,0 +1,698 @@
+/*//////////////////////////////////////////////////////*/
+/*/////////////////Global stylization///////////////////*/
+/*//////////////////////////////////////////////////////*/
+
+/*//////////////////font-size variables/////////////////*/
+:root{
+--bodyText: max(0.8vw, 16px);
+--h1: max(2.3vw, 44px);
+--h2: max(1.9vw, 36px);
+--h3: max(1.5vw, 28px);
+--h4: max(1.2vw, 24px);
+--h5: max(1vw, 20px);
+--h6: max(0.8vw, 16px);
+
+/*//////////////////font-family variables/////////////////*/
+/*
+--inputText: 'Helvetica', 'FontAwesome', sans-serif;
+*/
+}
+
+/*//////////////////Headings/////////////////*/
+h1{
+	font-size: var(--h1);
+    /*
+    font-family: 'Merienda', cursive;
+    */
+}
+
+h2{
+	font-size: var(--h2);
+}
+
+h3{
+	font-size: var(--h3);
+}
+
+h4{
+	font-size: var(--h4);  
+}
+
+h5{
+	font-size: var(--h5);
+}
+
+h6{
+	font-size: var(--h6);  
+}
+
+
+/*////////////Links/////////////*/
+a{
+    text-decoration: none;
+}
+
+a:link{
+    text-decoration: none;
+}
+    
+a:visited{
+    color: #97F7FF;
+}
+
+
+/*////////////Common/////////////*/
+body{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    /*
+    font-size: var(--bodyText);
+    */
+}
+
+
+/*/////////////////Option Buttons///////////////////*/
+.option_btn{
+    font-size: 1.4em;
+    color: #97F7FF;
+    margin: auto;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    width: 16vw;
+    height: 4vh;
+
+    background: none;
+    border: none;
+
+    background-image: url('/projects/project_starfox/assets/ui/button.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option_btn:hover{
+    color: #97F7FF;
+    background-image: url('/projects/project_starfox/assets/ui/button_active.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+
+/*/////////////////Menu Window///////////////////*/
+#menu_window{
+    position: fixed;
+    top: 24vh;
+    left: 34vw;
+    width: 32vw;
+    height: 48vh;
+    z-index: 30;
+
+    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    display: none;
+}
+    
+/*/////////////////Game Options Window///////////////////*/
+#options_window{
+    position: fixed;
+    top: 24vh;
+    left: 29vw;
+    width: 42vw;
+    height: 54vh;
+    margin: 0 3vw 2vw 3vw;
+    z-index: 30;
+
+    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    overflow-x: hidden;
+
+    display: none;
+}
+
+#options_content{
+    margin: 2vw;
+}
+
+#options_section{
+    padding: 1vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+
+    overflow-y: auto;
+}
+
+#options_section label{
+    color: orange;
+}
+
+#options_buttons{
+    display: grid;
+    justify-content: center;
+}
+
+    #options_buttons button{
+        grid-row: 1;
+    }
+
+    #options_buttons button:last-child{
+        grid-row: 2;
+        position: relative;
+        left: 50%;
+    }
+
+
+/*////////////////////UI////////////////////////*/
+#ui_top{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    color: orange;
+
+    background-image: url('/projects/project_starfox/assets/ui/ui_h_top.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    z-index: 20;
+}
+
+#action_btn{
+    position: fixed;
+    top: 0;
+    left: calc(50% - (20vw / 2));
+    width: 20vw;
+    height: 14vh;
+    font-size: 3em;
+    color: #000;
+
+    background: none;
+    border: none;
+
+    background-image: url('/projects/project_starfox/assets/ui/h_button.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#action_btn:hover{
+    background-image: url('/projects/project_starfox/assets/ui/h_button_active.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#ui_bottomLeft{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 28vw;
+    height: 32vh;
+    color: orange;
+    
+    background-image: url('/projects/project_starfox/assets/ui/ui_h_bottom_left.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    
+    z-index: 20;
+    
+    direction: rtl;
+}
+
+#ui_bottomRight{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 28vw;
+    height: 32vh;
+    color: orange;
+
+    background-image: url('/projects/project_starfox/assets/ui/ui_h_bottom_right.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    z-index: 20;
+}
+
+
+
+/*//////////////////////////////////////////////////////*/
+/*////////////////////index.html////////////////////////*/
+/*//////////////////////////////////////////////////////*/
+#index_master_container{
+    background-image: url('/projects/project_starfox/assets/b2.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+#index_header{
+    text-align: center;
+    height: 30vh;
+    margin: 10vh 0 5vh 0;
+    color: goldenrod;
+
+    display: none;
+}
+
+    #index_header hr{
+        border: none;
+        color: gold;
+        width: 36vw;
+        height: 4px !important;
+        margin: auto;
+    }
+
+#index_footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    text-align: right;
+    padding: 0 5vw 0 5vw;
+    color: goldenrod;
+
+    display: none;
+}
+
+
+/*//////////////////////////////////////////////////////*/
+/*////////////////////missions.html/////////////////////*/
+/*//////////////////////////////////////////////////////*/
+#missions_master_container{
+    background-image: url('/projects/project_starfox/assets/blue_galaxy_bck.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.mission_tile{
+    width: 4vw;
+    height: 4vw;
+    margin: 3vh 0.3vw 0 0.3vw;
+
+    background-image: url('/projects/project_starfox/assets/ui/ui_tile.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.mission_tile:hover{
+    background-image: url('/projects/project_starfox/assets/ui/ui_tile_active.png');
+}
+
+    .mission_tile button {
+        padding: 0;
+        border: none;
+        background: none;
+
+        width: inherit;
+        height: inherit;
+    }
+
+        .mission_tile button img {
+            width: 3vw;
+            height: 3vw;
+        }
+
+#mission_tile_1{
+    position: fixed;
+    top: 54vh;
+    left: 26vw;
+
+    z-index: 50;
+}
+
+#mission_tile_2{
+    position: fixed;
+    top: 60vh;
+    left: 38vw;
+}
+
+#mission_tile_3{
+    position: fixed;
+    top: 56vh;
+    left: 56vw;
+}
+
+#mission_tile_4{
+    position: fixed;
+    top: 46vh;
+    left: 72vw;
+}
+
+/*////////////////////UI Content/////////////////////*/
+#mission_summary_content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+
+    width: inherit;
+    height: inherit;
+    padding: 3vw;
+}
+
+#mission_details{
+    grid-column: 1;
+    text-align: start;
+    
+}
+
+    #mission_details h3,h5{
+        display: inline;
+    }
+
+#mission_avatar{
+    grid-column: 2;
+    width: 8vw;
+    height: 8vw;
+
+    justify-self: end;
+    align-self: center;
+}
+
+#mission_brief_content{
+    width: 25vw;
+    height: 26vh;
+    margin: 3vh 6vh 3vh 0;
+    padding-left: 3vh;
+
+    overflow: auto;
+}
+
+    #mission_brief_content *{
+        direction: ltr;
+    }
+
+#mission_brief{
+    font-size: 0.8em;
+}
+
+/*//////////////////////////////////////////////////////*/
+/*////////////////////hangar.html///////////////////////*/
+/*//////////////////////////////////////////////////////*/
+#hangar_master_container{
+    background-image: url('/projects/project_starfox/assets/hangar_screen_bck_v2.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+/*
+Change display content into 2 columns, so that headers and context can be aligned evenly to the side (like with tab), like:
+
+HP:             5000
+Max Speed:      10
+*/
+
+/*////////////////////Equipment Section/////////////////////*/
+#equipment_container{
+    width: 80vw;
+    height: 54vh;
+    margin: auto;
+    position: absolute;
+    top: 14vh;
+    left: calc(50% - (80vw /2));
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#starfighter_section{
+    grid-column: 1;
+    display: flex;
+    flex-flow: row wrap;
+
+    height: inherit;
+}
+
+#starfighter_screen{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-content: center;
+
+    width: 26vw;
+    height: inherit;
+
+    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+    #starfighter{
+        margin-left: auto;
+        margin-right: auto;
+        width: 22vw;
+        height: 40vh;
+    }
+
+#equipment_content{
+    display: flex;
+    flex-flow: column;
+}
+
+    .module_label{
+        color: orange;
+    }
+
+/*////////////////////Inventory Section/////////////////////*/
+#inventory{
+    grid-column: 2;
+    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#inventory_content{
+    width: inherit;
+    height: 30vh;
+    margin: 1vw;
+
+    overflow-y: auto;
+}
+
+.eq_tile{
+    width: 4vw;
+    height: 4vw;
+    margin: 0.3vw;
+
+    background-image: url('/projects/project_starfox/assets/ui/ui_tile.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+    .eq_tile img{
+        width: inherit;
+        height: inherit;
+        padding: 0.5vw;
+    }
+
+.eq_tile:hover{
+    background-image: url('/projects/project_starfox/assets/ui/ui_tile_active.png');
+}
+
+
+/*////////////////////UI Content/////////////////////*/
+#module_stats_content{
+    width: inherit;
+    height: inherit;
+    padding: 3vw;
+    text-align: right;
+}
+
+    #module_stats_content h5{
+        display: block;
+    }
+
+#starfighter_stats_content{
+    width: inherit;
+    height: inherit;
+    padding: 3vw;
+    text-align: left;
+}
+
+    #starfighter_stats_content h5{
+        display: block;
+    }
+
+/*////////////////////////////////////////////////////////*/
+/*////////////////////gameScreen.html/////////////////////*/
+/*////////////////////////////////////////////////////////*/
+#gameScreen{
+    z-index: 10;
+}
+
+#gameScreenUI_topLeft{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16vw;
+    height: 14vh;
+    color: orange;
+    background-image: url('/projects/project_starfox/assets/ui/ui_top_left.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 20;
+    padding-left: 20px;
+}
+
+#gameScreenUI_topRight{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 16vw;
+    height: 14vh;
+    color: orange;
+    background-image: url('/projects/project_starfox/assets/ui/ui_top_right.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 20;
+    padding-right: 20px;
+    text-align: end;
+}
+
+#gameScreenUI_bottomLeft{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 16vw;
+    height: 14vh;
+    color: orange;
+    background-image: url('/projects/project_starfox/assets/ui/ui_bottom_left.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 20;
+    padding-left: 20px;
+}
+
+#dialogue_box{
+    position: fixed;
+    top: 0;
+    left: 36vw;
+    width: 28vw;
+    height: 14vh;
+    color: orange;
+    background-image: url('/projects/project_starfox/assets/ui/ui_top.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 30;
+}
+
+#objective_box{
+    position: fixed;
+    top: 38vh;
+    left: 0;
+    width: 8vw;
+    height: 24vh;
+    color: orange;
+    background-image: url('/projects/project_starfox/assets/ui/ui_left.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 30;
+    padding-left: 20px;
+}
+
+#fps_box{
+    position: fixed;
+    bottom: 3vw;
+    left: 1vw;
+    z-index: 20;
+    color: white;
+}
+
+#clock_box{
+    position: fixed;
+    bottom: 1vw;
+    left: 1vw;
+    z-index: 20;
+    color: white;
+}
+
+
+/*//////////////////////////////////////////////////////*/
+/*////////////////////Utilities/////////////////////////*/
+/*//////////////////////////////////////////////////////*/
+
+/*///////////////////////loading screen and spiner////////////////////////////*/
+#loading_screen{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+   
+    background-color: #000;
+}
+
+/*
+#loader{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+*/
+
+
+#loadnig_bar{
+    position: fixed;
+    bottom: 4vw;
+    left: 25vw;
+    width: 50vw;
+    height: 4vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    background-image: url('/projects/project_starfox/assets/ui/loading_bar.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#loading_progress{
+    width: 5vw;
+    height: 2vh;
+    margin: 0 1vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #97F7FF;
+}
+
+#start_btn{
+    position: fixed;
+    bottom: 12vw;
+    left: 42vw;
+    margin: auto;
+
+    display: none;
+}
+/*///////////////////////////////////////////////////////////*/

@@ -26,11 +26,13 @@ class Rock1{
 	draw(ctx){
 		ctx.drawImage(this.img, this.position.x, this.position.y, this.width, this.height);
 
+		/* Debug
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = "grey";
 		ctx.rect(this.position.x, this.position.y, this.width, this.height);
 		ctx.stroke();
+		*/
 	}
 
 	update(){

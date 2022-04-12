@@ -1,0 +1,12 @@
+{
+    "name" : "black_red_wings_v3",
+    "type": "wings",
+    
+    "statistics" : {
+
+        "hp" : 3000,
+        "maxSpeed" : 0.15
+    },
+
+    "comments" : ""
+}

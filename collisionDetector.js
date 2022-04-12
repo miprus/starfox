@@ -1,4 +1,4 @@
-function collisionDetector(friendly, hostile){
+function collisionDetector(friendly, hostile, core){
 
 	let friendlyTop = friendly.position.y;
 	let friendlyBottom = friendly.position.y + friendly.height;
@@ -21,6 +21,16 @@ function collisionDetector(friendly, hostile){
 			friendlyRight > hostileLeft
 			
 		){
+			if(friendly.constructor.name == "Hero"){
+				document.getElementById("hero_hp").innerHTML = 0;
+				//core.GAME_STATE = 5;
+				core.togglePause();
+			}
+
+			if(hostile.constructor.name != "EnemyWeapon"){
+				document.getElementById("hero_score").innerHTML = Number(document.getElementById("hero_score").innerHTML) + 10;
+			}
+
 			return true;
 
 		} else {

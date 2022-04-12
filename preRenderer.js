@@ -9,7 +9,6 @@ function preRenderObject(imgSrc){
 	imgR.src = imgSrc;
 	
     
-	
 	//ctxR.save();
 
     //draw given image using provided source (file path) and dimensions. The draw function will only be called after an image is loaded to prevent any errors in case of heavier sprites 

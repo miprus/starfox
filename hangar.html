@@ -10,288 +10,44 @@
  	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<style>
-	body{
-		padding: 0;
-		margin: 0;
-		overflow: hidden;
-		background-image: url('assets/b1.jpg');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-	}
 
-	canvas{
-        border: 5px solid red;
-		z-index: 10;
-		width: 100vw;
-		height: 100vh;
-    }
-
-	#ui_top{
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 10vh;
-		color: orange;
-		background-image: url('assets/ui/ui_h_top.png');
-		background-repeat: no-repeat;
-        background-size: 100% 100%;
-		z-index: 20;
-		padding-left: 20px;
-	}
-
-	#ui_bottomRight{
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		width: 28vw;
-		height: 26vh;
-		color: orange;
-		background-image: url('assets/ui/ui_h_bottom_right.png');
-		background-repeat: no-repeat;
-        background-size: 100% 100%;
-		z-index: 20;
-		padding-right: 20px;
-		text-align: end;
-	}
-
-	#ui_bottomLeft{
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		width: 28vw;
-		height: 26vh;
-		color: orange;
-		background-image: url('assets/ui/ui_h_bottom_left.png');
-		background-repeat: no-repeat;
-        background-size: 100% 100%;
-		z-index: 20;
-		padding-left: 20px;
-	}
-
-
-	#menu_window{
-		position: fixed;
-        top: 24vh;
-        left: 34vw;
-        width: 32vw;
-        height: 48vh;
-        z-index: 30;
-        background-image: url('assets/ui/ui_window.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-
-		visibility: hidden;
-	}
-
-	.list-group button{
-        background: none;
-        border: none;
-        background-image: url('assets/ui/button.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        font-size: 1.4em;
-        color: #97F7FF;
-        margin: auto;
-        margin-top: 1vh;
-        margin-bottom: 1vh;
-        width: 16vw;
-        height: 4vh;
-    }
-	
-	.list-group button:hover{
-        background-image: url('assets/ui/button_active.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-
-	.list-group a{
-        background-image: url('assets/ui/button.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        font-size: 1.4em;
-        color: #97F7FF;
-        margin: auto;
-        margin-top: 1vh;
-        margin-bottom: 1vh;
-        width: 16vw;
-        height: 4vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-	
-	.list-group a:hover{
-        background-image: url('assets/ui/button_active.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-	
-	#main_button{
-		position: fixed;
-		top: 0;
-		left: 38vw;
-        background: none;
-        border: none;
-        background-image: url('assets/ui/h_button.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        font-size: 3em;
-        color: #000;
-        width: 20vw;
-        height: 14vh;
-	}
-
-	#main_button:hover{
-        background-image: url('assets/ui/h_button_active.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-	}
-
-	a{
-		text-decoration: none;
-    }
-
-    a:link{
-        text-decoration: none;
-    }
-        
-    a:visited{
-		color: #97F7FF;
-    }
-
-	#content_container{
-		width: 80vw;
-		height: 50vh;
-	}
-
-	#starfighter_modules{
-		
-	}
-
-	#starfighter_eq{
-		
-	}
-
-	#starfighter{
-		width: 26vw;
-		height: 40vh;
-		margin: 5vh 2vw 5vh 2vw;
-		border: 5px solid red;
-	}
-
-	.eq_tile{
-		width: 4vw;
-		height: 4vw;
-		margin: 0.3vw;
-		background-image: url('assets/ui/ui_tile.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-	}
-
-	.eq_tile img{
-		width: inherit;
-		height: inherit;
-		padding: 0.5vw;
-	}
-
-	.eq_tile:hover{
-		background-image: url('assets/ui/ui_tile_active.png');
-	}
-
-	#eq{
-		width: 25vw;
-		height: 40vh;
-		padding: 1.5vw 0.3vw;
-		margin: 5vh 2vw 0 2vw;
-		background-image: url('assets/ui/ui_window.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-		overflow: auto;
-	}
-
-	.module_label{
-		color: orange;
-	}
-
-	#options_window{
-            position: fixed;
-            top: 24vh;
-            left: 29vw;
-            width: 42vw;
-            height: 54vh;
-            z-index: 30;
-            background-image: url('assets/ui/ui_window.png');
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-
-            display: none;
-	    }
-
-
-</style>
-
+	 <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-
-
-	<canvas id="hangarScreen"></canvas>
-
-	
-
+<body id="hangar_master_container">
 	<div id="ui_top">
-		<button type="button" id="main_button" onclick="redirectToMissionScreen()">Missions</button>
-		<!--
-		<p>Score 1</p>
-		<p>Score 2</p>
-		<button>Menu</button>
-		-->
+		<button type="button" id="action_btn" onclick="redirectToMissionScreen()" data-sfxhover="version1" data-sfxclick="version1">Missions</button>
 	</div>
 	
-	<div id="ui_bottomRight">
-		<!--
-		<p>Level</p>
-		<button>Music on/off</button>
-		<button>Game Pause</button>
-		-->
-	</div>
+	<main id="equipment_container">
+		<section id="starfighter_section">
+			<!--starfighter_modules-->
+			<div id="starfighter_screen">
+				<canvas id="starfighter"></canvas>
 
-	<div id="ui_bottomLeft">
-		<!--
-		<p>HP</p>
-		<p>Energy</p>
-		<p>Special Ammo</p>
-		-->
-	</div>
+				<button class="option_btn" type="button" id="moduleSetSave_btn" data-sfxhover="version1" data-sfxclick="version1">Save Modules</button>
+			</div>
 
-
-	<main id="content_container" class="position-absolute top-50 start-50 translate-middle row g-0">
-
-		<section id="starfighter_modules" class="col-6 d-flex justify-content-center">
-			
-			<canvas id="starfighter"></canvas>
-
-			<div class="d-flex flex-column">
-				<div id="tile_weapon" class="eq_tile d-inline" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div id="equipment_content">
+				<div id="tile_weapon" class="eq_tile" ondrop="drop(event)" ondragover="allowDrop(event)" data-sfxhover="version1"></div>
 				<h6 class="module_label">Weapon</h6>
-				<div id="tile_cockpit" class="eq_tile ms-4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+				<div id="tile_cockpit" class="eq_tile ms-4" ondrop="drop(event)" ondragover="allowDrop(event)" data-sfxhover="version1"></div>
 				<h6 class="module_label ms-4">Cockpit</h6>
-				<div id="tile_hull" class="eq_tile ms-5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+				<div id="tile_hull" class="eq_tile ms-5" ondrop="drop(event)" ondragover="allowDrop(event)" data-sfxhover="version1"></div>
 				<h6 class="module_label ms-5">Hull</h6>
-				<div id="tile_wings" class="eq_tile ms-4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+				<div id="tile_wings" class="eq_tile ms-4" ondrop="drop(event)" ondragover="allowDrop(event)" data-sfxhover="version1"></div>
 				<h6 class="module_label ms-4">Wings</h6>
-				<div id="tile_engine" class="eq_tile" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+				<div id="tile_engine" class="eq_tile" ondrop="drop(event)" ondragover="allowDrop(event)" data-sfxhover="version1"></div>
 				<h6 class="module_label">Engine</h6>
 			</div>
 		</section>
-	
-		<div class="col-2"></div>
 
-		<section id="starfighter_eq" class="col-4"> 
+		<section id="inventory"> 
+			<div id="inventory_content" class="row row-cols-5 g-0 justify-content-start"></div>
 			<!--
 			<div id="filter_tab">
 				<label for="item_filter">Filter by:</label>
@@ -307,139 +63,64 @@
 				</select>
 			</div>
 			-->
-
-			<div id="eq" class="row row-cols-5 g-0 justify-content-start">
-			</div>
-
-			<button type="button" id="moduleSetSave_btn" class="d-inline">Save Modules</button>
 		</section>
 	</main>
 
-	<section id="menu_window">
-		<nav class="list-group text-center mt-5">
-			<button type="button" onclick="showOptionsMenu()">Options</button>
-			<a href="index.html">Quit</a>
-		</nav>
-	</section>
+	<div id="ui_bottomRight">
+		<section id="module_stats_content">
+			<h5 id="module_name"></h5>
+			<h5 id="module_type"></h5>
+			<h5 id="module_hp"></h5>
+			<h5 id="module_maxSpeed"></h5>
+		</section>
+	</div>
 
-	<section id="options_window">
-		<div class="list-group text-center mt-5">
-			<section id="options_section">
-			</section>
+	<div id="ui_bottomLeft">
+		<section id="starfighter_stats_content">
+			<h5 id="total_hp"></h5>
+			<h5 id="total_maxSpeed"></h5>
+		</section>
+	</div>
 
-			<section id="buttons_section">
-				<div class="row">
-					<div class="col">
-						<button type="button">Reset</button>
-					</div>
-					<div class="col">
-						<button type="button" onclick="saveOptions()">Save</button>
-					</div>
-				</div>
+	<div id="menu_window">
+        <nav id="menu_content" class="list-group text-center mt-5">
+			<button class="option_btn" type="button" onclick="showOptionsMenu()" data-sfxhover="version1" data-sfxclick="version1">Options</button>
+			<a class="option_btn" href="index.html?visited=true" data-sfxhover="version1" data-sfxclick="version1">Main Menu</a>
+        </nav>
+    </div>
 
-				<button type="button" onclick="showMainMenu()">Back</button>
-			</section>
-		</div>
-	</section>
+	<div id="options_window">
+        <nav id="options_content" class="mt-5">
+            <!--Options section is populated by JavaScript-->
+            <section id="options_section"></section>
 
+            <section id="options_buttons">
+                <button class="option_btn" type="button" data-sfxhover="version1" data-sfxclick="version1">Reset</button>
+                <button class="option_btn" type="button" onclick="saveOptions()" data-sfxhover="version1" data-sfxclick="version1">Save</button>
 
-
+                <button class="option_btn" type="button" onclick="showMainMenu()" data-sfxhover="version1" data-sfxclick="version1">Back</button>
+            </section>
+        </nav>
+    </div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<script type="module" src="hangarHandler.js"></script>
-
+<script type="module" src="./utilities/hangarHandler.js"></script>
+<script type="module" src="./optionsHandler.js"></script>
 
 <script type="module">
-import user_data from "./user/user_data.json" assert { type: "json" }; 
+	import {createAudioElementBck, assignSFXevents, setAudioUI} from './utilities/audioHandler.js';
+    
+	const UI_SFX = setAudioUI();
+    assignSFXevents(UI_SFX);
 
-//localStorage.removeItem('user_data');
+	//Load and play background music
+	//also load UI audio effects that are accesible from UI_SFX constant
+	var bckMusicSrc = "./Data/Audio/Music/bck_hangar_ambiance.mp3";
+	var bckMusicTrackName = "bck_hangar_music";
 
-const local_user_data = localStorage.getItem('user_data') 
-    ? JSON.parse(localStorage.getItem('user_data')) 
-    : (localStorage.setItem('user_data', JSON.stringify(user_data)), JSON.parse(localStorage.getItem('user_data')));
+    createAudioElementBck(bckMusicSrc, bckMusicTrackName, true);
 
-
-function displayOptions(local_user_data){
-    for(const [actionName, keyCode] of Object.entries(local_user_data.keyBindings)){
-
-        //<label for="opt1">Option 1:</label>
-        // <input type="text" id="opt1" name="opt1">
-
-        let bindingOptLabel = document.createElement('label');
-            bindingOptLabel.setAttribute("for", actionName);
-            bindingOptLabel.innerHTML = actionName;
-
-        let bindingOptInput = document.createElement('input');
-            bindingOptInput.setAttribute("type", "text");
-            bindingOptInput.setAttribute("id", actionName);
-            bindingOptInput.setAttribute("name", keyCode);
-            bindingOptInput.setAttribute("value", keyCode);
-            bindingOptInput.setAttribute("onfocus", "keyBindStart(this)");
-            bindingOptInput.setAttribute("onblur", "keyBindEnd(this)");
-
-            document.getElementById("options_section").appendChild(bindingOptLabel);
-            document.getElementById("options_section").appendChild(bindingOptInput);
-    }
-}
-
-displayOptions(local_user_data);
-
-
-///////////////key binding option handler//////////////////
-window.keyBindStart = function(keyBindInput){
-    keyBindInput.value = "Press key";
-    //add change style of value text
-
-    keyBindInput.addEventListener('keyup', event => {
-        keyBindInput.value = event.code;
-
-        //let local_user_data = JSON.parse(localStorage.getItem('user_data'));
-        //let local_user_data = localStorage.getItem('user_data');
-        //console.log(local_user_data);
-        //console.log(keyBindInput.name);
-        local_user_data.keyBindings[keyBindInput.id] = event.code;
-    });
-}
-
-
-window.keyBindEnd = function(keyBindInput){
-    //let local_user_data = JSON.parse(localStorage.getItem('user_data'));
-   //let local_user_data = localStorage.getItem('user_data');
-    if(keyBindInput.value == ""){
-        keyBindInput.value =  local_user_data.keyBindings[keyBindInput.id];
-    }
- 
-    //document.removeEventListener('keyup', event);
-}
-
-
-
-window.saveOptions = function(){
-    //let local_user_data = JSON.parse(localStorage.getItem('user_data'));
-
-    local_user_data.keyBindings.move_up = document.getElementById("move_up").value;
-    local_user_data.keyBindings.move_down = document.getElementById("move_down").value;
-    local_user_data.keyBindings.move_left = document.getElementById("move_left").value;
-    local_user_data.keyBindings.move_right = document.getElementById("move_right").value;
-    local_user_data.keyBindings.shoot = document.getElementById("shoot").value;
-    local_user_data.keyBindings.pause = document.getElementById("pause").value;
-
-    //update local storage
-    localStorage.setItem('user_data', JSON.stringify(local_user_data));
-}
-
-
-window.showOptionsMenu = function(){
-    document.getElementById("menu_window").style.display = "none";
-    document.getElementById("options_window").style.display = "initial";
-}
-
-window.showMainMenu = function(){
-    document.getElementById("options_window").style.display = "none";
-    document.getElementById("menu_window").style.display = "initial";
-}
 </script>
-
 </html>

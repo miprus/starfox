@@ -3,8 +3,8 @@ import {Core} from './core.js';
 let canvas = document.getElementById('gameScreen');
 let ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth - 10;
-canvas.height = window.innerHeight - 10;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 const GAME_WIDTH = canvas.width;
 const GAME_HEIGHT = canvas.height;
@@ -20,19 +20,22 @@ let lt = 0;
 //fps//
 let fpsLog = [];
 
-
-console.log(localStorage.getItem('user_data'));
-////////////////////////////////////
+////////////////game options////////////////////
 /*
 To be developed
-
-
 */
+
 document.getElementById("resume_btn").addEventListener("click", resumeButton);
 
-function resumeButton() {
-	core.togglePause();
-}
+	function resumeButton(){
+		core.togglePause();
+	}
+
+document.getElementById("restart_btn").addEventListener("click", restartButton);
+
+	function restartButton(){
+		window.location.href = "gameScreen.html";
+	}
 /////////////////////////////////////////
 
 function renderer(ts){
@@ -49,7 +52,7 @@ function renderer(ts){
 		//try to calculate average of fps to actualy see any difference on the screen
 	}
 
-	if(fpsLog.length >= 8){ //8 cuz of 16.66ms/2 (update rate)
+	if(fpsLog.length >= 8){ //8 because of 16.66ms/2 (update rate)
 		let fpsTotal = fpsLog.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
 
 		let fpsAverage = Math.round(fpsTotal/fpsLog.length);

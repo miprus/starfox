@@ -1,6 +1,7 @@
-class EnemyWeapon{
+class EnemyWeapon1{
 	//rename clas name to 'bullet something'
-	static bulletImgSrc = "assets/explosion.png";
+	//review reading of image path
+	static bulletImgSrc = "./Data/Art/shot_spritesheet_2.png";
 
 	constructor(core, sprite){
 		this.GAME_SCALE = core.GAME_SCALE;
@@ -24,25 +25,36 @@ class EnemyWeapon{
 			y: 0,
 		}
 
+		//this.explosionSFX = null;
+
 		this.dead = false;
 
-		this.numCol = 8;
-		this.numRow = 8;
+		//frame control for animation
+		this.numCol = 5;
+		this.numRow = 3;
 		this.maxFrame = this.numCol * this.numRow;
 		this.cFrame = 0;
 	}
 
+	playExpSFX(){
+		//this.explosionSFX.cloneNode(true).play();
+
+	}
 
 	draw(ctx){
+		//variables for sprite animation
 		let col = this.cFrame % this.numCol;
 		let row = Math.floor(this.cFrame / this.numCol);
 
-		ctx.drawImage(this.img, col*512, row*512, 512, 512, this.position.x, this.position.y, this.width, this.height);
+		ctx.drawImage(this.img, 1*32, 1*32, 32, 32, this.position.x, this.position.y, this.width, this.height);
+
+		/* Debug 
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = "purple";
 		ctx.rect(this.position.x, this.position.y, this.width, this.height);
 		ctx.stroke();
+		*/ 
 	}
 
 	update(){
@@ -62,4 +74,4 @@ class EnemyWeapon{
 	}
 }
 
-export {EnemyWeapon};
+export {EnemyWeapon1};

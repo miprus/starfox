@@ -6,43 +6,49 @@
     },
 
     "keyBindings" : {
-        "move_up" : "ArrowUp",
-        "move_down" : "ArrowDown",
-        "move_left" : "ArrowLeft",
-        "move_right" : "ArrowRight",
+        "move_up" : "KeyW",
+        "move_down" : "KeyS",
+        "move_left" : "KeyA",
+        "move_right" : "KeyD",
         "shoot" : "Space",
         "pause" : "Escape"
     },
 
     "starfighterDetails" : {
+        "statistics" : {
+            "hp" : "",
+            "maxSpeed" : ""
+        },
         "components" : [
             {
                 "type" :  "weapon",
-                "name" : "Weapon_1",
-                "bullet_name" : "HeroWeapon",
+                "name" : "black_red_weapon_v1",
+                "bullet_name" : "BulletV1",
                 "level" : 1
             },
             {
                 "type" :  "wings",
-                "name" : "Wings_1",
+                "name" : "black_red_wings_v1",
                 "level" : 1
             },
             {
                 "type" :  "engine",
-                "name" : "Engine_1",
+                "name" : "black_red_engine_v1",
                 "level" : 1
             },
             {
                 "type" :  "hull",
-                "name" : "Hull1",
+                "name" : "black_red_hull_v1",
                 "level" : 1
             },
             {
                 "type" :  "cockpit",
-                "name" : "Cockpit_2",
+                "name" : "black_red_cockpit_v1",
                 "level" : 1
             }
         ],
+
+        
         "componentsTest" : [
             {
                 "type" :  "weapon",

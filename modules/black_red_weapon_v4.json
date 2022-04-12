@@ -1,0 +1,12 @@
+{
+    "name" : "black_red_weapon_v4",
+    "type": "weapon",
+    
+    "statistics" : {
+
+        "hp" : 4000,
+        "maxSpeed" : 0.20
+    },
+
+    "comments" : ""
+}

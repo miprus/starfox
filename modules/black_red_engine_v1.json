@@ -1,0 +1,12 @@
+{
+    "name" : "black_red_engine_v1",
+    "type": "engine",
+    
+    "statistics" : {
+
+        "hp" : 1000,
+        "maxSpeed" : 0.05
+    },
+
+    "comments" : ""
+}

@@ -1,5 +1,7 @@
 import assets_list from "./assets_list.json" assert { type: "json" };
 import user_data from "./user/user_data.json" assert { type: "json" };
+import audioAssets_list from "./audioAssets_list.json" assert { type: "json" };
+import {createAudioElementSFX} from './utilities/audioHandler.js';
 
 //import {preRenderList} from "./preRenderer.js";
 import {Hero} from './hero.js';
@@ -9,7 +11,6 @@ async function moduleLoader(levelFilePath, globalModifires){
 
 	const LEVEL_SETTINGS = new levelPack.LevelSettings(globalModifires);
 	const LEVEL = new levelPack.Level;
-
 	return [LEVEL_SETTINGS, LEVEL];
 }
 
@@ -22,7 +23,6 @@ async function preLoadData(dataSet, assets, preLoadedSet){
 		
 		let objectClass = await import(objectFilePath);
 
-		
 		if(objectClass[objectName].bulletType){
 			let bulletData = assets.find(({name}) => name === objectClass[objectName].bulletType);
 			
@@ -32,6 +32,8 @@ async function preLoadData(dataSet, assets, preLoadedSet){
 			let bulletClass = await import(bulletFilePath);
 
 			preLoadedSet.hostile.push(bulletClass[bulletName]);
+
+			
 			
 		} 
 		
@@ -57,9 +59,10 @@ async function preLoadData(dataSet, assets, preLoadedSet){
 				break;
 		}
 	};
+	//console.log(dataSet)
+	//console.log(assets)
+	//console.log(preLoadedSet)
 }
-
-
 
 
 function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupType, tile, core){
@@ -82,19 +85,31 @@ function preLoadWave(waveTypeSet, dataSet, objectTypeSet, imgSet, newWaveGroupTy
 						if(element.name == object.name){	
 							let sprite = imgSet.find(({name}) => name === element.name);
 
+							var explosionAudioSFX;
+
+							if(element.trackName){
+								audioAssets_list.game_sfx.forEach(gameSFX => {
+									if(gameSFX.trackName == element.trackName){
+										explosionAudioSFX = createAudioElementSFX(gameSFX.src, element.trackName);
+									}
+								});
+							}
+
+						
 							if(element.bulletType){
 								let bulletSprite = imgSet.find(({name}) => name === element.bulletType);
-
-								//change "HeroWeapon" for element.bulletType | done :3
-
 								let bulletClass = objectTypeSet.find(({name}) => name === element.bulletType);
 
 								let newObject = new element(core, position, sprite.img, bulletClass, bulletSprite.img);
 
+								newObject.explosionSFX = explosionAudioSFX;
+
 								newWaveGroupType.push(newObject);	
 							} else {
-															
-							newWaveGroupType.push(new element(core, position, sprite.img));	
+								let newObject = new element(core, position, sprite.img);
+								newObject.explosionSFX = explosionAudioSFX;
+																
+								newWaveGroupType.push(newObject);	
 							}
 						}
 					});
@@ -126,10 +141,14 @@ async function levelLoader(core){
 	}
 
 	/////////////////hero object///////////////
+
+	//calculate statistics for her object
 	let local_user_data = JSON.parse(localStorage.getItem('user_data'));
 	let starfighterDetails = local_user_data.starfighterDetails;
 	let componentsData = [];
 	
+	var totalHp = 0, totalMaxSpeed = 0;
+
 	///change components to modules?
 	//array.prototype.forEach() doesen't work with async processes like await import(); that's why "manual" for each loop has to be created 
 	for(let i = 0; i < starfighterDetails.components.length; i++) {
@@ -149,6 +168,23 @@ async function levelLoader(core){
 
 			var bulletClass = objectClass[heroWeaponBullet.name];
 		}
+
+
+		var moduleDataPath = './modules/' + element.name + '.json';
+		var moduleData = await import(moduleDataPath, {assert: {type: 'json'}});
+		moduleData = moduleData["default"];
+		
+
+		totalHp = totalHp + moduleData.statistics.hp;
+		totalMaxSpeed = totalMaxSpeed + moduleData.statistics.maxSpeed;
+	}
+
+	//move it somewhere else 
+	document.getElementById("hero_hp").innerHTML = totalHp;
+
+	let starfighterStats = {
+		hp: totalHp,
+		maxSpeed: totalMaxSpeed,
 	}
 
 	let moduleSprites = componentsData;
@@ -172,10 +208,30 @@ async function levelLoader(core){
 		
 	});
 
-	//console.log(starfighterModules);
+	var explosionAudioSFX, shotAudioSFX;
 
+	//assign explosion SFX to Hero class
+	if(Hero.trackName){
+		audioAssets_list.game_sfx.forEach(gameSFX => {
+			if(gameSFX.trackName == Hero.trackName){
+				explosionAudioSFX = createAudioElementSFX(gameSFX.src, gameSFX.trackName);
+			}
+		});
+	}
 
-	let newHero = new Hero(core, starfighterModules, bulletClass);
+	//add shot sound effect as well
+	if(bulletClass.trackName){
+		audioAssets_list.game_sfx.forEach(gameSFX => {
+			if(gameSFX.trackName == bulletClass.trackName){
+				shotAudioSFX = createAudioElementSFX(gameSFX.src, bulletClass.trackName);
+			}
+		});
+	}
+
+	let newHero = new Hero(core, starfighterModules, bulletClass, starfighterStats);
+
+	newHero.shotSFX = shotAudioSFX;
+	newHero.explosionSFX = explosionAudioSFX
 
 	core.activeObjects.friendlyObjects.push(newHero);
 
@@ -184,13 +240,6 @@ async function levelLoader(core){
 	//debug
 	//let result = moduleSprites.find(({type}) => type === 'hull');
 	//console.log(result);
-
-	
-
-
-
-
-
 	//////////////////////////////////////////////
 
 
@@ -245,6 +294,8 @@ async function levelLoader(core){
 
 
 function levelEventHandler(core){
+	var eventCounter = 0;
+
 	if(core.gameClockRaw == core.inactiveObjects[0].timing){
 		core.activeObjects.hostileObjects.push(...core.inactiveObjects[0].hostileObjects);
 		core.activeObjects.friendlyObjects.push(...core.inactiveObjects[0].friendlyObjects);
@@ -259,9 +310,11 @@ function levelEventHandler(core){
 		core.activeThemes.backgroundThemes.push(...core.inactiveThemes[0].backgroundThemes);
 	}
 
-	if(core.gameClockRaw == core.levelEventTimings[1]){
+	if(core.gameClockRaw == core.levelEventTimings[eventCounter]){
 		console.log('end of the level');
 		core.togglePause();
+		console.log(eventCounter)
+		eventCounter++;
 	}
 }
 	

@@ -1,0 +1,11 @@
+{
+    "name" : "black_red_cockpit_v3",
+    "type": "cockpit",
+
+    "statistics" : {
+        "hp" : 3000,
+        "maxSpeed" : 0.15
+    },
+
+    "comments" : ""
+}

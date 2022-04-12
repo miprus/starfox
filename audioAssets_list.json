@@ -1,0 +1,29 @@
+{
+    "ui_sfx" : [
+        {      
+            "type" : "hover",
+            "trackName" : "OptionSelect",
+            "src" : "Data/Audio/SFX/OptionSelect.wav"
+        },
+        {      
+            "type" : "click",
+            "trackName" : "Complete_02",
+            "src" : "Data/Audio/SFX/Complete_02.wav"
+        }
+    ],
+    "game_sfx" : [
+        {
+            "type" : "shot",
+            "trackName" : "Shot_01",
+            "src" : "Data/Audio/SFX/Shot_01.wav"
+        },
+        {
+            "type" : "explosion",
+            "trackName" : "Explosion_01",
+            "src" : "Data/Audio/SFX/Explosion_01.wav"
+        }
+    ]
+}
+
+
+

@@ -21,6 +21,7 @@ class Controls {
 
 				case keyBindingsData.shoot: //Space
 					core.heroObjects.hero.fire = true;
+					core.heroObjects.hero.playShotAudio();
 
 					break;
 

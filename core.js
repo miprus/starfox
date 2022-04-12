@@ -5,7 +5,7 @@ import {preRenderList} from "./preRenderer.js";
 import assets_list from "./assets_list.json" assert { type: "json" };
 
 const user_data = JSON.parse(localStorage.getItem('user_data')); 
-console.log(user_data)
+//console.log(user_data)
 
 const GAME_STATE = {
 	PAUSE: 0,
@@ -13,6 +13,7 @@ const GAME_STATE = {
 	CUTSCENE: 2,
 	LOADING: 3,
 	MENU: 4,
+	END: 5,
 }
 
 
@@ -33,12 +34,12 @@ class Core{
 	togglePause(){
 		if(this.GAME_STATE == GAME_STATE.PAUSE){
 			this.GAME_STATE = GAME_STATE.RUN;
-			document.getElementById("menu_box").style.visibility = "hidden";
+			document.getElementById("menu_window").style.display = "none";
 			console.log("resume"); //debug
 
 		} else {
 			this.GAME_STATE = GAME_STATE.PAUSE;
-			document.getElementById("menu_box").style.visibility = "visible";
+			document.getElementById("menu_window").style.display = "initial";
 			console.log("paused");//debug
 		}
 	}
@@ -49,13 +50,10 @@ class Core{
 
 		///load assests data
 		this.imgArray = preRenderList(assets_list.gameObjects);
-		//this.img = this.imgArray[0].img;
 
 		this.gameObjectsImgData = preRenderList(assets_list.gameObjects);
 		this.gameBackgroundsImgData = preRenderList(assets_list.gameBackgrounds);
 		this.heroObjectsImgData = preRenderList(assets_list.heroObjects);
-
-
 
 
 		//debug//
@@ -91,7 +89,7 @@ class Core{
 		this.inactiveThemes = [];
 
 
-		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 66.4ms
+		//one cycle (update) takes approx. 16.6ms. That means speed of 4 (y: 4) = 1px / 66.4ms
 
 
 		await levelLoader(this);	
@@ -106,7 +104,8 @@ class Core{
 
 		this.gameClockRaw += 1;
 		this.gameClock = Math.round(this.gameClockRaw/60)
-		document.getElementById("clock_counter").innerHTML = this.gameClock; //game clock control (divided by 60 to convert timer to seconds so each showed interation takes 1 real second)
+		document.getElementById("clock_counter").innerHTML = this.gameClock; 
+		//game clock control (divided by 60 to convert timer to seconds so each showed interation takes 1 real second)
 
 
 
@@ -118,14 +117,15 @@ class Core{
 
 
 
-
-
 		for(let i = 0; i < this.activeObjects.friendlyObjects.length; i++){
 			for (let j = 0; j < this.activeObjects.hostileObjects.length; j++){
 
-				if(collisionDetector(this.activeObjects.friendlyObjects[i], this.activeObjects.hostileObjects[j])){
+				if(collisionDetector(this.activeObjects.friendlyObjects[i], this.activeObjects.hostileObjects[j], this)){
 					this.activeObjects.friendlyObjects[i].dead = true;
 					this.activeObjects.hostileObjects[j].dead = true;
+
+					this.activeObjects.hostileObjects[j].playExpSFX();
+					this.activeObjects.friendlyObjects[i].playExpSFX();
 				}
 			}
 		}

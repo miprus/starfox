@@ -1,0 +1,12 @@
+{
+    "name" : "black_red_hull_v4",
+    "type": "hull",
+    
+    "statistics" : {
+
+        "hp" : 4000,
+        "maxSpeed" : 0.20
+    },
+
+    "comments" : ""
+}

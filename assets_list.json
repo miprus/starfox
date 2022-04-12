@@ -1,22 +1,10 @@
 {
     "gameObjects" : [
-        {      
-            "type" : "friendly",
-            "file_name" : "hero.js",
-            "name" : "Hero",
-            "src" : "assets/fighter1.svg"
-        },
-        {
-            "type" : "neutral",
-            "file_name" : "neutral_object_1.js",
-            "name" : "Neutral_Object_1",
-            "src" : "assets/sprite_test.png"  
-        },
         {
             "type" : "hostile",
             "file_name" : "enemy_1.js",
             "name" : "Enemy1",
-            "src" : "assets/xwing.png"   
+            "src" : "assets/SF01.png"   
         },
         {
             "type" : "background",
@@ -27,14 +15,14 @@
         {
             "type" : "bullet",
             "file_name" : "e_weapon_1.js",
-            "name" : "EnemyWeapon",
-            "src" : "assets/explosion.png"
+            "name" : "EnemyWeapon1",
+            "src" : "Data/Art/shot_spritesheet_2.png"
         },
         {
             "type" : "bullet",
-            "file_name" : "h_weapon_1.js",
-            "name" : "HeroWeapon",
-            "src" : "assets/explosion.png"
+            "file_name" : "bullet_v1.js",
+            "name" : "BulletV1",
+            "src" : "Data/Art/shot_spritesheet_1.png"
         }
     ],
 
@@ -43,117 +31,152 @@
             "type" : "background_theme",
             "file_name" : "bck1.js",
             "name" : "Bck1",
-            "src" : "assets/bck_test.png"
+            "src" : "assets/green_nebula_background.png"
+        },
+        {
+            "type" : "background_theme",
+            "file_name" : "bck2.js",
+            "name" : "Bck2",
+            "src" : "assets/purple_nebula_background.png"
         }
     ],
 
     "heroObjects" : [
         {
-            "type" : "hull",
-            "file_name" : null,
-            "name" : "Hull1",
-            "src" : "assets/components/hull1.png"
-        },
-        {
-            "type" : "weapon",
-            "file_name" : null,
-            "name" : "Weapon1",
-            "src" : "assets/components/weapon1.png" 
+            "type" : "cockpit",
+            "file_name" : "black_red_cockpit_v1.json",
+            "name" : "black_red_cockpit_v1",
+            "src" : "assets/components/black_red_cockpit_v1.png"
         },
         {
             "type" : "cockpit",
-            "file_name" : null,
-            "name" : "Cockpit1",
-            "src" : "assets/components/cockpit1.png"
+            "file_name" : "black_red_cockpit_v2.json",
+            "name" : "black_red_cockpit_v2",
+            "src" : "assets/components/black_red_cockpit_v2.png"
         },
         {
-            "type" : "engine",
-            "file_name" : null,
-            "name" : "Engine1",
-            "src" : "assets/components/engine1.png"
+            "type" : "cockpit",
+            "file_name" : "black_red_cockpit_v3.json",
+            "name" : "black_red_cockpit_v3",
+            "src" : "assets/components/black_red_cockpit_v3.png"
         },
         {
-            "type" : "wing_left",
-            "file_name" : null,
-            "name" : "WingL1",
-            "src" : "assets/components/wingL1.png"
-        },
-        {
-            "type" : "wing_right",
-            "file_name" : null,
-            "name" : "WingR1",
-            "src" : "assets/components/wingR1.png"
+            "type" : "cockpit",
+            "file_name" : "black_red_cockpit_v4.json",
+            "name" : "black_red_cockpit_v4",
+            "src" : "assets/components/black_red_cockpit_v4.png"
         },
 
 
-        
+
+
+
         {
-            "type" : "cockpit",
-            "file_name" : null,
-            "name" : "Cockpit_1",
-            "src" : "assets/components/cockpit_1.png" 
+            "type" : "wings",
+            "file_name" : "black_red_wings_v1.json",
+            "name" : "black_red_wings_v1",
+            "src" : "assets/components/black_red_wings_v1.png"
         },
         {
-            "type" : "cockpit",
-            "file_name" : null,
-            "name" : "Cockpit_2",
-            "src" : "assets/components/cockpit_2.png"
+            "type" : "wings",
+            "file_name" : "black_red_wings_v2.json",
+            "name" : "black_red_wings_v2",
+            "src" : "assets/components/black_red_wings_v2.png"
         },
         {
-            "type" : "cockpit",
-            "file_name" : null,
-            "name" : "Cockpit_3",
-            "src" : "assets/components/cockpit_3.png"
+            "type" : "wings",
+            "file_name" : "black_red_wings_v3.json",
+            "name" : "black_red_wings_v3",
+            "src" : "assets/components/black_red_wings_v3.png"
+        },
+        {
+            "type" : "wings",
+            "file_name" : "black_red_wings_v4.json",
+            "name" : "black_red_wings_v4",
+            "src" : "assets/components/black_red_wings_v4.png"
+        },
+
+
+
+        {
+            "type" : "weapon",
+            "file_name" : "black_red_weapon_v1.json",
+            "name" : "black_red_weapon_v1",
+            "src" : "assets/components/black_red_weapon_v1.png"
+        },
+        {
+            "type" : "weapon",
+            "file_name" : "black_red_weapon_v2.json",
+            "name" : "black_red_weapon_v2",
+            "src" : "assets/components/black_red_weapon_v2.png"
+        },
+        {
+            "type" : "weapon",
+            "file_name" : "black_red_weapon_v3.json",
+            "name" : "black_red_weapon_v3",
+            "src" : "assets/components/black_red_weapon_v3.png"
+        },
+        {
+            "type" : "weapon",
+            "file_name" : "black_red_weapon_v4.json",
+            "name" : "black_red_weapon_v4",
+            "src" : "assets/components/black_red_weapon_v4.png"
+        },
+
+
+
+        {
+            "type" : "hull",
+            "file_name" : "black_red_hull_v1.json",
+            "name" : "black_red_hull_v1",
+            "src" : "assets/components/black_red_hull_v1.png"
+        },
+        {
+            "type" : "hull",
+            "file_name" : "black_red_hull_v2.json",
+            "name" : "black_red_hull_v2",
+            "src" : "assets/components/black_red_hull_v2.png"
+        },
+        {
+            "type" : "hull",
+            "file_name" : "black_red_hull_v3.json",
+            "name" : "black_red_hull_v3",
+            "src" : "assets/components/black_red_hull_v3.png"
+        },
+        {
+            "type" : "hull",
+            "file_name" : "black_red_hull_v4.json",
+            "name" : "black_red_hull_v4",
+            "src" : "assets/components/black_red_hull_v4.png"
+        },
+
+
+
+        {
+            "type" : "engine",
+            "file_name" : "black_red_engine_v1.json",
+            "name" : "black_red_engine_v1",
+            "src" : "assets/components/black_red_engine_v1.png"
         },
         {
             "type" : "engine",
-            "file_name" : null,
-            "name" : "Engine_1",
-            "src" : "assets/components/engine_1.png"
+            "file_name" : "black_red_engine_v2.json",
+            "name" : "black_red_engine_v2",
+            "src" : "assets/components/black_red_engine_v2.png"
         },
         {
-            "type" : "cockpit",
-            "file_name" : null,
-            "name" : "Engine_2",
-            "src" : "assets/components/engine_2.png"
+            "type" : "engine",
+            "file_name" : "black_red_engine_v3.json",
+            "name" : "black_red_engine_v3",
+            "src" : "assets/components/black_red_engine_v3.png"
         },
         {
-            "type" : "hull",
-            "file_name" : null,
-            "name" : "Hull_1",
-            "src" : "assets/components/hull_1.png"
-        },
-        {
-            "type" : "hull",
-            "file_name" : null,
-            "name" : "Hull_2",
-            "src" : "assets/components/hull_2.png"
-        },
-        {
-            "type" : "wings",
-            "file_name" : null,
-            "name" : "Wings_1",
-            "src" : "assets/components/wings_1.png"
-        },
-        {
-            "type" : "wings",
-            "file_name" : null,
-            "name" : "Wings_2",
-            "src" : "assets/components/wings_2.png"
-        },
-        {
-            "type" : "weapon",
-            "file_name" : null,
-            "name" : "Weapon_1",
-            "src" : "assets/components/weapon_1.png" 
-        },
-        {
-            "type" : "weapon",
-            "file_name" : null,
-            "name" : "Weapon_2",
-            "src" : "assets/components/weapon_2.png" 
+            "type" : "engine",
+            "file_name" : "black_red_engine_v4.json",
+            "name" : "black_red_engine_v4",
+            "src" : "assets/components/black_red_engine_v4.png"
         }
     ],
 
-    "comments" : "no need for width and height really. Width and height can be accesed directly from image onject :/ ----> gone, reduced to atoms"
+    "comments" : "[1] no need for width and height really. Width and height can be accesed directly from image onject :/ ----> gone, reduced to atoms.[2] Change file name of heroObjects from json to js?"
 }

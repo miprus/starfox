@@ -33,7 +33,6 @@ class Bck1{
             this.position.y = 0;
 		} else {
             this.position.y += this.speed.y;
-            //this.position.x += this.speed.x
         }
 	}
 }

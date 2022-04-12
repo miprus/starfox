@@ -3,9 +3,8 @@ class Neutral_Object_1{
 		this.GAME_WIDTH = core.GAME_WIDTH;
 		this.GAME_HEIGHT = core.GAME_HEIGHT;
 		this.GAME_SCALE = core.GAME_SCALE;
-        //this.spriteSheet = false;
-        this.img = sprite;
 
+        this.img = sprite;
 		this.core = core;
 
 		this.width = 64 * core.GAME_SCALE;
@@ -22,7 +21,6 @@ class Neutral_Object_1{
 			x: 
 			y:
 		}
-		
 		*/
 
 		this.dead = false;
@@ -32,11 +30,6 @@ class Neutral_Object_1{
 		this.maxFrame = this.numCol * this.numRow;
 		this.cFrame = 0;
 
-		/*
-		function(this){
-			wypluj variables: col, row i inne do draw and update function?
-		}
-		*/
 	}
 
 	draw(ctx){
@@ -44,13 +37,14 @@ class Neutral_Object_1{
 		let col = this.cFrame % this.numCol;
 		let row = Math.floor(this.cFrame / this.numCol);
 
-
+	/* debug
 		ctx.drawImage(this.img, col*16, row*16, 16, 16, this.position.x, this.position.y, this.width, this.height);
 		ctx.beginPath();
 		ctx.lineWidth = "2";
 		ctx.strokeStyle = "yellow";
 		ctx.rect(this.position.x, this.position.y, this.width, this.height);
 		ctx.stroke();
+		*/
 	}
 
 	update(){
