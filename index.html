@@ -114,10 +114,10 @@ if(params.has("visited") === true){
     document.getElementById("index_footer").style.display = "initial"; 
 } else {
     window.onload = function(){
-        const UI_SFX = setAudioUI();
-        assignSFXevents(UI_SFX);
 
         createAudioElementBck(bckMusicSrc, bckMusicTrackName, true);
+        const UI_SFX = setAudioUI();
+        assignSFXevents(UI_SFX);
 
         var loadingProgress = document.getElementById("loading_progress");
 
