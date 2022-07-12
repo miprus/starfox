@@ -85,7 +85,7 @@ body{
     background: none;
     border: none;
 
-    background-image: url('/projects/project_starfox/assets/ui/button.png');
+    background-image: url('../assets/ui/button.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 
@@ -96,7 +96,7 @@ body{
 
 .option_btn:hover{
     color: #97F7FF;
-    background-image: url('/projects/project_starfox/assets/ui/button_active.png');
+    background-image: url('../assets/ui/button_active.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -111,7 +111,7 @@ body{
     height: 48vh;
     z-index: 30;
 
-    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-image: url('../assets/ui/ui_window.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 
@@ -128,7 +128,7 @@ body{
     margin: 0 3vw 2vw 3vw;
     z-index: 30;
 
-    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-image: url('../assets/ui/ui_window.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 
@@ -179,7 +179,7 @@ body{
     height: 10vh;
     color: orange;
 
-    background-image: url('/projects/project_starfox/assets/ui/ui_h_top.png');
+    background-image: url('../assets/ui/ui_h_top.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 
@@ -198,13 +198,13 @@ body{
     background: none;
     border: none;
 
-    background-image: url('/projects/project_starfox/assets/ui/h_button.png');
+    background-image: url('../assets/ui/h_button.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
 #action_btn:hover{
-    background-image: url('/projects/project_starfox/assets/ui/h_button_active.png');
+    background-image: url('../assets/ui/h_button_active.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -217,7 +217,7 @@ body{
     height: 32vh;
     color: orange;
     
-    background-image: url('/projects/project_starfox/assets/ui/ui_h_bottom_left.png');
+    background-image: url('../assets/ui/ui_h_bottom_left.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     
@@ -234,7 +234,7 @@ body{
     height: 32vh;
     color: orange;
 
-    background-image: url('/projects/project_starfox/assets/ui/ui_h_bottom_right.png');
+    background-image: url('../assets/ui/ui_h_bottom_right.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 
@@ -247,7 +247,7 @@ body{
 /*////////////////////index.html////////////////////////*/
 /*//////////////////////////////////////////////////////*/
 #index_master_container{
-    background-image: url('/projects/project_starfox/assets/b2.jpg');
+    background-image: url('../assets/b2.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -288,7 +288,7 @@ body{
 /*////////////////////missions.html/////////////////////*/
 /*//////////////////////////////////////////////////////*/
 #missions_master_container{
-    background-image: url('/projects/project_starfox/assets/blue_galaxy_bck.png');
+    background-image: url('../assets/blue_galaxy_bck.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -299,13 +299,13 @@ body{
     height: 4vw;
     margin: 3vh 0.3vw 0 0.3vw;
 
-    background-image: url('/projects/project_starfox/assets/ui/ui_tile.png');
+    background-image: url('../assets/ui/ui_tile.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
 .mission_tile:hover{
-    background-image: url('/projects/project_starfox/assets/ui/ui_tile_active.png');
+    background-image: url('../assets/ui/ui_tile_active.png');
 }
 
     .mission_tile button {
@@ -399,7 +399,7 @@ body{
 /*////////////////////hangar.html///////////////////////*/
 /*//////////////////////////////////////////////////////*/
 #hangar_master_container{
-    background-image: url('/projects/project_starfox/assets/hangar_screen_bck_v2.png');
+    background-image: url('../assets/hangar_screen_bck_v2.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -442,7 +442,7 @@ Max Speed:      10
     width: 26vw;
     height: inherit;
 
-    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-image: url('../assets/ui/ui_window.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -466,7 +466,7 @@ Max Speed:      10
 /*////////////////////Inventory Section/////////////////////*/
 #inventory{
     grid-column: 2;
-    background-image: url('/projects/project_starfox/assets/ui/ui_window.png');
+    background-image: url('../assets/ui/ui_window.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -484,7 +484,7 @@ Max Speed:      10
     height: 4vw;
     margin: 0.3vw;
 
-    background-image: url('/projects/project_starfox/assets/ui/ui_tile.png');
+    background-image: url('../assets/ui/ui_tile.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -496,7 +496,7 @@ Max Speed:      10
     }
 
 .eq_tile:hover{
-    background-image: url('/projects/project_starfox/assets/ui/ui_tile_active.png');
+    background-image: url('../assets/ui/ui_tile_active.png');
 }
 
 
@@ -537,7 +537,7 @@ Max Speed:      10
     width: 16vw;
     height: 14vh;
     color: orange;
-    background-image: url('/projects/project_starfox/assets/ui/ui_top_left.png');
+    background-image: url('../assets/ui/ui_top_left.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 20;
@@ -551,7 +551,7 @@ Max Speed:      10
     width: 16vw;
     height: 14vh;
     color: orange;
-    background-image: url('/projects/project_starfox/assets/ui/ui_top_right.png');
+    background-image: url('../assets/ui/ui_top_right.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 20;
@@ -566,7 +566,7 @@ Max Speed:      10
     width: 16vw;
     height: 14vh;
     color: orange;
-    background-image: url('/projects/project_starfox/assets/ui/ui_bottom_left.png');
+    background-image: url('../assets/ui/ui_bottom_left.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 20;
@@ -580,7 +580,7 @@ Max Speed:      10
     width: 28vw;
     height: 14vh;
     color: orange;
-    background-image: url('/projects/project_starfox/assets/ui/ui_top.png');
+    background-image: url('../assets/ui/ui_top.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 30;
@@ -593,7 +593,7 @@ Max Speed:      10
     width: 8vw;
     height: 24vh;
     color: orange;
-    background-image: url('/projects/project_starfox/assets/ui/ui_left.png');
+    background-image: url('../assets/ui/ui_left.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 30;
@@ -670,7 +670,7 @@ Max Speed:      10
     align-items: center;
     justify-content: start;
 
-    background-image: url('/projects/project_starfox/assets/ui/loading_bar.png');
+    background-image: url('../assets/ui/loading_bar.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
